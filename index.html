@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Quadro de Indicadores do Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: coluna única de leitura; cabeçalho, cadeia indicador→pagamento, filtros, grade de fichas, perguntas e calendário */
+:root {
+  --bg: #f3f6f9;
+  --surface: #ffffff;
+  --ink: #132030;
+  --muted: #566577;
+  --line: #d7dee7;
+  --accent: #0a62c2;
+  --accent-soft: #e2edfa;
+  --amber: #9a5b00;
+  --amber-soft: #fbefd9;
+  --neutral-soft: #eceff3;
+  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
+    --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10; --neutral-soft: #1f2a36;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
+  --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10; --neutral-soft: #1f2a36;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.55;
+}
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+  display: grid; gap: 48px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; font-weight: 600; }
+h3 { font-size: 1.02rem; font-weight: 600; line-height: 1.3; }
+p { margin: 0; }
+.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; }
+.lede { color: var(--muted); max-width: 64ch; font-size: 1.02rem; }
+
+header { display: grid; gap: 14px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; color: var(--muted); font-size: 0.88rem; }
+.chip-status { background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: 0.78rem; padding: 3px 10px; border-radius: 999px; }
+
+section { display: grid; gap: 18px; }
+.section-head { display: grid; gap: 6px; }
+.section-head p { color: var(--muted); max-width: 66ch; }
+
+/* cadeia */
+.chain { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: step; }
+.step { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 16px; display: grid; gap: 6px; align-content: start; }
+.step .n { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.step strong { font-family: var(--font-display); font-weight: 600; font-size: 0.98rem; }
+.step span { color: var(--muted); font-size: 0.86rem; }
+.step:not(:last-child)::after {
+  content: "→"; position: absolute; right: -10px; top: 50%; transform: translate(50%, -50%);
+  color: var(--accent); font-size: 1rem; background: var(--bg); line-height: 1; padding: 2px 0;
+}
+@media (max-width: 820px) {
+  .chain { grid-template-columns: minmax(0, 1fr); }
+  .step:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -10px; transform: translate(50%, 50%); padding: 0 4px; }
+}
+
+/* resumo */
+.summary { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 0.92rem; color: var(--muted); }
+.summary b { font-family: var(--font-display); font-size: 1.5rem; color: var(--ink); font-variant-numeric: tabular-nums; margin-right: 6px; font-weight: 600; }
+
+/* legenda e filtros */
+.legend { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 0.86rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button {
+  font: inherit; font-size: 0.86rem; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  padding: 6px 12px; border-radius: 999px;
+}
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.filters button:focus-visible, .toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer; }
+.controls { display: grid; gap: 12px; }
+
+/* fichas */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+@media (max-width: 420px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.card.pay { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.card-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.dim { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.badge { font-size: 0.74rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.b-pay { background: var(--accent-soft); color: var(--accent); }
+.b-disc { background: var(--amber-soft); color: var(--amber); }
+.b-acomp { background: var(--neutral-soft); color: var(--muted); }
+.what { color: var(--muted); font-size: 0.9rem; }
+.formula { font-family: var(--font-mono); font-size: 0.82rem; background: var(--neutral-soft); border-radius: 6px; padding: 8px 10px; overflow-x: auto; }
+dl { margin: 0; display: grid; grid-template-columns: 7.2em minmax(0, 1fr); gap: 4px 10px; font-size: 0.86rem; }
+dt { color: var(--muted); }
+dd { margin: 0; }
+.ref { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); }
+.empty { color: var(--muted); padding: 20px 0; }
+
+/* perguntas */
+.questions { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.qbox { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.qbox ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: 0.92rem; }
+.who { font-size: 0.78rem; color: var(--muted); }
+
+/* calendário */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
+.timeline li { position: relative; padding: 0 0 18px 20px; display: grid; gap: 2px; }
+.timeline li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+.timeline time { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.timeline span { color: var(--muted); font-size: 0.9rem; }
+
+footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 4px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Hub Municipal de Eletromobilidade · São Bernardo do Campo</p>
+    <h1>Quadro de Indicadores de Desempenho</h1>
+    <p class="lede">Primeira versão, preparada pelo perfil Operacional para a equipe discutir. Ela organiza o que o pré-projeto já prevê nos itens 3.5, 3.10 e 3.3: o que medir, como medir, de onde vem o dado e quais indicadores podem entrar na remuneração do parceiro.</p>
+    <div class="meta">
+      <span class="chip-status">Rascunho v0 · para discussão</span>
+      <span>Thiago Belão · Giovanna Falcaro · Anderson Alves</span>
+      <span>Novembro de 2026</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-chain">
+    <div class="section-head">
+      <h2 id="h-chain">Como um indicador vira contrato</h2>
+      <p>Num contrato de PPP, o indicador só funciona se tiver fonte confiável e consequência definida. A cadeia abaixo mostra por onde ele passa, do carregador até o pagamento.</p>
+    </div>
+    <div class="chain">
+      <div class="step"><span class="n">1</span><strong>Operação</strong><span>Carregadores, hubs e usinas solares funcionando nos pontos.</span></div>
+      <div class="step"><span class="n">2</span><strong>Dado</strong><span>A plataforma digital registra status, sessões e energia. Usa padrão aberto de comunicação dos carregadores, como o OCPP.</span></div>
+      <div class="step"><span class="n">3</span><strong>Indicador</strong><span>Fórmula fixa, com meta e frequência definidas.</span></div>
+      <div class="step"><span class="n">4</span><strong>Nota de desempenho</strong><span>Os indicadores do período se combinam numa nota única.</span></div>
+      <div class="step"><span class="n">5</span><strong>Pagamento</strong><span>A nota ajusta a remuneração ou gera penalidade, conforme o contrato.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-ind">
+    <div class="section-head">
+      <h2 id="h-ind">Indicadores propostos</h2>
+      <p>As metas ficam em aberto de propósito. Elas dependem do diagnóstico de demanda e da rede elétrica, que o pré-projeto prevê para os meses 3 a 6. A coluna de status é uma proposta para a equipe decidir junto.</p>
+    </div>
+    <div class="summary" id="summary"></div>
+    <div class="legend">
+      <span><span class="badge b-pay">Proposto para pagamento</span> entra na nota de desempenho</span>
+      <span><span class="badge b-disc">A discutir</span> depende de decisão da equipe</span>
+      <span><span class="badge b-acomp">Acompanhamento</span> só monitora, sem efeito no pagamento</span>
+    </div>
+    <div class="controls">
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por dimensão"></div>
+      <label class="toggle" for="only-pay"><input type="checkbox" id="only-pay"> Mostrar só os propostos para pagamento</label>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section aria-labelledby="h-q">
+    <div class="section-head">
+      <h2 id="h-q">Perguntas para decidirmos juntos</h2>
+      <p>É aqui que o quadro conversa com as outras duas frentes do projeto.</p>
+    </div>
+    <div class="questions">
+      <div class="qbox">
+        <h3>Modelo econômico-financeiro</h3>
+        <p class="who">Thiago, com Anderson</p>
+        <ul>
+          <li>Quanto da remuneração deve depender da nota de desempenho?</li>
+          <li>O risco de demanda fica com o parceiro? Se ficar, o uso não deve penalizar, só acionar a expansão.</li>
+          <li>Qual taxa de utilização justifica abrir a fase seguinte de pontos?</li>
+        </ul>
+      </div>
+      <div class="qbox">
+        <h3>Contrato e penalidades</h3>
+        <p class="who">Giovanna, com Anderson</p>
+        <ul>
+          <li>Como a nota de desempenho vira cláusula, com faixas, descontos e reincidência?</li>
+          <li>Logística reversa das baterias deve ser obrigação pura ou indicador com peso?</li>
+          <li>Quem audita os dados críticos, e com que frequência?</li>
+        </ul>
+      </div>
+      <div class="qbox">
+        <h3>Operação e dados</h3>
+        <p class="who">Anderson, com a equipe</p>
+        <ul>
+          <li>O que a distribuidora precisa informar para calcularmos a capacidade de cada ponto?</li>
+          <li>Quem calcula a linha de base de emissões antes da implantação?</li>
+          <li>Quantos pontos e quais locais entram no piloto?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-t">
+    <div class="section-head">
+      <h2 id="h-t">Onde isso entra no curso</h2>
+      <p>Datas do cronograma ajustado da Turma 9.</p>
+    </div>
+    <ol class="timeline">
+      <li><time>24–25/11/2026</time><strong>Abertura e Disciplina 1, em Brasília</strong><span>Fundamentos de PPPs e concessões.</span></li>
+      <li><time>17/02/2027</time><strong>Mentoria Operacional · Disciplina 2</strong><span>Priorização de projetos. Primeira revisão deste quadro com o mentor.</span></li>
+      <li><time>07/06/2027</time><strong>Mentoria Operacional · Disciplina 7</strong><span>Engajamento e stakeholders.</span></li>
+      <li><time>09–11/08/2027</time><strong>Disciplina 9, presencial em PE</strong><span>Planejamento estratégico. Início do módulo Construa, quando os indicadores entram no edital.</span></li>
+      <li><time>ago–out/2027</time><strong>Disciplinas 10 a 12</strong><span>Riscos, auditoria e transparência, reequilíbrio econômico-financeiro.</span></li>
+      <li><time>jan–fev/2028</time><strong>Disciplina 16 · Monitoramento e Avaliação de PPPs</strong><span>Versão final do sistema de mensuração de desempenho.</span></li>
+    </ol>
+  </section>
+
+  <footer>
+    <p>Fontes: pré-projeto do Hub (itens 3.3, 3.5, 3.7 e 3.10), programa do MBA em PPPs e Concessões Sustentáveis (FGV/BB) e cronograma da Turma 9.</p>
+    <p>Rascunho de trabalho da equipe. Nenhuma meta ou valor foi fixado ainda.</p>
+  </footer>
+</div>
+
+<script>
+const IND = [
+  { dim: "Disponibilidade", name: "Disponibilidade dos pontos (uptime)", what: "Quanto tempo cada ponto fica apto a recarregar.", formula: "horas operantes ÷ horas programadas × 100", unit: "%", freq: "Mensal", src: "Plataforma digital (status de cada carregador)", meta: "Definida no diagnóstico (meses 3–6)", status: "pay", ref: "3.10 · uptime" },
+  { dim: "Disponibilidade", name: "Tempo médio de reparo", what: "Quanto tempo um ponto com falha leva para voltar a funcionar.", formula: "Σ (retorno à operação − abertura da falha) ÷ nº de falhas", unit: "horas", freq: "Mensal", src: "Plataforma digital e registro de chamados", meta: "Prazo máximo por tipo de falha", status: "pay", ref: "3.10 · tempo de reparo" },
+  { dim: "Disponibilidade", name: "Recargas concluídas com sucesso", what: "Se a recarga começa e termina sem erro do lado do equipamento.", formula: "sessões concluídas ÷ sessões iniciadas × 100", unit: "%", freq: "Mensal", src: "Plataforma digital (sessões)", meta: "Definida no diagnóstico", status: "pay", ref: "3.10 · falhas" },
+  { dim: "Disponibilidade", name: "Falhas por ponto", what: "Frequência de defeitos na rede.", formula: "nº de falhas no mês ÷ nº de pontos", unit: "falhas/ponto", freq: "Mensal", src: "Plataforma digital", meta: "Sem meta própria. Já pesa no uptime e no tempo de reparo, para não punir duas vezes", status: "acomp", ref: "3.10 · falhas" },
+  { dim: "Uso", name: "Número de recargas", what: "Volume de uso da rede, por ponto e por região da cidade.", formula: "Σ sessões no período", unit: "sessões/mês", freq: "Mensal", src: "Plataforma digital", meta: "Referência para a projeção de receita", status: "acomp", ref: "3.10 · uso" },
+  { dim: "Uso", name: "Energia fornecida", what: "Quanto de energia a rede entregou aos veículos.", formula: "Σ kWh medidos nos carregadores", unit: "kWh/mês", freq: "Mensal", src: "Plataforma digital (medição por ponto)", meta: "Base para receita e para o cálculo de emissões evitadas", status: "acomp", ref: "3.10 · uso" },
+  { dim: "Uso", name: "Taxa de utilização", what: "Quanto do tempo disponível o ponto passa de fato recarregando.", formula: "horas em recarga ÷ horas disponíveis × 100", unit: "%", freq: "Mensal", src: "Plataforma digital", meta: "Gatilho para abrir a próxima fase de pontos", status: "disc", ref: "3.5 · implantação por gatilhos" },
+  { dim: "Financeiro", name: "Investimento executado sobre o previsto", what: "Se a implantação segue o plano de investimento.", formula: "CAPEX executado ÷ CAPEX previsto no cronograma × 100", unit: "%", freq: "Trimestral", src: "Relatórios do parceiro, com conferência da Prefeitura", meta: "Marcos de implantação do contrato", status: "disc", ref: "3.10 · CAPEX" },
+  { dim: "Financeiro", name: "Receita por fonte", what: "De onde vem o dinheiro que sustenta a operação.", formula: "R$ por fonte: recarga, estacionamento, publicidade, serviços", unit: "R$", freq: "Trimestral", src: "Relatórios do parceiro e da plataforma", meta: "Comparar com o modelo econômico-financeiro", status: "acomp", ref: "3.2 · receitas" },
+  { dim: "Governança", name: "Nota de desempenho do período", what: "O resumo dos indicadores com peso no pagamento.", formula: "Σ (peso × atingimento de cada indicador)", unit: "nota 0–1", freq: "Trimestral", src: "Cálculo a partir dos indicadores acima", meta: "Faixas que ajustam a remuneração", status: "pay", ref: "3.5 · remuneração por desempenho" },
+  { dim: "Governança", name: "Reclamações e tempo de resposta", what: "Como o operador trata quem usa a rede.", formula: "reclamações por 1.000 recargas · tempo médio de resposta", unit: "nº · horas", freq: "Trimestral", src: "Canal de atendimento e ouvidoria", meta: "Prazo máximo de resposta", status: "disc", ref: "3.10 · reclamações" },
+  { dim: "Governança", name: "Penalidades aplicadas", what: "Histórico de descumprimentos do contrato.", formula: "nº e valor (R$) de penalidades no período", unit: "nº · R$", freq: "Trimestral", src: "Fiscalização do contrato", meta: "Sem meta. Serve para transparência e reincidência", status: "acomp", ref: "3.10 · penalidades" },
+  { dim: "Ambiental", name: "Emissões evitadas", what: "Quanto CO₂ deixou de ser emitido com a troca do combustível.", formula: "kWh fornecidos × fator de emissão evitada (linha de base)", unit: "tCO₂e", freq: "Semestral", src: "Energia fornecida e fatores de emissão oficiais", meta: "Linha de base definida antes da implantação", status: "disc", ref: "3.3 · ODS 13" },
+  { dim: "Ambiental", name: "Energia renovável", what: "Parte da energia entregue que vem de fonte renovável.", formula: "kWh renováveis (solar própria e contratada) ÷ kWh total × 100", unit: "%", freq: "Semestral", src: "Medição da geração solar e contratos de energia", meta: "Percentual mínimo crescente", status: "disc", ref: "3.3 · ODS 7" },
+  { dim: "Ambiental", name: "Destinação rastreada de baterias e equipamentos", what: "Se o que sai de uso tem destino comprovado.", formula: "itens com destinação comprovada ÷ itens descartados × 100", unit: "%", freq: "Anual", src: "Comprovantes de logística reversa", meta: "100% como obrigação, a confirmar", status: "disc", ref: "3.3 · ODS 12" },
+  { dim: "Social", name: "Acessibilidade e cobertura do território", what: "Se a rede chega a todas as regiões e serve a todos.", formula: "pontos acessíveis ÷ total · pontos por região", unit: "% · nº", freq: "Anual", src: "Cadastro georreferenciado dos pontos", meta: "Distribuição mínima por região", status: "disc", ref: "3.3 · ODS 10" },
+  { dim: "Social", name: "Pessoas qualificadas", what: "Formação para a transição do setor automotivo, com o Sistema S.", formula: "nº de concluintes, com recorte de jovens, mulheres e PcD", unit: "pessoas", freq: "Anual", src: "Relatórios das parcerias de qualificação", meta: "Metas por público prioritário", status: "acomp", ref: "3.3 · ODS 8 e 10" },
+  { dim: "Social", name: "Satisfação do usuário", what: "Como quem usa a rede avalia o serviço.", formula: "nota média da pesquisa periódica (0–10)", unit: "nota", freq: "Anual", src: "Pesquisa com usuários e frotas", meta: "Nota mínima, a definir", status: "disc", ref: "3.10 · satisfação" },
+  { dim: "Econômico", name: "Investimento privado mobilizado", what: "Quanto do investimento veio do parceiro, e não do orçamento municipal.", formula: "Σ R$ investidos pelo parceiro e financiadores", unit: "R$", freq: "Anual", src: "Relatórios do parceiro, com auditoria", meta: "Comparar com o modelo econômico-financeiro", status: "acomp", ref: "3.9 · impactos" },
+  { dim: "Econômico", name: "Empregos e compras locais", what: "Efeito do Hub na economia de São Bernardo.", formula: "nº de empregos gerados · compras locais ÷ compras totais × 100", unit: "nº · %", freq: "Anual", src: "Relatórios do parceiro", meta: "Sem meta contratual. Serve para medir impacto", status: "acomp", ref: "3.10 · econômicos" }
+];
+const STATUS = { pay: ["Proposto para pagamento", "b-pay"], disc: ["A discutir", "b-disc"], acomp: ["Acompanhamento", "b-acomp"] };
+const DIMS = ["Todas", ...new Set(IND.map(i => i.dim))];
+let dimSel = "Todas";
+let onlyPay = false;
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function renderSummary() {
+  const n = IND.length;
+  const pay = IND.filter(i => i.status === "pay").length;
+  const disc = IND.filter(i => i.status === "disc").length;
+  const dims = DIMS.length - 1;
+  document.getElementById("summary").innerHTML =
+    `<span><b>${n}</b>indicadores</span><span><b>${dims}</b>dimensões</span><span><b>${pay}</b>propostos para pagamento</span><span><b>${disc}</b>a discutir</span>`;
+}
+function renderFilters() {
+  const el = document.getElementById("filters");
+  el.innerHTML = DIMS.map(d => `<button type="button" data-dim="${esc(d)}" aria-pressed="${d === dimSel}">${esc(d)}</button>`).join("");
+  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { dimSel = b.dataset.dim; renderFilters(); renderGrid(); }));
+}
+function renderGrid() {
+  const list = IND.filter(i => (dimSel === "Todas" || i.dim === dimSel) && (!onlyPay || i.status === "pay"));
+  const grid = document.getElementById("grid");
+  if (!list.length) { grid.innerHTML = `<p class="empty">Nenhum indicador nesse filtro. Escolha outra dimensão ou desmarque "só os propostos para pagamento".</p>`; return; }
+  grid.innerHTML = list.map(i => {
+    const [label, cls] = STATUS[i.status];
+    return `<article class="card${i.status === "pay" ? " pay" : ""}">
+      <div class="card-top"><span class="dim">${esc(i.dim)} · ${esc(i.freq)}</span><span class="badge ${cls}">${label}</span></div>
+      <h3>${esc(i.name)}</h3>
+      <p class="what">${esc(i.what)}</p>
+      <div class="formula">${esc(i.formula)}</div>
+      <dl>
+        <dt>Unidade</dt><dd>${esc(i.unit)}</dd>
+        <dt>Fonte</dt><dd>${esc(i.src)}</dd>
+        <dt>Meta</dt><dd>${esc(i.meta)}</dd>
+      </dl>
+      <span class="ref">pré-projeto ${esc(i.ref)}</span>
+    </article>`;
+  }).join("");
+}
+document.getElementById("only-pay").addEventListener("change", e => { onlyPay = e.target.checked; renderGrid(); });
+renderSummary(); renderFilters(); renderGrid();
+</script>

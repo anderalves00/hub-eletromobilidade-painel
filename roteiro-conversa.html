@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro da Conversa do Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: leitura no celular, uma coluna estreita; passos em sequência, falas destacadas, objeções e checklist */
+:root {
+  --bg: #f3f6f9;
+  --surface: #ffffff;
+  --ink: #132030;
+  --muted: #566577;
+  --line: #d7dee7;
+  --accent: #0a62c2;
+  --accent-soft: #e2edfa;
+  --amber: #9a5b00;
+  --amber-soft: #fbefd9;
+  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
+    --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
+  --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.wrap {
+  max-width: 720px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 36px 64px;
+  display: grid; gap: 40px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.15; font-weight: 700; }
+h2 { font-size: 1.25rem; font-weight: 600; }
+h3 { font-size: 1.02rem; font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; }
+.private { display: inline-block; background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: 0.8rem; padding: 3px 10px; border-radius: 999px; }
+header, section { display: grid; gap: 14px; }
+.goal { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; }
+.goal strong { font-family: var(--font-display); font-weight: 600; }
+.muted { color: var(--muted); }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.steps > li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 10px; }
+.step-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.num { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
+.time { margin-left: auto; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+.say { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; display: grid; gap: 8px; }
+.say p::before { content: "“"; }
+.say p::after { content: "”"; }
+.why { font-size: 0.9rem; color: var(--muted); }
+ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+
+.objections { display: grid; gap: 12px; }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+summary { cursor: pointer; font-weight: 600; }
+summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+details > div { margin-top: 10px; display: grid; gap: 8px; }
+
+.avoid { display: grid; gap: 8px; }
+.avoid li { color: var(--ink); }
+
+.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.check label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.check input { margin-top: 5px; accent-color: var(--accent); }
+.check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.check input:checked + span { color: var(--muted); text-decoration: line-through; }
+.link-box { font-family: var(--font-mono); font-size: 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">MBA PPPs FGV/BB · Brasília, 24–25/11/2026</p>
+    <h1>Roteiro da conversa sobre a divisão da equipe</h1>
+    <span class="private">Só para você · não mostrar</span>
+    <div class="goal">
+      <strong>Objetivo</strong>
+      <p>Sair de Brasília com a equipe de acordo: você fica com o modelo de operação, os indicadores e a plataforma. A articulação com a indústria passa a ser dividida, com a Giovanna puxando.</p>
+      <p class="muted">Quadro de apoio: <em>Quadro de Indicadores do Hub</em>, aberto no celular.</p>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-when">
+    <h2 id="h-when">Quando puxar o assunto</h2>
+    <ul class="plain">
+      <li><b>Melhor momento:</b> no fim do dia 24, depois da abertura e da Oficina Action, num jantar ou num café. A essa altura, a FGV já terá explicado o que espera de cada perfil, e você usa isso como gancho.</li>
+      <li><b>Plano B:</b> no intervalo do almoço do dia 25.</li>
+      <li><b>Evite:</b> na frente da equipe da FGV ou de outras turmas. É conversa interna de vocês três.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="h-steps">
+    <h2 id="h-steps">A conversa em cinco passos</h2>
+    <ol class="steps">
+      <li>
+        <div class="step-head"><span class="num">1</span><h3>Ouvir primeiro</h3><span class="time">~10 min</span></div>
+        <p>Você chegou agora, e o Thiago escreveu o pré-projeto. Comece reconhecendo o trabalho deles e perguntando.</p>
+        <div class="say">
+          <p>Eu cheguei com o trem andando, então antes queria entender. O que a Aieska já estava tocando? Tem algo combinado com alguém que eu precise assumir?</p>
+          <p>Depois de hoje, como vocês enxergam a divisão entre nós três?</p>
+        </div>
+        <p class="why">Por quê: se já houver algo combinado, você descobre antes de propor. E quem é ouvido primeiro escuta melhor depois.</p>
+      </li>
+      <li>
+        <div class="step-head"><span class="num">2</span><h3>Ligar com o que a FGV falou</h3><span class="time">~2 min</span></div>
+        <div class="say">
+          <p>Pelo que entendi hoje, o trabalho final é o edital com os anexos. Cada um responde por uma parte: o jurídico diz se pode, o econômico diz se a conta fecha, e o operacional diz como funciona e como a gente mede.</p>
+        </div>
+        <p class="why">Por quê: a proposta deixa de parecer preferência sua e passa a ser leitura do curso.</p>
+      </li>
+      <li>
+        <div class="step-head"><span class="num">3</span><h3>Mostrar o quadro</h3><span class="time">~3 min</span></div>
+        <p>Abra o quadro e mostre só três coisas: a cadeia de cinco etapas, o filtro "só os propostos para pagamento" e as perguntas para cada um.</p>
+        <div class="say">
+          <p>Fiz um rascunho a partir do que já está no pré-projeto, nos itens 3.5 e 3.10. São 20 indicadores, e quatro deles eu proponho que entrem no pagamento: disponibilidade, tempo de reparo, recargas com sucesso e a nota de desempenho que junta tudo.</p>
+          <p>As metas estão em aberto de propósito. Dependem do diagnóstico de demanda e da rede.</p>
+          <p>Thiago, tem umas perguntas que são suas: quanto da remuneração depende da nota, e qual uso justifica abrir mais pontos. Giovanna, a sua parte é como a nota vira cláusula.</p>
+        </div>
+        <p class="why">Por quê: você chega oferecendo trabalho pronto, e cada um vê onde entra.</p>
+      </li>
+      <li>
+        <div class="step-head"><span class="num">4</span><h3>Propor a divisão</h3><span class="time">~3 min</span></div>
+        <div class="say">
+          <p>Onde eu acho que mais ajudo: modelo de operação, indicadores, painel e plataforma. É o que eu faço hoje com dados e acompanhamento de emendas.</p>
+          <p>Giovanna, a relação com a indústria já faz parte do seu dia a dia no Fortalecimento Industrial. Faz sentido você puxar essa frente comigo junto, em vez de eu começar do zero?</p>
+          <p>A parte de energia e rede eu assumo e vou estudar. Já anotei as perguntas para a distribuidora.</p>
+        </div>
+        <p class="why">Por quê: você pede para dividir, não para entregar. E deixa claro que a parte difícil de energia continua com você.</p>
+      </li>
+      <li>
+        <div class="step-head"><span class="num">5</span><h3>Fechar com um próximo passo</h3><span class="time">~2 min</span></div>
+        <div class="say">
+          <p>Que tal eu revisar o quadro com o que vocês falaram e mandar até a aula de 30/11? Aí a gente leva uma versão para a primeira mentoria operacional, em fevereiro.</p>
+        </div>
+        <p class="why">Por quê: conversa sem data some. Com uma entrega marcada, a divisão vira prática.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-obj">
+    <h2 id="h-obj">Se vier alguma objeção</h2>
+    <div class="objections">
+      <details>
+        <summary>"Mas você não é da área de energia."</summary>
+        <div>
+          <p>Concorde e mostre o plano.</p>
+          <div class="say"><p>É verdade, e por isso já separei o que preciso aprender e o que perguntar à distribuidora. O papel operacional não é projetar a rede, é definir o serviço e garantir que dê para medir.</p></div>
+        </div>
+      </details>
+      <details>
+        <summary>"A Aieska ia cuidar dos stakeholders, isso já estava combinado."</summary>
+        <div>
+          <p>Aceite e ajuste o pedido.</p>
+          <div class="say"><p>Tranquilo, eu assumo. Só queria contar com você, Giovanna, nos contatos com a indústria, porque você já conhece esse pessoal. Eu organizo a agenda e registro os resultados.</p></div>
+        </div>
+      </details>
+      <details>
+        <summary>"Ainda é cedo para falar de indicadores."</summary>
+        <div>
+          <p>Mostre que é rascunho e que serve para orientar o diagnóstico.</p>
+          <div class="say"><p>Concordo que as metas são para depois. A lista serve para a gente saber, desde já, que dados o diagnóstico precisa levantar. Senão a gente descobre isso no módulo Construa, com pouco tempo.</p></div>
+        </div>
+      </details>
+      <details>
+        <summary>"Vou ficar sobrecarregada." (Giovanna)</summary>
+        <div>
+          <p>Recue na hora. O objetivo é dividir, não transferir.</p>
+          <div class="say"><p>Faz sentido. Então eu toco os contatos e só te chamo quando precisar da sua relação com a empresa ou do olhar jurídico.</p></div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-avoid">
+    <h2 id="h-avoid">O que evitar</h2>
+    <ul class="plain avoid">
+      <li>Abrir com o que você <b>não</b> quer fazer. Abra com o que você entrega.</li>
+      <li>Comparar com a Aieska ou com o que ela teria feito.</li>
+      <li>Apresentar o quadro como pronto. É v0, e as perguntas são deles.</li>
+      <li>Falar em multa, frequência ou nas suas condições de trabalho. Não é o assunto dessa conversa.</li>
+      <li>Fechar sem data para a próxima versão.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="h-check">
+    <h2 id="h-check">Antes de embarcar</h2>
+    <ul class="check">
+      <li><label for="c1"><input type="checkbox" id="c1"><span>Abrir o quadro no celular uma vez com internet, para conferir que carrega.</span></label></li>
+      <li><label for="c2"><input type="checkbox" id="c2"><span>Mandar ao Thiago e à Giovanna só o link do painel (anderalves00.github.io/hub-eletromobilidade-painel). Nunca o deste roteiro.</span></label></li>
+      <li><label for="c3"><input type="checkbox" id="c3"><span>Reler os itens 3.5, 3.8 e 3.10 do pré-projeto, que são a base do quadro.</span></label></li>
+      <li><label for="c4"><input type="checkbox" id="c4"><span>Ter na ponta da língua as três perguntas para a distribuidora: capacidade disponível por local, prazo de conexão e custo de reforço da rede.</span></label></li>
+      <li><label for="c5"><input type="checkbox" id="c5"><span>Pitch: confirmar com o Thiago a troca do nome no slide 2.</span></label></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Preparado a partir do pré-projeto do Hub, do edital do 5º MBA em PPPs e Concessões Sustentáveis (item 7.2.2), do programa do curso e do cronograma da Turma 9. As falas são sugestões. Adapte ao seu jeito.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  const KEY = "roteiro-hub-check";
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+  document.querySelectorAll(".check input").forEach(function (cb) {
+    if (saved[cb.id]) cb.checked = true;
+    cb.addEventListener("change", function () {
+      saved[cb.id] = cb.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>

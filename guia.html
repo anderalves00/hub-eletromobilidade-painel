@@ -151,7 +151,14 @@ td.d { font-family: var(--font-mono); white-space: nowrap; }
 .timebar a:last-child { border-right: 0; }
 .timebar a:hover { filter: brightness(.92); }
 .timebar a.warn-s { background: var(--amber-soft); color: var(--amber); }
-.timebar .limit { position: absolute; top: -2px; bottom: -2px; left: 97.3%; width: 2px; background: var(--amber); }
+.timebar-box { position: relative; display: grid; gap: 4px; }
+.limit { position: absolute; top: -6px; height: 56px; left: 97.3%; width: 0; border-left: 2px dashed var(--amber); pointer-events: none; }
+.limit::after { content: "3 min"; position: absolute; top: -18px; right: 4px; font-family: var(--font-mono); font-size: .72rem; color: var(--amber); white-space: nowrap; }
+.timebar a { position: relative; }
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
+ol.steps li { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 8px; padding: 4px 0 4px 12px; font-size: .92rem; position: relative; }
+ol.steps li::before { content: ""; position: absolute; left: -6px; top: 12px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+ol.steps b { white-space: nowrap; font-weight: 600; }
 .timebar-legend { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted); font-family: var(--font-mono); }
 .slides { --min: 300px; }
 .slide { scroll-margin-top: 20px; }
@@ -376,7 +383,7 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
         <div class="stat"><b>153 por minuto</b><span>ritmo que isso exige: rápido</span></div>
         <div class="stat"><b>~400 palavras</b><span>meta para caber com folga</span></div>
       </div>
-      <div>
+      <div class="timebar-box">
         <div class="timebar" aria-label="Tempo de cada slide">
           <a href="#slide-1" style="flex:10" title="Slide 1 · 10 s">1</a>
           <a href="#slide-2" style="flex:20" title="Slide 2 · 20 s" class="warn-s">2</a>
@@ -388,9 +395,9 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
           <a href="#slide-8" style="flex:20" title="Slide 8 · 20 s">8</a>
           <a href="#slide-9" style="flex:25" title="Slide 9 · 25 s">9</a>
           <a href="#slide-10" style="flex:10" title="Slide 10 · 10 s">10</a>
-          <span class="limit" title="3 minutos"></span>
         </div>
-        <div class="timebar-legend"><span>0 s</span><span>a linha âmbar marca os 3 minutos · em âmbar, os slides que pedem ajuste</span><span>185 s</span></div>
+        <span class="limit" title="3 minutos"></span>
+        <div class="timebar-legend"><span>0 s</span><span>em âmbar: os slides que pedem ajuste e o limite de 3 minutos</span><span>185 s</span></div>
       </div>
       <p class="small muted">Os números acima são contas sobre o texto, não medição de fala. O tempo real só aparece no ensaio com cronômetro.</p>
 
@@ -435,7 +442,14 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
           <p class="say">Por isso a matriz de riscos estará no centro da modelagem.</p></article>
 
         <article class="card slide" id="slide-9"><div class="slide-head"><span class="slide-n">09</span><h3>Etapas até a licitação</h3><span class="slide-t">25 s</span></div>
-          <div class="flow small"><span>meses 1–3: governança e inventário</span><i>→</i><span>3–6: diagnóstico</span><i>→</i><span>até 9: pré-viabilidade</span><i>→</i><span>até 15: modelagem</span><i>→</i><span>15–18: consultas</span><i>→</i><span>até 24: decisão</span></div>
+          <ol class="steps">
+            <li><b>Meses 1 a 3</b><span>governança e inventário de ativos</span></li>
+            <li><b>Meses 3 a 6</b><span>diagnóstico de demanda e de rede elétrica</span></li>
+            <li><b>Até o mês 9</b><span>pré-viabilidade</span></li>
+            <li><b>Até o mês 15</b><span>modelagem técnica, jurídica e financeira</span></li>
+            <li><b>Meses 15 a 18</b><span>consultas ao mercado e à sociedade</span></li>
+            <li><b>Até o mês 24</b><span>decisão municipal</span></li>
+          </ol>
           <p class="small muted">Se a decisão for favorável, seguem licitação, contratação, piloto e expansão. Ao fim do curso: uma decisão fundamentada e, se for o caso, edital e contrato prontos.</p></article>
 
         <article class="card slide" id="slide-10"><div class="slide-head"><span class="slide-n">10</span><h3>Encerramento</h3><span class="slide-t">10 s</span></div>

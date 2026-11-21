@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Base do curso — o que cada documento diz</title>
+<!-- Só do Andy (escondida). Identidade de caderno, a mesma do roteiro pessoal (mesmo material de estudo) — ver DecisoesProj.md. O publicar-quadro.ps1 injeta doctype e head. -->
+<style>
+:root {
+  /* Caderno: papel, tinta e caneta azul; marca-texto para o que pede atenção */
+  --papel: #FBF8F1; --papel-2: #F3EEE2; --tinta: #1E2A44; --azul: #2F4B8A; --azul-esc: #1E2A44; --azul-claro: #E9EDF6;
+  --marca: #F6E27A; --marca-claro: #FFF7CC; --pauta: #E4DCCB;
+  /* Áreas (cores fixas do projeto, as mesmas do guia) e estados */
+  --verde: #2E9E5B; --verde-claro: #E5F4EB;
+  --roxo: #6A4C9C; --roxo-claro: #F0EBF7;
+  --laranja: #E0922A; --laranja-esc: #9A5B0E; --laranja-claro: #FDF1E0;
+  --vermelho: #B3261E; --vermelho-claro: #FBE9E7;
+  --texto: #2A2F3A; --texto-suave: #6B6F78; --borda: #E4DCCB;
+  --cartao: #ffffff;
+  --raio: 6px; --sombra: 0 1px 2px rgba(30, 42, 68, .06);
+  --serifa: Georgia, "Times New Roman", serif;
+  --fonte: "Segoe UI", system-ui, Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--papel); color: var(--texto); font: 15px/1.6 var(--fonte); }
+a { color: var(--azul); text-underline-offset: 2px; }
+a:hover { color: var(--tinta); }
+a.ext::after { content: " ↗"; font-size: .85em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; font-family: var(--serifa); font-weight: 700; color: var(--tinta); }
+p { margin: 0; }
+.nw { white-space: nowrap; }
+
+/* Hover de termo: <span class="termo" tabindex="0" data-def="significado">TERMO</span> */
+.termo { position: relative; text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.termo:hover::after, .termo:focus::after { content: attr(data-def); position: absolute; left: 0; top: calc(100% + 4px); z-index: 30; width: max-content; max-width: min(340px, 80vw); background: var(--tinta); color: #fff; font: 400 13px/1.45 var(--fonte); font-style: normal; padding: 8px 10px; border-radius: 6px; white-space: normal; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
+
+/* Cabeçalho: folha de rosto do caderno */
+.topo { background: var(--papel); border-bottom: 2px solid var(--tinta); }
+.topo-int { padding: 26px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; color: var(--texto-suave); letter-spacing: .02em; }
+.topo h1 { font-size: 32px; margin-top: 6px; }
+.topo .subtitulo { font: italic 16px var(--serifa); color: var(--texto-suave); margin-top: 6px; }
+.topo .selos { display: flex; flex-wrap: wrap; gap: 8px; }
+.topo .atualizado { font-size: 13px; color: var(--texto-suave); border: 1px solid var(--pauta); padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+.topo .privado { font-size: 13px; background: var(--marca); color: var(--tinta); font-weight: 700; padding: 5px 12px; border-radius: 3px; white-space: nowrap; }
+
+/* Barra de ferramentas */
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--papel); border-bottom: 1px solid var(--pauta); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--pauta); border-radius: 6px; font: inherit; background: #fff; }
+.grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-filtro { border: 1px solid var(--pauta); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.botao { border: 1px solid var(--tinta); background: transparent; color: var(--tinta); padding: 6px 12px; border-radius: 6px; font: 600 13px var(--fonte); cursor: pointer; text-decoration: none; }
+.botao:hover { background: var(--papel-2); }
+
+/* Estrutura */
+.layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 28px; padding: 24px 32px 48px; }
+.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; padding: 4px 0; border-right: 1px solid var(--pauta); padding-right: 16px; }
+.lateral h2 { font: italic 700 14px var(--serifa); color: var(--texto-suave); margin: 14px 8px 4px; }
+.lateral h2:first-child { margin-top: 0; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 4px; text-decoration: none; color: var(--texto); font-size: 14px; }
+.lateral a:hover, .lateral a.ativo { background: var(--marca-claro); }
+.lateral a .cod { font-weight: 700; min-width: 22px; color: var(--tinta); }
+.lateral a .tit { color: var(--texto-suave); font-size: 13px; overflow-wrap: anywhere; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c9c2b2; }
+.ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.azul { background: var(--azul); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
+main { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+
+/* Seções: a primeira aberta (section), as demais recolhidas (details) */
+section.bloco, details.bloco { background: var(--cartao); border: 1px solid var(--pauta); border-radius: var(--raio); box-shadow: var(--sombra); }
+section.bloco { padding: 20px 26px; }
+section.bloco > h2, details.bloco > summary h2 { font-size: 22px; }
+section.bloco > h2 { margin-bottom: 14px; }
+details.bloco > summary, details.item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+details > summary::-webkit-details-marker { display: none; }
+details.bloco > summary { padding: 16px 26px; }
+details.bloco > summary .cont { font: italic 14px var(--serifa); color: var(--texto-suave); margin-left: auto; }
+details.bloco > .bloco-corpo { padding: 0 26px 22px; display: grid; gap: 16px; }
+.seta { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--pauta); color: var(--tinta); font-weight: 700; transition: transform .15s; flex: none; }
+details[open] > summary .seta { transform: rotate(90deg); }
+
+/* Item recolhível dentro de uma seção */
+details.item { border: 1px solid var(--pauta); border-radius: var(--raio); background: #fff; }
+details.item[open] { border-color: var(--azul); }
+details.item > summary { padding: 12px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
+.cod-grande { font: 700 22px var(--serifa); color: var(--azul); min-width: 28px; }
+.sum-tit { font-size: 16px; font-weight: 600; }
+.sum-sub { font-size: 13px; color: var(--texto-suave); }
+.sum-dir { font-size: 13px; color: var(--texto-suave); white-space: nowrap; }
+.item-corpo { padding: 12px 16px 16px; border-top: 1px dashed var(--pauta); display: grid; gap: 10px; }
+
+/* Indicadores */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 14px; }
+.kpi { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; background: var(--papel); }
+.kpi .rot { font-size: 13px; color: var(--texto-suave); }
+.kpi .val { font: 700 30px/1.15 var(--serifa); color: var(--tinta); margin-top: 4px; }
+.kpi .val small { font: 400 15px var(--fonte); color: var(--texto-suave); }
+.kpi .det { font-size: 13px; color: var(--texto-suave); margin-top: 2px; }
+.kpi.destaque { background: var(--marca-claro); border-color: var(--marca); }
+.progresso { margin-top: 18px; }
+.rotulo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 10px; border-radius: 999px; background: var(--papel-2); overflow: hidden; }
+.trilho span { height: 100%; }
+.contexto { margin: 16px 0 0; padding-left: 20px; }
+.contexto li { margin: 4px 0; }
+
+/* Tabelas */
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font: italic 700 14px var(--serifa); color: var(--tinta); padding: 8px 10px; border-bottom: 2px solid var(--tinta); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--pauta); vertical-align: top; }
+tbody tr:hover td { background: var(--papel); }
+
+/* Etiquetas */
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 1px 9px; border-radius: 3px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.t-azul { background: var(--azul-claro); color: var(--azul); }
+.t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
+.t-verde { background: var(--verde-claro); color: var(--verde); }
+.t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
+.t-roxo { background: var(--roxo-claro); color: var(--roxo); }
+
+/* Caixas */
+.definicao { padding: 12px 14px; background: var(--papel); border: 1px solid var(--pauta); border-radius: var(--raio); }
+.resumo { padding: 12px 14px; background: var(--marca-claro); border-left: 4px solid var(--marca); border-radius: 0 var(--raio) var(--raio) 0; }
+.alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 var(--raio) var(--raio) 0; }
+.fala { padding: 10px 14px; border-left: 3px solid var(--azul); background: var(--papel); font: italic 16px/1.55 var(--serifa); color: var(--tinta); border-radius: 0 var(--raio) var(--raio) 0; }
+.nota { color: var(--texto-suave); font-size: 14px; }
+.lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
+
+/* Grades de cartões */
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
+.coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: #fff; display: grid; gap: 8px; align-content: start; }
+.coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
+.coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; }
+.pend { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; background: var(--papel); }
+.pend h3 { font-size: 16px; margin-bottom: 6px; }
+.cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
+.cenario { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.cenario.rec { border: 2px solid var(--verde); }
+.cen-topo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* Lista de tarefas */
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.checklist label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 4px; border-bottom: 1px solid var(--pauta); cursor: pointer; }
+.checklist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--tinta); flex: none; }
+.checklist input:checked + span { color: var(--texto-suave); text-decoration: line-through; }
+
+.subtitulo-bloco { font: italic 700 15px var(--serifa); color: var(--tinta); margin-top: 6px; }
+.mapa { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px; margin: 14px 0; }
+.passo { display: grid; gap: 4px; align-content: start; padding: 12px 14px; border: 1px solid var(--pauta); border-radius: var(--raio); background: var(--papel); text-decoration: none; color: var(--texto); }
+.passo:hover { background: var(--marca-claro); border-color: var(--marca); }
+.passo b { font: 700 17px var(--serifa); color: var(--tinta); }
+.passo span:last-child { font-size: 14px; color: var(--texto-suave); }
+.passo .num { font: 700 22px var(--serifa); color: var(--azul); }
+.origem { font-size: 14px; color: var(--texto-suave); border-top: 1px dashed var(--pauta); padding-top: 10px; margin-top: 4px; }
+.origem b { color: var(--tinta); }
+.t-sintese { background: #ECE8DD; color: #5B5446; }
+details.sub { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 8px 12px; background: var(--papel); }
+details.sub > summary { cursor: pointer; font: italic 700 15px var(--serifa); color: var(--tinta); }
+details.sub[open] > summary { margin-bottom: 6px; }
+code { font-size: 13px; background: var(--papel-2); padding: 1px 5px; border-radius: 3px; }
+.oculto { display: none !important; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(--serifa); }
+
+@media (max-width: 900px) {
+  .barra-ferramentas { position: static; }
+  html { scroll-padding-top: 12px; }
+  .layout { grid-template-columns: 1fr; padding: 16px; }
+  .lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--pauta); padding: 0 0 12px; }
+  .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  .topo h1 { font-size: 26px; }
+  footer { padding: 0 16px 24px; }
+  section.bloco { padding: 16px; }
+  details.bloco > summary { padding: 14px 16px; }
+  details.bloco > .bloco-corpo { padding: 0 16px 16px; }
+  details.item > summary { grid-template-columns: minmax(0, 1fr) auto; }
+  details.item > summary .cod-grande, details.item > summary .sum-dir { grid-column: 1 / -1; }
+}
+@media print {
+  .barra-ferramentas, .lateral { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  details { break-inside: avoid-page; }
+  .seta { display: none; }
+  body { background: #fff; }
+}
+</style>
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre"><span class="termo" tabindex="0" data-def="Master of Business Administration: pós-graduação executiva. Aqui, o MBA em Parcerias Público-Privadas e Concessões Sustentáveis da FGV com o Banco do Brasil.">MBA</span> em Parcerias Público-Privadas e Concessões Sustentáveis · Hub de Eletromobilidade · base de estudo</div>
+      <h1>Base do curso — o que cada documento diz</h1>
+      <div class="subtitulo">Para chegar à mesma página da equipe: de onde vem cada informação e o que ela significa</div>
+    </div>
+    <div class="selos"><span class="privado">Só para você · não compartilhar</span><span class="atualizado">Atualizado em 21/11/2026</span></div>
+  </div>
+</header>
+
+<div class="barra-ferramentas">
+  <div class="barra-int">
+    <input type="search" id="busca" placeholder="Buscar nos documentos e nos termos…" aria-label="Buscar">
+    <button class="botao" id="expandir">Expandir tudo</button>
+    <button class="botao" id="recolher">Recolher tudo</button>
+    <button class="botao" id="imprimir">Imprimir</button>
+    <a class="botao" href="roteiro-pessoal.html" target="_blank" rel="noopener">Roteiro pessoal</a>
+    <a class="botao" href="guia.html" target="_blank" rel="noopener">Guia da equipe</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="lateral" aria-label="Navegação">
+    <h2>Começo</h2>
+    <a href="#visao-geral">Como os documentos se encaixam</a>
+    <a href="#linha">Como chegamos até aqui</a>
+    <h2>Os documentos</h2>
+    <a href="#edital"><span class="cod">1</span><span class="tit">Edital (5ª oferta)</span></a>
+    <a href="#comunicado"><span class="cod">2</span><span class="tit">Comunicado de convocação</span></a>
+    <a href="#programa"><span class="cod">3</span><span class="tit">Programa do curso</span></a>
+    <a href="#cronograma"><span class="cod">4</span><span class="tit">Cronograma da Turma 9</span></a>
+    <a href="#preprojeto"><span class="cod">5</span><span class="tit">Pré-projeto do Hub</span></a>
+    <a href="#pitch"><span class="cod">6</span><span class="tit">Pitch da equipe</span></a>
+    <h2>Para você</h2>
+    <a href="#substituto">O que muda por você ser substituto</a>
+    <a href="#termos">Termos que vão aparecer</a>
+  </nav>
+
+  <main>
+    <section class="bloco" id="visao-geral">
+      <h2>Como os documentos se encaixam</h2>
+      <p>São seis documentos, e cada um responde a uma pergunta. Lidos nesta ordem, contam a história do começo: como o município entrou, o que o curso pede, quando, o que a equipe prometeu e como vai apresentar.</p>
+      <div class="mapa">
+        <a class="passo" href="#edital"><span class="num">1</span><b>Edital</b><span>Quais eram as regras para um município entrar no curso?</span></a>
+        <a class="passo" href="#comunicado"><span class="num">2</span><b>Comunicado</b><span>Quem entrou? São Bernardo foi aprovada.</span></a>
+        <a class="passo" href="#programa"><span class="num">3</span><b>Programa</b><span>O que o curso ensina e o que cobra no fim?</span></a>
+        <a class="passo" href="#cronograma"><span class="num">4</span><b>Cronograma</b><span>Quando é cada aula, mentoria e entrega?</span></a>
+        <a class="passo" href="#preprojeto"><span class="num">5</span><b>Pré-projeto</b><span>O que a equipe propôs ao se inscrever?</span></a>
+        <a class="passo" href="#pitch"><span class="num">6</span><b>Pitch</b><span>Como a equipe apresenta o projeto em 24/11?</span></a>
+      </div>
+      <div class="resumo"><b>A ligação que explica quase tudo:</b> o edital mandou o município apresentar um pré-projeto com dez itens (7.3.1 a 7.3.10). O pré-projeto do Hub tem exatamente esses dez itens, de 3.1 a 3.10. O pitch resume o pré-projeto em 3 minutos. E o curso inteiro serve para transformar esse pré-projeto em um edital de verdade, que é o trabalho final.</div>
+      <h3 class="subtitulo-bloco">Por onde começar, antes de terça</h3>
+      <ol class="lista">
+        <li><a href="#preprojeto">Pré-projeto</a>: itens 3.1, 3.2, 3.5, 3.7, 3.8 e 3.10. É o que a equipe vai defender.</li>
+        <li><a href="#pitch">Pitch</a>: os 10 slides, com o que se fala em cada um.</li>
+        <li><a href="#programa">Programa</a>: só a estrutura (os quatro módulos e o FGV Action).</li>
+        <li><a href="#substituto">O que muda por você ser substituto</a>: as regras que valem para você.</li>
+      </ol>
+      <p class="origem"><b>Como esta página foi feita:</b> cada documento foi lido inteiro em 21/11. Os PDFs com texto foram extraídos; o cronograma, que é imagem, foi lido pelas páginas. O que é resumo ou opinião do Claude está marcado com <span class="tag t-sintese">síntese</span>.</p>
+    </section>
+
+    <details class="bloco" id="linha" data-busca>
+      <summary><h2>Como chegamos até aqui</h2><span class="cont">de julho a 24/11/2026</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Quando</th><th>O que aconteceu</th><th>Fonte</th></tr></thead>
+          <tbody>
+            <tr><td class="nw">14/07/2026</td><td>A FGV publica o 5º edital.</td><td>Edital, item 17</td></tr>
+            <tr><td class="nw">até 27/09</td><td>Inscrições. A Prefeitura inscreve a equipe (Thiago, Giovanna e a integrante anterior do Operacional) e o pré-projeto do Hub. O prazo era 13/09 e foi prorrogado.</td><td>Edital e 1ª retificação</td></tr>
+            <tr><td class="nw">26/10</td><td>Resultado. São Bernardo aparece na lista de aprovados.</td><td>Comunicado, Anexo I</td></tr>
+            <tr><td class="nw">05 a 11/11</td><td>Matrícula da equipe aprovada, com assinatura do contrato individual de cada aluno com a FGV.</td><td>Comunicado; edital, item 17</td></tr>
+            <tr><td class="nw">13 a 18/11</td><td>No calendário do edital, convocação e inscrição de "alunos substitutos".</td><td>Edital, item 17</td></tr>
+            <tr><td class="nw">18/11</td><td>Você é indicado no lugar da integrante anterior; a carta de substituição é enviada.</td><td>Registro do projeto</td></tr>
+            <tr><td class="nw">19/11</td><td>Comunicado de confirmação aos alunos inscritos, pelo calendário do edital.</td><td>Edital, item 17</td></tr>
+            <tr><td class="nw">24/11, 9h</td><td>Início do curso, na FGV em Brasília. É quando acontece o pitch.</td><td>Comunicado; cronograma</td></tr>
+          </tbody>
+        </table></div>
+        <div class="alerta"><b>Ainda em aberto:</b> o aceite da FGV para a sua substituição não tinha chegado em 21/11. O edital não diz se os "alunos substitutos" de 13 a 18/11 são pessoas que trocam de lugar numa equipe ou equipes da lista de espera; não dá para tirar daí que a sua troca está aprovada.</div>
+      </div>
+    </details>
+
+    <details class="bloco" id="edital" data-busca>
+      <summary><h2>1 · Edital da 5ª oferta</h2><span class="cont">as regras de entrada · 19 itens</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna"><h4>O que é</h4><p>O "Quinto Edital para Credenciamento" da FGV com o Banco do Brasil: as regras pelas quais os municípios se candidataram ao curso. Ele <b>seleciona municípios</b>, não pessoas. Cada município entra com uma equipe de três e um pré-projeto.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Site da FGV, versão 5 (<a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">PDF</a>). A <b>1ª retificação</b> só mudou o fim das inscrições, de 13/09 para 27/09/2026. Cópias em <code>edital/</code>.</p></div>
+          <div class="coluna"><h4>Quem paga</h4><p>O Banco do Brasil paga o curso inteiro. A Prefeitura paga deslocamento e hospedagem nas aulas presenciais. O aluno não paga nada, <b>desde que conclua</b>: veja o ressarcimento abaixo.</p></div>
+        </div>
+        <h3 class="subtitulo-bloco">O que cada parte diz</h3>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Item</th><th>Assunto</th><th>O que importa</th></tr></thead>
+          <tbody>
+            <tr><td class="nw"><b>1</b></td><td>Sobre o programa</td><td>Aprovação: <b>média 7,0 e 75% de frequência em cada disciplina</b>. No presencial, só conta a presença física. Quem conclui recebe o título de Especialista em PPPs e Concessões Sustentáveis.</td></tr>
+            <tr><td class="nw"><b>2</b></td><td>Condições financeiras</td><td><b>Ressarcimento de R$ 30.952,38</b> (o valor integral do curso) para quem desiste depois da 3ª disciplina, não atinge as notas mínimas ou é reprovado em mais de cinco disciplinas. Não vale em caso fortuito ou força maior, nem se a pessoa deixar de ser agente público sem querer. Também traz as <a href="#substituto">regras de substituição</a>.</td></tr>
+            <tr><td class="nw"><b>3</b></td><td>Objetivo</td><td>Selecionar municípios comprometidos com projetos de PPP e concessão sustentáveis.</td></tr>
+            <tr><td class="nw"><b>4</b></td><td>Requisitos da inscrição</td><td>Carta de compromisso do município; um pré-projeto <b>factível em até dois anos</b>; três agentes públicos com nível superior, um por especialidade, pelo menos um efetivo.</td></tr>
+            <tr><td class="nw"><b>5</b></td><td>Etapas da inscrição</td><td>Quatro formulários: A (pré-cadastro), B (dados do município e pré-projeto), C (indicação da equipe), D (inscrição individual de cada um).</td></tr>
+            <tr><td class="nw"><b>6</b></td><td>Os três especialistas</td><td>O perfil de cada área: econômico-financeiro (6.1), operacional (6.2), jurídico (6.3). Está completo no <a href="guia.html#areas" target="_blank" rel="noopener">guia da equipe</a>.</td></tr>
+            <tr><td class="nw"><b>7</b></td><td>Critérios e nota</td><td>A nota de cada município na seleção, até 100 pontos: <b>7.1</b> o município (30), <b>7.2</b> a equipe (30), <b>7.3</b> o pré-projeto (40). Nota zero em qualquer um desclassificava.</td></tr>
+            <tr><td class="nw"><b>9 e 10</b></td><td>Balanceamento e desempate</td><td>Vagas por região, proporcionais à população; prioridade a municípios estreantes. No empate, vale o pré-projeto e depois a diversidade da equipe.</td></tr>
+            <tr><td class="nw"><b>12</b></td><td>Vagas</td><td>48 alunos por turma: 9 indicados pelo Banco do Brasil e 39 de municípios, ou seja, <b>13 equipes municipais por turma</b>.</td></tr>
+            <tr><td class="nw"><b>16</b></td><td>Matrícula</td><td>Só se matriculam equipes completas, com o contrato assinado. Não há troca de integrante antes da matrícula; depois, valem as regras do item 2.</td></tr>
+            <tr><td class="nw"><b>17</b></td><td>Calendário da seleção</td><td>Ver <a href="#linha">Como chegamos até aqui</a>.</td></tr>
+          </tbody>
+        </table></div>
+        <details class="sub"><summary>Os 30 pontos do município (7.1)</summary><p>Seis critérios de até 5 pontos: experiência prévia em PPP ou concessão; capacidade administrativa e técnica; compromisso com a sustentabilidade; potencial de impacto; disposição para compartilhar o conhecimento; transparência e governança.</p></details>
+        <details class="sub"><summary>Os 40 pontos do pré-projeto (7.3)</summary><p>Dez itens: descrição; viabilidade; sustentabilidade (os <span class="termo" tabindex="0" data-def="Objetivos de Desenvolvimento Sustentável: as 17 metas da ONU para 2030, como energia limpa (ODS 7) e cidades sustentáveis (ODS 11).">ODS</span>); partes interessadas; riscos; base legal; plano de implementação; capacidade organizacional; impactos; monitoramento e avaliação. Nove valem até 4 pontos; o 7.3.7 (implementação) aparece no edital sem pontuação escrita. <b>É a mesma lista do pré-projeto, de 3.1 a 3.10.</b></p></details>
+        <p class="origem"><b>De onde vem:</b> o edital, lido inteiro (itens 1 a 17), e a 1ª retificação.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="comunicado" data-busca>
+      <summary><h2>2 · Comunicado de convocação</h2><span class="cont">o resultado da seleção</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna"><h4>O que é</h4><p>O "Comunicado de Convocação Preliminar" da 5ª edição: o resultado da seleção. O <b>Anexo I</b> lista os aprovados, município por município e especialista por especialista; o <b>Anexo II</b>, a lista de espera.</p></div>
+          <div class="coluna"><h4>São Bernardo</h4><p>Aprovada no Anexo I, com a equipe original: Thiago (Econômico), Giovanna (Jurídico) e a integrante anterior (Operacional).</p></div>
+          <div class="coluna"><h4>O que ele acrescenta</h4><ul class="lista">
+            <li>Matrícula por formulário digital, de 05 a 11/11, com diploma e documentos.</li>
+            <li><b>Contrato individual de prestação de serviços</b> com a FGV, assinado digitalmente. É onde estão as obrigações e o ressarcimento.</li>
+            <li>Aprovação: <b>nota 7,0 em cada disciplina, 75% de frequência e nota 7,0 no projeto aplicado (FGV Action)</b>. O edital não mencionava a nota do projeto aplicado.</li>
+            <li>Início em 24/11/2026, às 9h, na FGV em Brasília.</li></ul></div>
+        </div>
+        <p class="origem"><b>De onde vem:</b> o comunicado (<code>edital/comunicado-classificacao-5a-oferta.pdf</code>), lido inteiro. As listas trazem nomes de outros municípios, que ficam fora daqui.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="programa" data-busca>
+      <summary><h2>3 · Programa do curso</h2><span class="cont">o que se ensina e o que se cobra</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna"><h4>O que é</h4><p>O documento acadêmico do curso: estrutura, competências, a lista de disciplinas com a carga e a ementa de cada uma, o FGV Action e a coordenação.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Site da FGV, versão de julho/2026 (<a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-07/Programa_MBA%20em%20Parcerias%20P%C3%BAblico-Privada%20Sustent%C3%A1veis.pdf" target="_blank" rel="noopener">PDF</a>). Cópia em <code>curso/</code>.</p></div>
+          <div class="coluna"><h4>Em números</h4><p><b>432 horas-aula</b>: 2 disciplinas presenciais, 12 ao vivo pela internet, 2 online sem aula ao vivo, mais o FGV Action. Coordenação geral: João Lins; acadêmica: Patrícia Mello.</p></div>
+        </div>
+        <h3 class="subtitulo-bloco">A lógica do curso</h3>
+        <p>Os quatro módulos seguem a metodologia <span class="termo" tabindex="0" data-def="Descubra, Inove, Construa, Avalie: método do FGV In Company para cursos que resolvem um desafio real de uma instituição.">DICA</span>, e cada um é uma fase da preparação de uma PPP. O fio condutor é a <b>Teoria da Mudança</b>: do problema público até o impacto. O trabalho final é o edital do projeto, construído aos poucos. Cada disciplina alimenta uma parte dele, com a ajuda das oficinas e mentorias do FGV Action.</p>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Módulo</th><th>Disciplina</th><th>Para que serve, segundo o programa</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="4"><b>1 · Descubra</b><br><span class="nota">o problema</span></td><td>1. Fundamentos das PPPs e Concessões</td><td>Bases de PPP e concessão como instrumento de política pública; por que o Estado intervém (<span class="termo" tabindex="0" data-def="Situações em que o mercado sozinho não entrega o que a sociedade precisa: externalidades, bens públicos, monopólios naturais.">falhas de mercado</span>); Teoria da Mudança. <span class="tag t-laranja">presencial em Brasília</span></td></tr>
+            <tr><td>2. Priorização de Projetos</td><td>Decidir qual problema enfrentar por PPP, com matriz multicritério e as primeiras noções de Value for Money.</td></tr>
+            <tr><td>3. Preparação para Projetos de PPP</td><td>As primeiras decisões para tornar o projeto institucionalmente viável.</td></tr>
+            <tr><td>4. Aspectos Legais, Contratuais e Governança ESG</td><td>Elementos jurídicos, contratuais e de governança, com as exigências <span class="termo" tabindex="0" data-def="Environmental, Social and Governance: critérios ambientais, sociais e de governança.">ESG</span>.</td></tr>
+            <tr><td rowspan="4"><b>2 · Inove</b><br><span class="nota">a estratégia</span></td><td>5. Inovação em Modelos de PPPs</td><td>Experiências nacionais e internacionais que fugiram do formato tradicional.</td></tr>
+            <tr><td>6. Financiamento e Modelagem Econômica</td><td>Como planejar e avaliar financeiramente o projeto: riscos, incentivos, fontes de financiamento.</td></tr>
+            <tr><td>7. Engajamento e Stakeholders</td><td>Mapear e envolver as partes interessadas, incluindo órgãos de controle, mercado e sociedade.</td></tr>
+            <tr><td>8. Governança Institucional e Finanças Públicas</td><td>Impacto fiscal, exigências legais e governança. <span class="tag t-azul">online, sem aula ao vivo</span></td></tr>
+            <tr><td rowspan="4"><b>3 · Construa</b><br><span class="nota">as peças do edital</span></td><td>9. Planejamento Estratégico de PPPs</td><td>Coerência entre problema, solução e resultados: Teoria do Programa, Teoria da Mudança, monitoramento. <span class="tag t-laranja">presencial em Pernambuco</span></td></tr>
+            <tr><td>10. Avaliação e Gestão de Riscos</td><td>Identificar, analisar e gerir os riscos; a base da matriz de riscos.</td></tr>
+            <tr><td>11. Auditoria, Transparência e Compliance ESG</td><td>Auditoria, transparência e integridade aplicadas à PPP.</td></tr>
+            <tr><td>12. (Re)equilíbrio Econômico-Financeiro</td><td>Quando e como reequilibrar o contrato ao longo da execução.</td></tr>
+            <tr><td rowspan="4"><b>4 · Avalie</b><br><span class="nota">revisão e gestão</span></td><td>13. Governança na Gestão Contratual</td><td>Anexos contratuais, monitoramento de desempenho e riscos na execução. <span class="tag t-azul">online, sem aula ao vivo</span></td></tr>
+            <tr><td>14-A ou 14-B (eletiva)</td><td>Modelos de negócio em saneamento e resíduos (A) ou em conservação ambiental (B).</td></tr>
+            <tr><td>15-A ou 15-B (eletiva)</td><td>Inovação em mobilidade urbana e infraestrutura sustentável (A) ou em energia renovável (B). <b>As duas tocam o Hub.</b></td></tr>
+            <tr><td>16. Monitoramento e Avaliação de PPPs</td><td>Acompanhar o contrato e medir resultados. 48 horas-aula, o dobro das outras.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="resumo"><b>Ainda não sabemos:</b> como e quando se escolhem as eletivas 14 e 15. O programa só lista as opções, e o cronograma chama as duas apenas de "Disciplina 14" e "Disciplina 15".</div>
+        <h3 class="subtitulo-bloco">FGV Action (disciplina 17)</h3>
+        <p>É a disciplina integradora, com 11 oficinas e 6 mentorias. Usa aprendizagem por projeto (<span class="termo" tabindex="0" data-def="Project Based Learning: aprender fazendo um projeto real, em vez de só assistir aula.">PBL</span>) e ferramentas como MURAL, OneDrive e Mentimeter. Ao longo do curso, a equipe produz: problema e objeto da contratação; estratégia e lógica da solução; governança e matriz de stakeholders; modelagem jurídica, econômico-financeira e operacional; matriz de riscos; remuneração e garantias; <b>indicadores de desempenho</b>; diretrizes contratuais; <b>plano de monitoramento e avaliação</b>.</p>
+        <p class="origem"><b>De onde vem:</b> o programa (Estrutura Pedagógica, Carga Horária, Quadro de Disciplinas, o "Propósito" de cada disciplina e a seção 17). A modalidade das disciplinas 8 e 13 vem do cronograma.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="cronograma" data-busca>
+      <summary><h2>4 · Cronograma da Turma 9</h2><span class="cont">como ler as 3 páginas</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna"><h4>O que é</h4><p>A tabela com data, dia, horário, modalidade, disciplina e carga de cada encontro, de 24/11/2026 a 19/04/2028.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>A versão <b>ajustada</b> chegou por e-mail em novembro/2026; a do site é a preliminar. As duas estão em <code>curso/</code>. O PDF é imagem: não dá para buscar texto nele.</p></div>
+        </div>
+        <h3 class="subtitulo-bloco">Como ler</h3>
+        <ul class="lista">
+          <li><b>Faixas de módulo:</b> cada módulo começa com uma faixa ("MÓDULO 1_DESCUBRA…") e termina com "ENTREGA DA ATIVIDADE DO MÓDULO", com a data.</li>
+          <li><b>Ritmo:</b> aulas às segundas e quartas, das 19h às 22h30, ao vivo pela internet. Cada disciplina tem cerca de cinco noites.</li>
+          <li><b>"Action – disciplina N":</b> o FGV Action que vem depois da disciplina N. "Oficina Síncrona" é a oficina da equipe; "Mentoria Operacional, Jurídico ou Econômico" é a mentoria da área.</li>
+          <li><b>Grupos 1 a 4:</b> as mentorias têm dois horários, 19h–20h30 ou 21h–22h30, conforme o grupo. O nosso ainda não foi informado.</li>
+          <li><b>ONLINE com período</b> (Disciplinas 8 e 13): sem aula ao vivo, com prazo de algumas semanas.</li>
+          <li><b>Férias:</b> depois da Disciplina 8 (julho/2027) e depois da 13 (dezembro/2027 a janeiro/2028).</li>
+          <li><b>Presenciais:</b> Brasília (24 e 25/11/2026), Pernambuco (09 a 11/08/2027), São Paulo (18 e 19/04/2028).</li>
+        </ul>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Entrega</th><th>Data</th><th>Mentorias do Operacional no módulo</th></tr></thead>
+          <tbody>
+            <tr><td>Módulo 1 · Descubra</td><td class="nw">19/04/2027</td><td>17/02/2027 (Action da Disciplina 2)</td></tr>
+            <tr><td>Módulo 2 · Inove</td><td class="nw">06/08/2027</td><td>07/06/2027 (Action da Disciplina 7)</td></tr>
+            <tr><td>Módulo 3 · Construa</td><td class="nw">08/11/2027</td><td>—</td></tr>
+            <tr><td>Módulo 4 · Avalie</td><td class="nw">28/03/2028</td><td>—</td></tr>
+          </tbody>
+        </table></div>
+        <p class="origem"><b>De onde vem:</b> as três páginas do cronograma ajustado, lidas como imagem em 21/11. A soma da última linha dá 432 horas-aula.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="preprojeto" data-busca>
+      <summary><h2>5 · Pré-projeto do Hub</h2><span class="cont">o que a equipe propôs · 3.1 a 3.10</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna"><h4>O que é</h4><p>As respostas da Prefeitura ao formulário B da inscrição: o projeto que a equipe se comprometeu a estruturar no curso. Foi avaliado pelos 40 pontos do item 7.3 do edital.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Da equipe, na versão do Thiago (<code>projeto-aplicado/</code>, em Word).</p></div>
+        </div>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Item</th><th>O que diz</th><th>Para o Operacional</th></tr></thead>
+          <tbody>
+            <tr><td class="nw"><b>3.1</b> Descrição</td><td>São Bernardo, polo automotivo no eixo Anchieta–Rodoanel–Porto de Santos, precisa de infraestrutura para a eletrificação. Feita só pelo Município, concentraria investimento e riscos. Objetivo: estruturar e avaliar uma PPP, concessão ou "arranjo equivalente" para um Hub modular: rede de recarga, hubs rápidos, frotas e veículos pesados, energia solar com armazenamento, plataforma digital.</td><td>O objeto que você vai detalhar.</td></tr>
+            <tr><td class="nw"><b>3.2</b> Viabilidade</td><td>Ainda não é "tecnicamente responsável" apresentar <span class="termo" tabindex="0" data-def="CAPEX: investimento inicial. OPEX: custo de operar e manter.">CAPEX e OPEX</span>: dependem de projeto de referência, quantidade e potência dos pontos, estudo de conexão e pesquisa de demanda. Receitas a testar: tarifa, estacionamento, publicidade, serviços. Se não bastarem, uma contraprestação pública. Retorno por <span class="termo" tabindex="0" data-def="Valor Presente Líquido: quanto o projeto rende trazendo os ganhos futuros para o valor de hoje e descontando o investimento. Positivo = cria valor.">VPL</span>, <span class="termo" tabindex="0" data-def="Taxa Interna de Retorno: a taxa de juros em que o projeto empata. Compara-se com o custo do dinheiro.">TIR</span>, <span class="termo" tabindex="0" data-def="Tempo para o projeto devolver o que foi investido.">payback</span> e Value for Money.</td><td>Quantidade e potência dos pontos e o estudo de conexão são insumos seus.</td></tr>
+            <tr><td class="nw"><b>3.3</b> ODS</td><td>ODS 7, 8, 9, 10, 11, 12, 13 e 17, cada um com uma ação: energia renovável medida no contrato, qualificação com o Sistema S, logística reversa de baterias, CO2 evitado com linha de base.</td><td>Vários viram indicadores.</td></tr>
+            <tr><td class="nw"><b>3.4</b> Partes interessadas</td><td>Comitê Técnico das secretarias; oficinas com indústria e investidores; grupo técnico com a distribuidora de energia; universidades; Sistema S; consulta pública; painel público na operação.</td><td>O grupo técnico com a distribuidora é a sua lacuna de energia.</td></tr>
+            <tr><td class="nw"><b>3.5</b> Riscos</td><td>Financeiros (demanda, preço da energia, financiamento, impacto fiscal); técnicos e operacionais (conexão, obsolescência, atrasos, equipamento parado, ataque cibernético); ambientais (baterias, licenças); social (baixa adesão). Cada risco fica com quem o previne ao menor custo.</td><td>Os técnicos e operacionais são seus.</td></tr>
+            <tr><td class="nw"><b>3.6</b> Base legal</td><td>Leis de PPP (<span class="termo" tabindex="0" data-def="Lei 11.079/2004, a lei das Parcerias Público-Privadas.">11.079</span>), de concessões (<span class="termo" tabindex="0" data-def="Lei 8.987/1995, a lei das concessões de serviço público.">8.987</span>) e de licitações (<span class="termo" tabindex="0" data-def="Lei 14.133/2021, a nova lei de licitações e contratos.">14.133</span>); <span class="termo" tabindex="0" data-def="Lei de Responsabilidade Fiscal (Lei Complementar 101/2000): limites de gasto e de dívida do poder público.">LRF</span>; mobilidade urbana (Lei 12.587/2012); LGPD; regras da <span class="termo" tabindex="0" data-def="Agência Nacional de Energia Elétrica, que regula a conexão à rede.">ANEEL</span>. No município: a Lei 7.578/2026 (inovação) e a 7.577/2026 (SBC Sandbox, que permite testar o piloto em ciclos de 6 a 12 meses). O modelo de contrato "será definido pelos estudos".</td><td>A regulação da ANEEL sobre conexão toca a sua parte.</td></tr>
+            <tr><td class="nw"><b>3.7</b> Implementação</td><td>Sete etapas: governança e inventário (meses 1 a 3), diagnóstico (3 a 6), pré-viabilidade (até 9), modelagem (até 15), consultas (15 a 18), decisão municipal (até 24) e implantação (licitação, piloto, expansão por gatilhos).</td><td>Inventário e diagnóstico são as primeiras entregas, e são do Operacional.</td></tr>
+            <tr><td class="nw"><b>3.8</b> Capacidade organizacional</td><td>Três servidores: o jurídico cuida do marco legal, contratos e riscos; o econômico, de custos, receitas, financiamento e Value for Money; <b>o técnico-operacional, de "energia, mobilidade, operação e ESG"</b>. Um patrocinador institucional decide; uma coordenação integra.</td><td><b>É o seu papel por escrito</b>, redigido antes de você chegar.</td></tr>
+            <tr><td class="nw"><b>3.9</b> Impactos</td><td>Econômicos (investimento privado, empregos, cadeia automotiva), sociais (acesso, qualificação) e ambientais (emissões, energia renovável, logística reversa).</td><td>—</td></tr>
+            <tr><td class="nw"><b>3.10</b> Monitoramento</td><td>Linha de base e metas anuais. Todo mês: disponibilidade (<span class="termo" tabindex="0" data-def="Tempo em que o equipamento está funcionando e disponível, em percentual.">uptime</span>, falhas, tempo de reparo) e uso. A cada trimestre: financeiros e governança (<span class="termo" tabindex="0" data-def="Service Level Agreement: acordo de nível de serviço, as metas de qualidade com desconto no pagamento se não forem cumpridas.">SLA</span>, penalidades, reclamações). A cada semestre ou ano: impactos. Painel público e auditoria independente dos dados críticos.</td><td><b>O núcleo do seu trabalho.</b> O painel do Hub nasceu daqui.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="resumo"><b>Fontes de financiamento citadas (3.2), "ainda não asseguradas":</b> capital privado, <span class="termo" tabindex="0" data-def="Financiamento pago pelo caixa que o próprio projeto vai gerar, e não pelo balanço de quem o executa.">project finance</span>, BNDES/Fundo Clima, FINEP, Desenvolve SP, CAIXA/FINISA e organismos multilaterais.</div>
+        <p class="origem"><b>De onde vem:</b> o pré-projeto, lido inteiro. A coluna "Para o Operacional" é <span class="tag t-sintese">síntese</span>.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="pitch" data-busca>
+      <summary><h2>6 · Pitch da equipe</h2><span class="cont">10 slides · 3 minutos</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna"><h4>O que é</h4><p>A apresentação de 3 minutos para 24/11, com notas de fala e o tempo de cada slide. Resume o pré-projeto: quem somos, o problema, a solução, a PPP, os beneficiados, os diferenciais, os desafios, as etapas e o fecho.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Da equipe, na versão 1 (<code>projeto-aplicado/</code>), feita pela SDETJ antes da sua chegada. A regra dos 3 minutos foi informada pela equipe; o site da FGV não fala do pitch.</p></div>
+          <div class="coluna"><h4>Onde estudar</h4><p>O slide a slide, com a checagem dos números de 21/11, está no <a href="guia.html#pitch" target="_blank" rel="noopener">guia da equipe</a>. A conversa sobre os argumentos do Operacional é a próxima etapa.</p></div>
+        </div>
+        <div class="resumo"><b>Pitch e pré-projeto descrevem o Operacional de jeitos diferentes:</b> o cartão do slide 2 diz "infraestrutura, indústria, stakeholders e ESG"; o pré-projeto (3.8) diz "energia, mobilidade, operação e ESG". Os dois foram escritos antes de você chegar. <span class="tag t-sintese">síntese</span></div>
+        <p class="origem"><b>De onde vem:</b> o texto dos slides e das notas, extraído do pptx.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="substituto" data-busca>
+      <summary><h2>O que muda por você ser substituto</h2><span class="cont">edital, item 2 · comunicado</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Regra</th><th>O que diz</th><th>Onde</th></tr></thead>
+          <tbody>
+            <tr><td><b>Quando pode haver troca</b></td><td>Depois da matrícula e até o fim da 3ª disciplina, por desistência comprovada de caso fortuito ou força maior, ou porque a pessoa deixou de ser agente público.</td><td>Edital, 2 e 16</td></tr>
+            <tr><td><b>Quem pode substituir</b></td><td>Quem cumpre o mesmo perfil e os mesmos requisitos da vaga: formação mínima, experiência e especialidade. Se a pessoa que sai era a única efetiva da equipe, o substituto também precisa ser efetivo.</td><td>Edital, 2</td></tr>
+            <tr><td><b>Quem aprova</b></td><td>O Comitê de Seleção, com os documentos do município e a anuência formal do representante legal da Prefeitura.</td><td>Edital, 2 e 14</td></tr>
+            <tr><td><b>O que o substituto assume</b></td><td>Todas as obrigações acadêmicas da pessoa original, inclusive as disciplinas que já tiverem passado, "com respectivo ônus financeiro". Como o curso ainda não começou, hoje não há disciplina passada.</td><td>Edital, 2</td></tr>
+            <tr><td><b>O contrato</b></td><td>Cada aluno assina um contrato individual com a FGV. É lá que está o ressarcimento de R$ 30.952,38.</td><td>Comunicado; edital, 2</td></tr>
+          </tbody>
+        </table></div>
+        <div class="resumo"><b>Na prática:</b> o aceite da FGV que você aguarda é a aprovação do Comitê de Seleção. O contrato que vai chegar para você é o mesmo que a equipe assinou na matrícula; vale ler com calma antes de assinar, porque é nele que mora a multa. <span class="tag t-sintese">síntese</span></div>
+        <p class="origem"><b>De onde vem:</b> edital, itens 2, 14 e 16, e o comunicado de convocação. Detalhes de como a FGV trata o seu caso não estão em nenhum documento daqui.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="termos" data-busca>
+      <summary><h2>Termos que vão aparecer</h2><span class="cont">além do glossário do guia</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <p class="nota">Os termos básicos (PPP, concessão, contraprestação, Value for Money, CAPEX e OPEX, SLA, Teoria da Mudança) estão no <a href="guia.html#glossario" target="_blank" rel="noopener">glossário do guia</a>. Aqui ficam os que aparecem nos documentos acima.</p>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Termo</th><th>Significado</th><th>Onde aparece</th></tr></thead>
+          <tbody>
+            <tr><td><b>Lato sensu</b></td><td>Pós-graduação de especialização, como o MBA. Mestrado e doutorado são stricto sensu.</td><td>Edital</td></tr>
+            <tr><td><b>Agente público efetivo</b></td><td>Servidor ou empregado público concursado, e não comissionado. Cada equipe precisava de pelo menos um.</td><td>Edital, 4.4</td></tr>
+            <tr><td><b>Caso fortuito ou força maior</b></td><td>Fato imprevisível ou inevitável, fora do controle da pessoa. Livra do ressarcimento.</td><td>Edital, 2</td></tr>
+            <tr><td><b>ODS</b></td><td>Os 17 Objetivos de Desenvolvimento Sustentável da ONU, para 2030.</td><td>Edital 7.3.3; pré-projeto 3.3</td></tr>
+            <tr><td><b>ESG</b></td><td>Environmental, Social and Governance: critérios ambientais, sociais e de governança.</td><td>Edital; programa; pitch</td></tr>
+            <tr><td><b>Stakeholders</b></td><td>Partes interessadas: quem afeta o projeto ou é afetado por ele.</td><td>Programa, Disciplina 7</td></tr>
+            <tr><td><b>Matriz multicritério</b></td><td>Tabela que compara alternativas por vários critérios com pesos, em vez de um só.</td><td>Programa, Disciplina 2</td></tr>
+            <tr><td><b>VPL, TIR e payback</b></td><td>Medidas de retorno: valor criado hoje, taxa de retorno e tempo para recuperar o investimento.</td><td>Pré-projeto, 3.2</td></tr>
+            <tr><td><b>Project finance</b></td><td>Financiamento pago pelo caixa que o próprio projeto vai gerar.</td><td>Pré-projeto, 3.2</td></tr>
+            <tr><td><b>LRF</b></td><td>Lei de Responsabilidade Fiscal: limites de gasto e de dívida. Limita a contraprestação que o Município pode assumir.</td><td>Pré-projeto, 3.5 e 3.6</td></tr>
+            <tr><td><b>SBC Sandbox</b></td><td>Programa municipal (Lei 7.577/2026) que permite testar soluções com regras municipais temporariamente adaptadas.</td><td>Pré-projeto, 3.6</td></tr>
+            <tr><td><b>Logística reversa</b></td><td>Recolher e dar destino ao produto no fim da vida útil, aqui as baterias.</td><td>Pré-projeto, 3.3 e 3.5</td></tr>
+            <tr><td><b>Linha de base</b></td><td>A medida de antes do projeto, contra a qual se compara o resultado.</td><td>Pré-projeto, 3.10</td></tr>
+            <tr><td><b>Uptime</b></td><td>Percentual do tempo em que o equipamento funciona e está disponível.</td><td>Pré-projeto, 3.10</td></tr>
+            <tr><td><b>Gatilho de expansão</b></td><td>Meta que, quando atingida (por exemplo, um nível de uso), obriga a abrir a fase seguinte.</td><td>Pré-projeto, 3.5 e 3.7</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </details>
+  </main>
+</div>
+<footer>Página só do Andy. Escondida, não privada: nenhuma página pública tem link para ela, mas quem abrir o repositório no GitHub vê o arquivo.</footer>
+
+<script>
+(function () {
+  const norm = s => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const todos = () => document.querySelectorAll("main details");
+  document.getElementById("expandir").onclick = () => todos().forEach(d => d.open = true);
+  document.getElementById("recolher").onclick = () => todos().forEach(d => d.open = false);
+  document.getElementById("imprimir").onclick = () => { todos().forEach(d => d.open = true); window.print(); };
+
+  // Link interno abre o details de destino e os que o contêm
+  function abrir(id) {
+    const alvo = id && document.getElementById(id);
+    if (!alvo) return;
+    for (let d = alvo; d; d = d.parentElement) if (d.tagName === "DETAILS") d.open = true;
+    alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); abrir(a.getAttribute("href").slice(1));
+  });
+  if (location.hash) abrir(location.hash.slice(1));
+
+  // Busca e filtro por categoria (data-area); itens sem data-area não são filtrados
+  let filtro = "todas";
+  function aplicar() {
+    const q = norm(document.getElementById("busca").value.trim());
+    document.querySelectorAll("[data-area], [data-busca]").forEach(el => {
+      const a = el.dataset.area;
+      const areaOk = !a || filtro === "todas" || a === filtro || a === "todas";
+      const bate = !el.hasAttribute("data-busca") || !q || norm(el.textContent).includes(q);
+      el.classList.toggle("oculto", !areaOk || !bate);
+      if (q && bate && areaOk && el.tagName === "DETAILS") el.open = true;
+    });
+  }
+  document.getElementById("busca").addEventListener("input", aplicar);
+  document.querySelectorAll(".chip-filtro[data-filtro]").forEach(b => b.onclick = () => {
+    filtro = b.dataset.filtro;
+    document.querySelectorAll(".chip-filtro[data-filtro]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    aplicar();
+  });
+})();
+</script>

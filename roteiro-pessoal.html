@@ -4,282 +4,371 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro Pessoal — Operacional do Hub</title>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro Pessoal — o Operacional no Hub</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Roteiro pessoal: leitura no celular; trilhas com checklist salvo no navegador; falas destacadas */
+/* Roteiro pessoal. Padrão: DevMode/configuracao/docs/padrao-html.md (largura total, grid, cores por área) */
 :root {
-  --bg: #f3f6f9; --surface: #ffffff; --ink: #132030; --muted: #566577; --line: #d7dee7;
-  --accent: #0a62c2; --accent-soft: #e2edfa; --amber: #9a5b00; --amber-soft: #fbefd9;
+  --bg: #f2f5f8; --surface: #ffffff; --surface-2: #f7f9fb; --ink: #142131; --muted: #5a6879; --line: #d9e0e8;
+  --accent: #0a62c2; --accent-soft: #e3eefb;
+  --eco: #0d7a5c; --eco-soft: #e0f3ec; --jur: #6a3dbd; --jur-soft: #eee7fa; --ope: #c04a0a; --ope-soft: #fdeadf;
+  --amber: #8f5600; --amber-soft: #fbefd6; --green: #17734a; --green-soft: #def3e8;
+  --shadow: 0 6px 18px rgba(20, 33, 49, .10);
   --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
-    --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10; color-scheme: dark;
+    --bg: #0c131b; --surface: #141e29; --surface-2: #18232f; --ink: #e6edf4; --muted: #9eadbd; --line: #283646;
+    --accent: #64abf3; --accent-soft: #14304d;
+    --eco: #4fd0a4; --eco-soft: #0f2f26; --jur: #b597f5; --jur-soft: #261c3d; --ope: #ff9a5c; --ope-soft: #3a2114;
+    --amber: #f3bb5e; --amber-soft: #3a2a10; --green: #5fd39b; --green-soft: #12301f;
+    --shadow: 0 6px 18px rgba(0, 0, 0, .35); color-scheme: dark;
   }
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
-.wrap {
-  max-width: 760px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 36px 64px; display: grid; gap: 42px;
-}
-h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.15; font-weight: 700; }
-h2 { font-size: 1.25rem; font-weight: 600; }
-h3 { font-size: 1.02rem; font-weight: 600; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; hyphens: manual; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); line-height: 1.12; font-weight: 700; }
+h2 { font-size: clamp(1.25rem, 2vw, 1.55rem); font-weight: 600; }
+h3 { font-size: 1.04rem; font-weight: 600; }
 p { margin: 0; }
-a { color: var(--accent); }
-.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; }
-.private { justify-self: start; background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: 0.8rem; padding: 3px 10px; border-radius: 999px; }
-header, section { display: grid; gap: 14px; }
+ul { margin: 0; padding-left: 1.15em; display: grid; gap: 5px; }
+a { color: var(--accent); text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size .2s; }
+a:hover, a:focus-visible { background-size: 100% 1.5px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+a.ext::after { content: " ↗"; font-size: .8em; }
+.nw { white-space: nowrap; }
 .muted { color: var(--muted); }
-.small { font-size: 0.88rem; }
-.num { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; margin-right: 8px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 10px; }
+.small { font-size: .88rem; }
+
+.page { max-width: 1440px; margin: 0 auto; padding: 32px clamp(16px, 3vw, 40px) 72px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px 44px; }
+.hero { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: end; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+.hero-text { display: grid; gap: 14px; }
+.eyebrow { font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+.private { justify-self: start; background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: .82rem; padding: 4px 12px; border-radius: 999px; }
+.lead { font-size: 1.08rem; max-width: 70ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: .86rem; font-weight: 500; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.chip:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow); }
+aside.toc { position: sticky; top: 20px; align-self: start; display: grid; gap: 10px; }
+aside.toc p { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+aside.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; border-left: 2px solid var(--line); }
+aside.toc a { display: block; padding: 5px 12px; margin-left: -2px; border-left: 2px solid transparent; color: var(--muted); font-size: .92rem; background: none; transition: color .2s, border-color .2s; }
+aside.toc a:hover { color: var(--ink); border-left-color: var(--muted); }
+aside.toc a.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+main { display: grid; gap: 56px; min-width: 0; }
+section { display: grid; gap: 18px; scroll-margin-top: 20px; border-radius: 12px; }
+section:target { animation: flash 1.6s ease-out; }
+@keyframes flash { from { box-shadow: 0 0 0 6px var(--accent-soft); } to { box-shadow: 0 0 0 6px transparent; } }
+.sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.sec-num { font-family: var(--font-mono); color: var(--accent); font-size: .9rem; }
+.sec-head .more { margin-left: auto; font-size: .88rem; }
+@media (max-width: 1100px) {
+  .page { grid-template-columns: minmax(0, 1fr); }
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  aside.toc { top: 0; z-index: 5; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line); }
+  aside.toc p { display: none; }
+  aside.toc ol { display: flex; overflow-x: auto; border-left: 0; gap: 4px; scrollbar-width: thin; }
+  aside.toc a { white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; margin: 0; }
+  aside.toc a.on { border-bottom-color: var(--accent); }
+  section { scroll-margin-top: 64px; }
+}
+
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(var(--min, 260px), 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; }
+.stat b { font-family: var(--font-display); font-size: 1.35rem; white-space: nowrap; }
+.stat span { color: var(--muted); font-size: .86rem; }
+.box { border-left: 4px solid var(--c, var(--accent)); background: var(--c-soft, var(--accent-soft)); padding: 12px 16px; border-radius: 0 10px 10px 0; display: grid; gap: 6px; }
+.box.amber { --c: var(--amber); --c-soft: var(--amber-soft); }
+.tag { display: inline-block; font-size: .72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; background: var(--c-soft, var(--accent-soft)); color: var(--c, var(--accent)); }
+.tag.amber { --c: var(--amber); --c-soft: var(--amber-soft); }
+.tag.green { --c: var(--green); --c-soft: var(--green-soft); }
+.eco { --c: var(--eco); --c-soft: var(--eco-soft); }
+.jur { --c: var(--jur); --c-soft: var(--jur-soft); }
+.ope { --c: var(--ope); --c-soft: var(--ope-soft); }
+.area { border-top: 5px solid var(--c); }
+.area h3 { color: var(--c); }
+.card-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.card-head .right { margin-left: auto; }
+
+/* Comparação lado a lado */
+.compare { display: grid; grid-template-columns: 10em minmax(0, 1fr) minmax(0, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.compare > div { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.compare .hd { font-family: var(--font-display); font-weight: 600; font-size: .9rem; background: var(--surface-2); }
+.compare .hd.new { color: var(--ope); }
+.compare .k { font-weight: 600; color: var(--muted); font-size: .9rem; }
+.compare .new { background: var(--ope-soft); }
+.compare .hd.new { background: var(--ope-soft); }
+.compare > div:nth-last-child(-n+3) { border-bottom: 0; }
+@media (max-width: 700px) {
+  .compare { grid-template-columns: minmax(0, 1fr); }
+  .compare .hd:first-child { display: none; }
+  .compare .k { background: var(--surface-2); border-bottom: 0; padding-bottom: 4px; }
+  .compare > div:not(.hd)::before { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); display: block; }
+  .compare > div.old:not(.hd)::before { content: "hoje"; }
+  .compare > div.new:not(.hd)::before { content: "possível"; }
+  .compare .hd { display: none; }
+}
+
+/* Trilhas */
+.track { border-top: 5px solid var(--c, var(--accent)); }
+.when { font-family: var(--font-mono); font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.bar { height: 6px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--c, var(--accent)); transition: width .3s; }
+.count { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); }
+.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.check label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; padding: 4px 6px; margin: 0 -6px; border-radius: 6px; transition: background .15s; }
+.check label:hover { background: var(--surface-2); }
+.check input { margin-top: 5px; accent-color: var(--c, var(--accent)); flex: none; }
+.check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.check input:checked + span { color: var(--muted); text-decoration: line-through; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+
+/* Falas */
 .say { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; display: grid; gap: 8px; }
 .say p::before { content: "“"; }
 .say p::after { content: "”"; }
-.why { font-size: 0.9rem; color: var(--muted); }
-.note { border-left: 3px solid var(--amber); background: var(--amber-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; }
-ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
-.links { display: flex; flex-wrap: wrap; gap: 8px; }
-.links a { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.88rem; text-decoration: none; }
-
-.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
-th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
-th { font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; background: var(--bg); }
-tr:last-child td { border-bottom: 0; }
-
-.track { display: grid; gap: 10px; }
-.track-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.when { margin-left: auto; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
-.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.check label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
-.check input { margin-top: 5px; accent-color: var(--accent); }
-.check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.check input:checked + span { color: var(--muted); text-decoration: line-through; }
-.progress { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
-
-details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
-details + details { margin-top: 10px; }
+.why { font-size: .9rem; color: var(--muted); }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; transition: box-shadow .2s, border-color .2s; }
+details:hover { box-shadow: var(--shadow); }
+details[open] { border-color: var(--accent); }
 summary { cursor: pointer; font-weight: 600; }
-summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-details > div { margin-top: 10px; display: grid; gap: 8px; }
-footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 14px; }
+details > div { margin-top: 12px; display: grid; gap: 8px; }
+.qa { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); align-items: start; }
+@media (max-width: 460px) { .qa { grid-template-columns: minmax(0, 1fr); } }
+footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top: 1px solid var(--line); padding-top: 16px; }
 </style>
 
-<div class="wrap">
-  <header>
-    <p class="eyebrow">MBA PPPs FGV/BB · Hub de Eletromobilidade · Perfil Operacional</p>
-    <h1>Roteiro pessoal: seu lugar no projeto e os próximos passos</h1>
-    <span class="private">Só para você · não mostrar</span>
-    <div class="links">
-      <a href="guia.html">Guia da equipe</a>
-      <a href="./">Painel de indicadores</a>
-      <a href="roteiro-conversa.html">Roteiro da conversa</a>
+<div class="page">
+  <header class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">MBA em Parcerias Público-Privadas e Concessões Sustentáveis · Hub de Eletromobilidade · Área técnico-operacional</p>
+      <h1>Roteiro pessoal: seu lugar no Hub e os próximos passos</h1>
+      <span class="private">Só para você · não compartilhar este link</span>
+      <p class="lead">Complementa o guia da equipe, que tem o curso, o projeto e o pitch. Aqui fica o que é só seu: onde você entra, o que estudar, o que fazer e o que falar.</p>
+      <div class="chips">
+        <a class="chip" href="guia.html">Guia da equipe</a>
+        <a class="chip" href="./">Painel de indicadores</a>
+        <a class="chip" href="roteiro-conversa.html">Roteiro da conversa com a equipe</a>
+        <a class="chip ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">Edital (PDF)</a>
+      </div>
     </div>
-    <p class="small muted">Complementa o guia da equipe. Lá estão o curso, o projeto e o pitch; aqui, o que é só seu.</p>
+    <div class="grid" style="--min: 160px">
+      <div class="stat"><b>24/11, 9h</b><span>abertura em Brasília, momento provável do pitch</span></div>
+      <div class="stat"><b>17/02/2027</b><span>sua 1ª mentoria operacional</span></div>
+      <div class="stat"><b>3 trilhas</b><span>pitch, logística e papel na equipe</span></div>
+      <div class="stat"><b>4 disciplinas</b><span>pesam mais para você: 9, 10, 13 e 16</span></div>
+    </div>
   </header>
 
-  <!-- 1 -->
-  <section aria-labelledby="h-fit">
-    <h2 id="h-fit"><span class="num">1</span>Onde você se encaixa</h2>
-    <p>O núcleo do Operacional é fixo: <b>como o serviço funciona e como se mede que funciona</b>. O modelo de operação e os indicadores não se repassam. O que dá para redividir é a articulação com stakeholders.</p>
-    <div class="table-wrap"><table>
-      <thead><tr><th></th><th>Visão atual (herdada)</th><th>Visão possível (a combinar)</th></tr></thead>
-      <tbody>
-        <tr><td><b>Cartão do pitch</b></td><td>Infraestrutura, indústria, stakeholders e ESG</td><td>Operação, indicadores de desempenho e plataforma digital</td></tr>
-        <tr><td><b>Indústria</b></td><td>com o Operacional</td><td>Giovanna puxa, porque já é o dia a dia dela; você organiza e registra</td></tr>
-        <tr><td><b>Sua força</b></td><td>—</td><td>indicadores e Power BI, gestão de projetos (as 40 emendas), sistemas: a plataforma do Hub</td></tr>
-        <tr><td><b>Lacuna</b></td><td>—</td><td>energia e rede elétrica: saber perguntar, não projetar</td></tr>
-      </tbody>
-    </table></div>
-    <p class="why">Os critérios do edital para o Operacional (7.2.2) pedem gestão de projetos e monitoramento da performance. É exatamente o que você já faz, e esse é o argumento para a visão nova.</p>
-  </section>
+  <aside class="toc" aria-label="Sumário">
+    <p>Nesta página</p>
+    <ol>
+      <li><a href="#encaixe">1 · Onde você se encaixa</a></li>
+      <li><a href="#divisao">2 · Seu e dividido</a></li>
+      <li><a href="#aprender">3 · O que aprender</a></li>
+      <li><a href="#trilhas">4 · Trilhas de ação</a></li>
+      <li><a href="#falar">5 · Se tiver de falar</a></li>
+      <li><a href="#perguntas">6 · Perguntas prováveis</a></li>
+    </ol>
+  </aside>
 
-  <!-- 2 -->
-  <section aria-labelledby="h-map">
-    <h2 id="h-map"><span class="num">2</span>O que é seu, o que é dividido</h2>
-    <div class="card">
-      <h3>Só seu</h3>
-      <ul class="plain">
-        <li>O desenho do serviço: o que se opera, quantos pontos, onde, de que tipo e em que fases (com gatilhos de expansão).</li>
-        <li>O caderno de encargos: padrões de serviço, manutenção e atendimento.</li>
-        <li>Os indicadores de desempenho e o plano de monitoramento. O painel já é o rascunho.</li>
-        <li>O inventário de ativos e áreas (meses 1–3) e o diagnóstico de demanda e rede (meses 3–6).</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Dividido</h3>
-      <ul class="plain">
-        <li><b>Com o Thiago:</b> como a nota de desempenho mexe no pagamento; quais custos de operação e manutenção entram no modelo; o uso que justifica abrir mais pontos.</li>
-        <li><b>Com a Giovanna:</b> metas que viram cláusulas e penalidades; regras de fiscalização; o que volta ao Município no fim do contrato.</li>
-        <li><b>Os três:</b> a matriz de riscos.</li>
-      </ul>
-    </div>
-    <p class="note small">A divisão de peças do edital (caderno de encargos, sistema de desempenho, plano de implantação) é prática de mercado, não está escrita pela FGV. Confirme na 1ª Mentoria Operacional, em 17/02/2027.</p>
-  </section>
-
-  <!-- 3 -->
-  <section aria-labelledby="h-learn">
-    <h2 id="h-learn"><span class="num">3</span>O que aprender</h2>
-    <details open>
-      <summary>Antes de terça: vocabulário mínimo</summary>
-      <div>
-        <ul class="plain">
-          <li><b>Concessão comum:</b> o parceiro é pago pela tarifa do usuário.</li>
-          <li><b>PPP administrativa:</b> quem paga o parceiro é o Município (contraprestação).</li>
-          <li><b>PPP patrocinada:</b> tarifa mais complemento público.</li>
-          <li><b>Value for Money:</b> a PPP entrega mais valor que a obra pública tradicional pelo mesmo dinheiro?</li>
-          <li><b>SLA / pagamento por desempenho:</b> se o serviço falha, o parceiro recebe menos.</li>
-          <li><b>Teoria da Mudança:</b> problema → atividades → produtos → resultados → impacto. É a espinha do curso.</li>
-        </ul>
-        <p class="why">Leitura: pré-projeto, itens 3.1, 3.5, 3.7 e 3.10 (cerca de 15 min).</p>
+  <main>
+    <!-- 1 -->
+    <section id="encaixe" aria-labelledby="h-fit">
+      <div class="sec-head"><span class="sec-num">1</span><h2 id="h-fit">Onde você se encaixa</h2><a class="more" href="guia.html#areas">as três áreas no guia →</a></div>
+      <p style="max-width: 90ch">O núcleo do Operacional é fixo: <b>como o serviço funciona e como se mede que funciona</b>. O modelo de operação e os indicadores não se repassam. O que dá para redividir é a articulação com a indústria e outros parceiros.</p>
+      <div class="compare">
+        <div class="hd"></div><div class="hd">Hoje (herdado do pitch)</div><div class="hd new">Possível (a combinar)</div>
+        <div class="k">Cartão do pitch</div><div class="old">"Infraestrutura, indústria, <i>stakeholders</i> (partes interessadas) e <abbr title="ambiental, social e governança">ESG</abbr>"</div><div class="new">Operação, indicadores de desempenho e plataforma digital</div>
+        <div class="k">Indústria</div><div class="old">com o Operacional</div><div class="new">Giovanna puxa, porque já faz isso no cargo; você organiza a agenda e registra</div>
+        <div class="k">Sua força</div><div class="old">não aparece</div><div class="new">indicadores e Power BI; gestão de projetos (o acompanhamento das 40 emendas); sistemas, que é a plataforma do Hub</div>
+        <div class="k">Lacuna</div><div class="old">não aparece</div><div class="new">energia e rede elétrica: saber perguntar, não projetar</div>
       </div>
-    </details>
-    <details>
-      <summary>Módulo 1 (até 19/04/2027)</summary>
-      <div>
-        <ul class="plain">
-          <li>Disciplina 1: falhas de mercado e por que o Estado intervém; Teoria da Mudança aplicada ao Hub.</li>
-          <li>Disciplina 2: análise multicritério e noções de VfM. A pergunta é se o Hub deve ser PPP.</li>
-          <li>Energia, o básico: potência (kW) × energia (kWh); recarga AC × DC rápida; o que a distribuidora precisa para ligar um ponto de alta potência.</li>
-        </ul>
+      <div class="box ope"><p><b>O argumento para a visão nova:</b> o edital avalia o Operacional por <b>gestão de projetos</b> e <b>monitoramento da performance</b> (itens 7.2.2.4 e 7.2.2.5). É o que você já faz no dia a dia.</p></div>
+    </section>
+
+    <!-- 2 -->
+    <section id="divisao" aria-labelledby="h-div">
+      <div class="sec-head"><span class="sec-num">2</span><h2 id="h-div">O que é seu, o que é dividido</h2><a class="more" href="guia.html#operacional">o Operacional em detalhe no guia →</a></div>
+      <div class="grid" style="--min: 280px">
+        <div class="card area ope">
+          <h3>Só seu</h3>
+          <ul>
+            <li>O desenho do serviço: quantos pontos de recarga, onde, de que tipo e em que fases, com gatilhos de expansão.</li>
+            <li>O caderno de encargos: padrões de serviço, manutenção e atendimento.</li>
+            <li>Os indicadores e o plano de monitoramento. O <a href="./">painel</a> já é o rascunho.</li>
+            <li>O inventário de ativos e áreas (meses 1 a 3) e o diagnóstico de demanda e de rede (meses 3 a 6).</li>
+          </ul>
+        </div>
+        <div class="card area eco">
+          <h3>Com o Thiago (Econômico)</h3>
+          <ul>
+            <li>Quanto do pagamento depende da nota de desempenho.</li>
+            <li>Os custos de operação e manutenção que entram no modelo.</li>
+            <li>O nível de uso que justifica abrir mais pontos.</li>
+          </ul>
+        </div>
+        <div class="card area jur">
+          <h3>Com a Giovanna (Jurídico)</h3>
+          <ul>
+            <li>As metas que viram cláusulas e penalidades.</li>
+            <li>As regras de fiscalização e quem confere os dados.</li>
+            <li>O que volta ao Município no fim do contrato.</li>
+          </ul>
+        </div>
       </div>
-    </details>
-    <details>
-      <summary>Ao longo do curso: onde concentrar</summary>
-      <div>
-        <ul class="plain">
-          <li>Disciplina 9: Planejamento Estratégico (presencial em PE, ago/2027).</li>
-          <li>Disciplina 10: Avaliação e Gestão de Riscos.</li>
-          <li>Disciplina 13: Governança na Gestão Contratual.</li>
-          <li>Disciplina 16: Monitoramento e Avaliação. É o seu tema.</li>
-          <li>Eletiva <b>15-A, Inovação em Mobilidade Urbana</b>: a ementa cita "mobilidade elétrica".</li>
-        </ul>
+      <div class="grid" style="--min: 320px">
+        <div class="box"><p><b>Os três juntos:</b> a matriz de riscos, que diz quem assume cada risco (demanda, energia, tecnologia).</p></div>
+        <div class="box amber"><p>A divisão em peças do edital é <b>prática de mercado</b>, não está escrita pela FGV. Confirme na mentoria de 17/02/2027.</p></div>
       </div>
-    </details>
-  </section>
+    </section>
 
-  <!-- 4 -->
-  <section aria-labelledby="h-plan">
-    <h2 id="h-plan"><span class="num">4</span>Sequência de ações</h2>
-    <p class="why">As trilhas A e B correm em paralelo até segunda. A trilha C começa em Brasília. Os itens marcados ficam salvos neste navegador.</p>
-
-    <div class="card track">
-      <div class="track-head"><h3>A · Pitch</h3><span class="when">até 24/11 · em sequência</span><span class="progress" data-track="a"></span></div>
-      <ul class="check" data-track="a">
-        <li><label for="a1"><input type="checkbox" id="a1"><span>Ler o guia da equipe e o pré-projeto (3.1, 3.5, 3.7, 3.10).</span></label></li>
-        <li><label for="a2"><input type="checkbox" id="a2"><span>Slide 2: nome, cartão do perfil e nota. Decidir a lotação que vai no cartão.</span></label></li>
-        <li><label for="a3"><input type="checkbox" id="a3"><span>Mandar à equipe a versão e o link do guia (só <code>guia.html</code>, nunca este). Perguntar quem fala e qual é a regra exata.</span></label></li>
-        <li><label for="a4"><input type="checkbox" id="a4"><span>Propor os cortes do roteiro (de 472 para ~400 palavras), se a equipe topar.</span></label></li>
-        <li><label for="a5"><input type="checkbox" id="a5"><span>Ensaio por chamada com cronômetro, antes do voo de segunda às 20:20.</span></label></li>
-        <li><label for="a6"><input type="checkbox" id="a6"><span>Terça: chegar cedo e combinar a ordem com a equipe.</span></label></li>
-      </ul>
-    </div>
-
-    <div class="card track">
-      <div class="track-head"><h3>B · Logística</h3><span class="when">até 23/11 · em paralelo</span><span class="progress" data-track="b"></span></div>
-      <ul class="check" data-track="b">
-        <li><label for="b1"><input type="checkbox" id="b1"><span>Confirmar que as diárias (MO) saíram no seu nome.</span></label></li>
-        <li><label for="b2"><input type="checkbox" id="b2"><span>Avisar o hotel da chegada por volta das 22h30 (o check-in vai até 00:00).</span></label></li>
-        <li><label for="b3"><input type="checkbox" id="b3"><span>Acompanhar o aceite da FGV. Se não chegar até segunda, perguntar ao curso como fica a presença em 24/11.</span></label></li>
-        <li><label for="b4"><input type="checkbox" id="b4"><span>Abrir o painel e o guia no celular, com internet, para garantir que carregam.</span></label></li>
-      </ul>
-    </div>
-
-    <div class="card track">
-      <div class="track-head"><h3>C · Papel na equipe</h3><span class="when">de Brasília em diante</span><span class="progress" data-track="c"></span></div>
-      <ul class="check" data-track="c">
-        <li><label for="c1"><input type="checkbox" id="c1"><span>Conversa sobre a divisão: ouvir primeiro, depois propor (<a href="roteiro-conversa.html">roteiro da conversa</a>).</span></label></li>
-        <li><label for="c2"><input type="checkbox" id="c2"><span>Revisar o painel de indicadores com o retorno da equipe e mandar até 30/11.</span></label></li>
-        <li><label for="c3"><input type="checkbox" id="c3"><span>Ler o contrato individual da FGV antes de assinar.</span></label></li>
-        <li><label for="c4"><input type="checkbox" id="c4"><span>Montar a lista de perguntas para a distribuidora: capacidade por local, prazo de conexão, custo de reforço.</span></label></li>
-        <li><label for="c5"><input type="checkbox" id="c5"><span>Levar à Mentoria Operacional de 17/02/2027: painel v1, esboço de fases e perguntas à distribuidora.</span></label></li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Formas de atuar</h3>
-      <ul class="plain">
-        <li><b>Na equipe:</b> chegue com algo concreto. Rascunho na mão convence mais que discussão aberta.</li>
-        <li><b>No curso:</b> traga cada disciplina para o Hub. É isso que o FGV Action pede em cada oficina.</li>
-        <li><b>Com o Claude:</b> tirar dúvidas de conceito, revisar entregas, evoluir o painel e estas páginas, conferir dados antes de virarem slide.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 5 -->
-  <section aria-labelledby="h-speak">
-    <h2 id="h-speak"><span class="num">5</span>Se você tiver de falar no pitch</h2>
-    <details open>
-      <summary>Cenário 1: só se apresenta (o mais provável) · ~10 s</summary>
-      <div>
-        <p>Diga o que você faz, não o cargo.</p>
-        <div class="say"><p>Anderson Alves, perfil técnico-operacional. Minha parte é garantir que o Hub funcione no dia a dia e que isso seja medido: disponibilidade, tempo de reparo e uso viram indicadores no contrato, e o parceiro recebe conforme o desempenho.</p></div>
+    <!-- 3 -->
+    <section id="aprender" aria-labelledby="h-learn">
+      <div class="sec-head"><span class="sec-num">3</span><h2 id="h-learn">O que aprender</h2></div>
+      <div class="grid" style="--min: 300px">
+        <div class="card">
+          <div class="card-head"><h3>Antes de terça</h3><span class="tag amber right">urgente</span></div>
+          <p class="why">Vocabulário mínimo. As definições completas estão no <a href="guia.html#glossario">glossário do guia</a>.</p>
+          <ul>
+            <li><a href="guia.html#g-conc">Concessão comum</a>: o usuário paga a tarifa.</li>
+            <li><a href="guia.html#g-ppp">PPP administrativa</a>: o Município paga. Na <b>patrocinada</b>, é tarifa mais complemento público.</li>
+            <li><a href="guia.html#g-vfm">Value for Money</a>: a PPP vale mais que a obra pública pelo mesmo dinheiro?</li>
+            <li><a href="guia.html#g-sla">Acordo de nível de serviço</a>: o serviço falha, o parceiro recebe menos.</li>
+            <li><a href="guia.html#g-tm">Teoria da Mudança</a>: problema → atividades → produtos → resultados → impacto.</li>
+          </ul>
+          <p class="why">Leitura: pré-projeto, itens 3.1, 3.5, 3.7 e 3.10 (cerca de 15 minutos).</p>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Módulo 1</h3><span class="when right">até 19/04/2027</span></div>
+          <ul>
+            <li>Disciplina 1: por que o Estado intervém (falhas de mercado) e a Teoria da Mudança aplicada ao Hub.</li>
+            <li>Disciplina 2: análise com vários critérios e Value for Money. A pergunta é se o Hub deve mesmo ser PPP.</li>
+            <li><b>Energia, o básico:</b> potência, em quilowatts, × energia, em quilowatts-hora. Recarga em corrente alternada (lenta) × corrente contínua (rápida). O que a distribuidora precisa saber para ligar um ponto de alta potência.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Ao longo do curso</h3><span class="when right">até 2028</span></div>
+          <ul>
+            <li><b>Disciplina 9:</b> Planejamento Estratégico, presencial em Pernambuco, ago/2027.</li>
+            <li><b>Disciplina 10:</b> Avaliação e Gestão de Riscos.</li>
+            <li><b>Disciplina 13:</b> Governança na Gestão Contratual em PPPs.</li>
+            <li><b>Disciplina 16:</b> Monitoramento e Avaliação. É o seu tema.</li>
+            <li><b>Eletiva 15-A:</b> Inovação em Mobilidade Urbana. A ementa cita "mobilidade elétrica".</li>
+          </ul>
+        </div>
       </div>
-    </details>
-    <details>
-      <summary>Cenário 2: fala um trecho · slides 8 e 9 · ~45 s</summary>
-      <div>
-        <p>São o "como vamos fazer" e casam com o seu perfil. Fale a partir das notas, com um gancho operacional no fim:</p>
-        <div class="say"><p>…por isso o primeiro passo é o inventário e o diagnóstico de demanda e de rede elétrica: não dá para contratar o que não se mediu.</p></div>
-      </div>
-    </details>
-    <details>
-      <summary>Cenário 3: fala tudo · 3 min</summary>
-      <div>
-        <p>Use o roteiro enxuto. Decore só a abertura, a pergunta do problema (slide 3) e o fecho. O resto você fala a partir do título de cada slide.</p>
-      </div>
-    </details>
-    <div class="card">
-      <h3>Em qualquer cenário</h3>
-      <ul class="plain">
-        <li>Uma ideia por slide. Não leia a tela.</li>
-        <li>Números arredondados: 224 mil · cerca de 20 por ponto · um quarto em SP.</li>
-        <li>Não peça desculpas por ter chegado agora. Você é o Operacional da equipe, ponto.</li>
-      </ul>
-    </div>
-  </section>
+    </section>
 
-  <!-- 6 -->
-  <section aria-labelledby="h-qa">
-    <h2 id="h-qa"><span class="num">6</span>Perguntas prováveis</h2>
-    <p class="why">As respostas são sugestões. Combine com a equipe antes de usá-las como posição do grupo.</p>
-    <details>
-      <summary>"Por que não a própria Prefeitura instalar os carregadores?"</summary>
-      <div><div class="say"><p>Porque o investimento é alto e o risco tecnológico e de demanda também. A tecnologia muda rápido. A PPP transfere esses riscos a quem sabe operar, e o Value for Money vai dizer se compensa.</p></div></div>
-    </details>
-    <details>
-      <summary>"Quantos pontos e onde?"</summary>
-      <div><div class="say"><p>Ainda não temos esse número, e de propósito. Ele sai do diagnóstico de demanda e de rede, nos meses 3 a 6. A implantação é em fases, e cada nova fase abre quando o uso atinge uma meta.</p></div></div>
-    </details>
-    <details>
-      <summary>"A rede elétrica aguenta recarga rápida e ônibus?"</summary>
-      <div><div class="say"><p>Esse é exatamente o ponto do diagnóstico com a distribuidora: capacidade disponível por local, prazo e custo de conexão. Está no nosso cronograma antes de qualquer definição de local.</p></div></div>
-    </details>
-    <details>
-      <summary>"Como vocês vão saber se o parceiro está entregando?"</summary>
-      <div><div class="say"><p>Com indicadores no contrato, medidos mensalmente: disponibilidade, tempo de reparo e uso. Eles mexem no pagamento e aparecem num painel público, com auditoria dos dados críticos.</p></div></div>
-    </details>
-    <details>
-      <summary>"Isso não concorre com os eletropostos privados que já existem?"</summary>
-      <div><div class="say"><p>O diagnóstico vai mostrar onde o mercado já atende. O foco do Hub está onde ele não chega sozinho: frotas públicas, veículos pesados e áreas sem cobertura.</p></div><p class="why">Esta é a resposta menos amarrada no pré-projeto. Vale alinhar com o Thiago.</p></div>
-    </details>
-  </section>
+    <!-- 4 -->
+    <section id="trilhas" aria-labelledby="h-plan">
+      <div class="sec-head"><span class="sec-num">4</span><h2 id="h-plan">Trilhas de ação</h2></div>
+      <p class="why">As trilhas A e B correm em paralelo até segunda. A trilha C começa em Brasília. O que você marcar fica salvo neste navegador.</p>
+      <div class="grid" style="--min: 300px">
+        <div class="card track" style="--c: var(--accent)">
+          <div class="card-head"><h3>A · Pitch</h3><span class="when right">até 24/11 · em sequência</span></div>
+          <div class="bar" data-track="a"><i></i></div><span class="count" data-track="a"></span>
+          <ul class="check" data-track="a">
+            <li><label for="a1"><input type="checkbox" id="a1"><span>Ler o <a href="guia.html">guia da equipe</a> e o pré-projeto (itens 3.1, 3.5, 3.7 e 3.10).</span></label></li>
+            <li><label for="a2"><input type="checkbox" id="a2"><span>Slide 2: nome, cartão do perfil e nota. Decidir a lotação que vai no cartão.</span></label></li>
+            <li><label for="a3"><input type="checkbox" id="a3"><span>Mandar à equipe a nova versão e o link do <code>guia.html</code>, nunca o desta página. Perguntar quem fala e qual é a regra exata.</span></label></li>
+            <li><label for="a4"><input type="checkbox" id="a4"><span>Propor os <a href="guia.html#pitch">cortes do roteiro</a>, de 472 para cerca de 400 palavras.</span></label></li>
+            <li><label for="a5"><input type="checkbox" id="a5"><span>Ensaio por chamada, com cronômetro, antes do voo de segunda às 20h20.</span></label></li>
+            <li><label for="a6"><input type="checkbox" id="a6"><span>Terça: chegar cedo e combinar a ordem com a equipe.</span></label></li>
+          </ul>
+        </div>
+        <div class="card track" style="--c: var(--amber)">
+          <div class="card-head"><h3>B · Logística</h3><span class="when right">até 23/11 · em paralelo</span></div>
+          <div class="bar" data-track="b"><i></i></div><span class="count" data-track="b"></span>
+          <ul class="check" data-track="b">
+            <li><label for="b1"><input type="checkbox" id="b1"><span>Confirmar que a autorização das diárias saiu no seu nome.</span></label></li>
+            <li><label for="b2"><input type="checkbox" id="b2"><span>Avisar o hotel que você chega por volta das 22h30. O check-in vai até meia-noite.</span></label></li>
+            <li><label for="b3"><input type="checkbox" id="b3"><span>Acompanhar o aceite da FGV. Se não vier até segunda, perguntar à coordenação do curso como fica a presença em 24/11.</span></label></li>
+            <li><label for="b4"><input type="checkbox" id="b4"><span>Abrir o painel e o guia no celular, com internet, para garantir que carregam.</span></label></li>
+          </ul>
+        </div>
+        <div class="card track" style="--c: var(--ope)">
+          <div class="card-head"><h3>C · Papel na equipe</h3><span class="when right">de Brasília em diante</span></div>
+          <div class="bar" data-track="c"><i></i></div><span class="count" data-track="c"></span>
+          <ul class="check" data-track="c">
+            <li><label for="c1"><input type="checkbox" id="c1"><span>Conversa sobre a divisão de papéis: ouvir primeiro, depois propor (<a href="roteiro-conversa.html">roteiro da conversa</a>).</span></label></li>
+            <li><label for="c2"><input type="checkbox" id="c2"><span>Revisar o <a href="./">painel de indicadores</a> com o retorno da equipe e mandar até 30/11.</span></label></li>
+            <li><label for="c3"><input type="checkbox" id="c3"><span>Ler o contrato individual da FGV antes de assinar.</span></label></li>
+            <li><label for="c4"><input type="checkbox" id="c4"><span>Montar as perguntas para a distribuidora: capacidade disponível em cada local, prazo de conexão e custo de reforço da rede.</span></label></li>
+            <li><label for="c5"><input type="checkbox" id="c5"><span>Levar à mentoria de 17/02/2027: painel revisado, esboço das fases e as perguntas à distribuidora.</span></label></li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid" style="--min: 260px">
+        <div class="box"><p><b>Na equipe:</b> chegue com algo concreto. Rascunho na mão convence mais que discussão aberta.</p></div>
+        <div class="box"><p><b>No curso:</b> traga cada disciplina para o Hub. É isso que cada oficina do FGV Action pede.</p></div>
+        <div class="box"><p><b>Com o Claude:</b> tirar dúvidas de conceito, revisar entregas, evoluir o painel e estas páginas, conferir dados antes de virarem slide.</p></div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="falar" aria-labelledby="h-speak">
+      <div class="sec-head"><span class="sec-num">5</span><h2 id="h-speak">Se você tiver de falar no pitch</h2><a class="more" href="guia.html#pitch">o pitch slide a slide →</a></div>
+      <div class="grid" style="--min: 300px">
+        <div class="card">
+          <div class="card-head"><h3>Só se apresenta</h3><span class="tag green right">mais provável · 10 s</span></div>
+          <p class="why">Diga o que você faz, não o cargo.</p>
+          <div class="say"><p>Anderson Alves, área técnico-operacional. Minha parte é garantir que o Hub funcione no dia a dia e que isso seja medido: disponibilidade, tempo de reparo e uso viram indicadores no contrato, e o parceiro recebe conforme o desempenho.</p></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Fala um trecho</h3><span class="tag right">slides 8 e 9 · 45 s</span></div>
+          <p class="why">São o "como vamos fazer" e casam com a sua área. Fale a partir das notas e feche com o gancho operacional:</p>
+          <div class="say"><p>…por isso o primeiro passo é o inventário e o diagnóstico de demanda e de rede elétrica: não dá para contratar o que não se mediu.</p></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Fala tudo</h3><span class="tag amber right">3 minutos</span></div>
+          <p>Use o roteiro enxuto. Decore só a abertura, a pergunta do problema (slide 3) e o fecho. O resto você fala a partir do título de cada slide.</p>
+        </div>
+      </div>
+      <div class="box"><p><b>Em qualquer cenário:</b> uma ideia por slide, sem ler a tela · números arredondados (224 mil, cerca de 20 por ponto, um quarto no estado de São Paulo) · nada de pedir desculpas por ter chegado agora. Você é o Operacional da equipe.</p></div>
+    </section>
+
+    <!-- 6 -->
+    <section id="perguntas" aria-labelledby="h-qa">
+      <div class="sec-head"><span class="sec-num">6</span><h2 id="h-qa">Perguntas prováveis</h2></div>
+      <p class="why">As respostas são sugestões. Combine com a equipe antes de usá-las como posição do grupo.</p>
+      <div class="qa">
+        <details>
+          <summary>"Por que a própria Prefeitura não instala os carregadores?"</summary>
+          <div><div class="say"><p>Porque o investimento é alto, e o risco de tecnologia e de demanda também. A tecnologia muda rápido. A PPP passa esses riscos a quem sabe operar, e o Value for Money vai dizer se compensa.</p></div></div>
+        </details>
+        <details>
+          <summary>"Quantos pontos, e onde?"</summary>
+          <div><div class="say"><p>Ainda não temos esse número, e é de propósito. Ele sai do diagnóstico de demanda e de rede, nos meses 3 a 6. A implantação é em fases, e cada nova fase abre quando o uso atinge uma meta.</p></div></div>
+        </details>
+        <details>
+          <summary>"A rede elétrica aguenta recarga rápida e ônibus?"</summary>
+          <div><div class="say"><p>Esse é exatamente o ponto do diagnóstico com a distribuidora: capacidade disponível em cada local, prazo e custo de conexão. Está no cronograma antes de qualquer definição de local.</p></div></div>
+        </details>
+        <details>
+          <summary>"Como vocês vão saber se o parceiro está entregando?"</summary>
+          <div><div class="say"><p>Com indicadores no contrato, medidos todo mês: disponibilidade, tempo de reparo e uso. Eles mexem no pagamento e aparecem num painel público, com auditoria dos dados críticos.</p></div></div>
+        </details>
+        <details>
+          <summary>"Isso não concorre com os eletropostos privados?"</summary>
+          <div><div class="say"><p>O diagnóstico vai mostrar onde o mercado já atende. O foco do Hub é onde ele não chega sozinho: frotas públicas, veículos pesados e áreas sem cobertura.</p></div><p class="why">É a resposta menos amarrada no pré-projeto. Vale alinhar com o Thiago.</p></div>
+        </details>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>Preparado em 21/11/2026 a partir do edital (6.2 e 7.2.2), do programa e do cronograma da Turma 9, do pré-projeto e do pitch v1. Página escondida, não privada: não tem link no painel, mas quem abrir o repositório no GitHub vê o arquivo.</p>
+    <p>Preparado em 21/11/2026 a partir do edital (itens 6.2 e 7.2.2), do programa e do cronograma da Turma 9, do pré-projeto e do pitch. Página escondida, não privada: nenhuma página pública tem link para ela, mas quem abrir o repositório no GitHub vê o arquivo.</p>
   </footer>
 </div>
 
@@ -289,10 +378,11 @@ footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--li
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
   function progress() {
-    document.querySelectorAll(".progress[data-track]").forEach(function (el) {
-      const boxes = document.querySelectorAll('.check[data-track="' + el.dataset.track + '"] input');
+    ["a", "b", "c"].forEach(function (t) {
+      const boxes = document.querySelectorAll('.check[data-track="' + t + '"] input');
       const done = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
-      el.textContent = done + "/" + boxes.length;
+      document.querySelector('.bar[data-track="' + t + '"] i').style.width = (100 * done / boxes.length) + "%";
+      document.querySelector('.count[data-track="' + t + '"]').textContent = done + " de " + boxes.length + " feitos";
     });
   }
   document.querySelectorAll(".check input").forEach(function (cb) {
@@ -304,5 +394,20 @@ footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--li
     });
   });
   progress();
+
+  const links = Array.from(document.querySelectorAll("aside.toc a"));
+  const map = new Map(links.map(function (a) { return [a.getAttribute("href").slice(1), a]; }));
+  const obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      links.forEach(function (a) { a.classList.remove("on"); });
+      const a = map.get(e.target.id);
+      if (!a) return;
+      a.classList.add("on");
+      const bar = a.closest("ol");
+      if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: a.offsetLeft - 16, behavior: "smooth" });
+    });
+  }, { rootMargin: "-35% 0px -60% 0px" });
+  map.forEach(function (_, id) { const s = document.getElementById(id); if (s) obs.observe(s); });
 })();
 </script>

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Guia do Projeto Aplicado — Hub de Eletromobilidade</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Guia da equipe: leitura em celular e desktop; mesmo sistema visual do painel e do roteiro */
+:root {
+  --bg: #f3f6f9; --surface: #ffffff; --ink: #132030; --muted: #566577; --line: #d7dee7;
+  --accent: #0a62c2; --accent-soft: #e2edfa; --amber: #9a5b00; --amber-soft: #fbefd9;
+  --green: #17734a; --green-soft: #def3e8;
+  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
+    --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10;
+    --green: #5fd39b; --green-soft: #12301f; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.wrap {
+  max-width: 860px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 36px 64px; display: grid; gap: 44px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.15; font-weight: 700; }
+h2 { font-size: 1.3rem; font-weight: 600; }
+h3 { font-size: 1.02rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; }
+.muted { color: var(--muted); }
+.small { font-size: 0.88rem; }
+header, section { display: grid; gap: 14px; }
+.num { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; margin-right: 8px; }
+
+nav.toc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; }
+nav.toc ol { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; columns: 2; column-gap: 32px; }
+@media (max-width: 560px) { nav.toc ol { columns: 1; } }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 2px; }
+.stat b { font-family: var(--font-display); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 0.88rem; }
+
+.note { border-left: 3px solid var(--amber); background: var(--amber-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; display: grid; gap: 6px; }
+.quote { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; display: grid; gap: 6px; }
+.ok { color: var(--green); font-weight: 600; }
+.warn { color: var(--amber); font-weight: 600; }
+.tag { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.tag.amber { background: var(--amber-soft); color: var(--amber); }
+
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-family: var(--font-mono); color: var(--accent); white-space: nowrap; }
+
+ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+details + details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: 600; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+details > div { margin-top: 12px; display: grid; gap: 10px; }
+.time { margin-left: auto; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 6px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">MBA PPPs e Concessões Sustentáveis · FGV/BB · Turma 9 · Prefeitura de São Bernardo do Campo</p>
+    <h1>Guia do Projeto Aplicado: Hub Municipal de Eletromobilidade</h1>
+    <p>O curso, o projeto, o papel de cada perfil e o pitch de 24/11 numa página só. Material de apoio da equipe, para ir sendo melhorado ao longo do MBA.</p>
+    <p class="small muted">Atualizado em 21/11/2026 · Painel de indicadores: <a href="./">abrir o painel</a></p>
+  </header>
+
+  <nav class="toc" aria-label="Sumário">
+    <ol>
+      <li><a href="#curso">O curso em uma tela</a></li>
+      <li><a href="#projeto">O projeto</a></li>
+      <li><a href="#perfis">Os três perfis</a></li>
+      <li><a href="#operacional">O Operacional em detalhe</a></li>
+      <li><a href="#brasilia">A semana em Brasília</a></li>
+      <li><a href="#pitch">O pitch slide a slide</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section id="curso" aria-labelledby="h-curso">
+    <h2 id="h-curso"><span class="num">1</span>O curso em uma tela</h2>
+    <div class="grid">
+      <div class="stat"><b>432 h/a</b><span>24/11/2026 a 19/04/2028</span></div>
+      <div class="stat"><b>Seg e qua</b><span>aulas ao vivo, 19h–22h30</span></div>
+      <div class="stat"><b>3 presenciais</b><span>Brasília (nov/26), PE (ago/27), SP (abr/28)</span></div>
+      <div class="stat"><b>7 e 75%</b><span>nota mínima e frequência, em cada disciplina e no TCC</span></div>
+    </div>
+    <p><b>O trabalho final (TCC) é o edital da PPP ou concessão, com os principais anexos.</b> Ele é construído aos poucos, em quatro módulos. Cada módulo termina com uma entrega da equipe:</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Módulo</th><th>Pergunta do módulo</th><th>Entrega</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 · Descubra</b></td><td>Qual é o problema público, e a PPP faz sentido para ele?</td><td class="n">19/04/2027</td></tr>
+        <tr><td><b>2 · Inove</b></td><td>Qual é a estratégia: resultados, governança, stakeholders, primeiras escolhas jurídicas, financeiras e operacionais</td><td class="n">06/08/2027</td></tr>
+        <tr><td><b>3 · Construa</b></td><td>Modelagem, matriz de riscos, remuneração e garantias, <b>indicadores de desempenho</b>: as peças do edital</td><td class="n">08/11/2027</td></tr>
+        <tr><td><b>4 · Avalie</b></td><td>Revisar o conjunto, gestão contratual, monitoramento, e a banca final</td><td class="n">28/03/2028</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>FGV Action</b> é a disciplina que liga tudo. Tem 11 oficinas, em que a equipe aplica cada disciplina ao Hub, e 6 mentorias: <b>duas para cada perfil</b>.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Mentoria</th><th>1ª</th><th>2ª</th></tr></thead>
+      <tbody>
+        <tr><td>Operacional</td><td class="n">17/02/2027</td><td class="n">07/06/2027</td></tr>
+        <tr><td>Jurídico</td><td class="n">31/03/2027</td><td class="n">06/12/2027</td></tr>
+        <tr><td>Econômico</td><td class="n">17/05/2027</td><td class="n">20/10/2027</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small muted">As mentorias são em dois horários (19h–20h30 ou 21h–22h30), conforme o grupo da equipe. Ainda não sabemos qual é o nosso grupo.</p>
+    <p class="small muted">O curso é guiado pela <b>Teoria da Mudança</b>: problema público → solução → resultados mensuráveis. Vale ter essa cadeia clara para o Hub desde a Disciplina 1.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="projeto" aria-labelledby="h-projeto">
+    <h2 id="h-projeto"><span class="num">2</span>O projeto</h2>
+    <div class="quote"><p><b>Problema público:</b> como preparar São Bernardo para a eletromobilidade sem pôr no orçamento municipal os altos investimentos e riscos dessa nova infraestrutura?</p></div>
+    <div class="grid">
+      <div class="card"><h3>A hipótese</h3><p>Um Hub modular com recarga, recarga rápida, frota pesada, solar com baterias, plataforma digital e inovação com a indústria. Um parceiro privado implanta, opera e mantém. O Município planeja, regula e fiscaliza.</p></div>
+      <div class="card"><h3>O que ainda é aberto</h3><p>Se é PPP, concessão comum ou um modelo híbrido. A escolha sai da comparação de modelos e do <i>Value for Money</i>. O pré-projeto diz isso com todas as letras: não parte de que a PPP é a resposta.</p></div>
+      <div class="card"><h3>O que ainda não existe</h3><p>CAPEX e OPEX, quantos pontos, onde ficam e o estudo de rede elétrica. Esses números são as primeiras entregas da estruturação: governança e inventário nos meses 1–3, diagnóstico nos meses 3–6.</p></div>
+    </div>
+    <p class="small muted">Base: pré-projeto aprovado no 5º edital (itens 3.1 a 3.10).</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="perfis" aria-labelledby="h-perfis">
+    <h2 id="h-perfis"><span class="num">3</span>Os três perfis</h2>
+    <p>Pelo programa, o curso parte de que estruturar uma PPP exige juntar três dimensões. Por isso cada equipe tem um especialista de cada. O edital define cada perfil (item 6) e diz o que se espera de cada um (item 7.2):</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>Econômico-financeiro</th><th>Jurídico</th><th>Operacional</th></tr></thead>
+      <tbody>
+        <tr><td><b>Pergunta</b></td><td>A conta fecha?</td><td>Pode ser feito, e em que modelo?</td><td>Como o serviço funciona e como se mede que funciona?</td></tr>
+        <tr><td><b>Edital, item 6</b></td><td>análise econômica e financeira, modelagem, estruturação, investimentos</td><td>regulação, gestão contratual, concessões, governança; questões jurídicas e institucionais</td><td>gestão, planejamento, infraestrutura, políticas públicas, operação de serviços públicos, <b>com conhecimento prático do serviço objeto da PPP</b></td></tr>
+        <tr><td><b>Edital, item 7.2</b></td><td>viabilidade, custo-benefício, mercado, M&amp;A e Teoria da Mudança</td><td>regulação e direito público, análise jurídica, negociação</td><td>políticas públicas e operações, gestão de projetos, <b>monitoramento da performance</b></td></tr>
+        <tr><td><b>No Hub</b></td><td>CAPEX/OPEX, receitas, financiamento, VfM, reequilíbrio</td><td>marco legal, modelo contratual, cláusulas, penalidades, edital</td><td>serviço, fases, papéis, operação e manutenção, indicadores, riscos operacionais, fiscalização</td></tr>
+      </tbody>
+    </table></div>
+    <p>Os perfis se alimentam: os números operacionais (pontos, custos de manutenção) entram no modelo financeiro, e as metas operacionais viram cláusulas e penalidades no contrato.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="operacional" aria-labelledby="h-op">
+    <h2 id="h-op"><span class="num">4</span>O Operacional em detalhe</h2>
+    <p>Nem o site nem o edital descrevem as tarefas do Operacional no TCC. O que existe está espalhado em três fontes:</p>
+
+    <details open>
+      <summary>O que a FGV escreveu <span class="tag">edital e programa</span></summary>
+      <div>
+        <p><b>Definição (edital 6.2):</b> "profissional com experiência em gestão, planejamento, infraestrutura, políticas públicas, operação de serviços públicos ou áreas correlatas, com conhecimento prático relacionado ao serviço, infraestrutura ou política pública objeto do projeto de PPP."</p>
+        <p><b>Critérios (edital 7.2.2):</b></p>
+        <ul class="plain">
+          <li>7.2.2.1: gestão, planejamento, operação de serviços públicos, infraestrutura, políticas públicas;</li>
+          <li>7.2.2.2: experiência prática em políticas públicas e na <b>gestão operacional de serviços ou infraestruturas públicas</b>;</li>
+          <li>7.2.2.3: experiência em PPPs e/ou concessões;</li>
+          <li>7.2.2.4: <b>gestão de projetos</b>, com capacidade de planejamento e de execução;</li>
+          <li>7.2.2.5: <b>monitoramento</b>, com acompanhamento da performance de projetos.</li>
+        </ul>
+        <p><b>Programa:</b> no módulo Construa entra a "modelagem jurídica, econômico-financeira e operacional", junto com matriz de riscos, mecanismos de remuneração e "indicadores de desempenho". O FGV Action lista o que as equipes desenvolvem. Os itens mais ligados à operação são: <i>objeto da contratação; lógica da solução; modelagem operacional; matriz de riscos; indicadores de desempenho; plano de monitoramento e avaliação</i>.</p>
+      </div>
+    </details>
+
+    <details open>
+      <summary>O que o pré-projeto já atribui à operação <span class="tag">pré-projeto do Hub</span></summary>
+      <div>
+        <ul class="plain">
+          <li><b>3.5 Riscos técnicos e operacionais:</b> custo de conexão elétrica, obsolescência, atrasos, indisponibilidade de equipamentos, incidentes cibernéticos. Mitigação: estudos de rede, padrões abertos, <b>SLA com remuneração por desempenho</b>.</li>
+          <li><b>3.7 Implementação:</b> inventário de ativos, diagnóstico de demanda, rede e locais, implantação em fases com <b>gatilhos de expansão</b>.</li>
+          <li><b>3.10 Monitoramento:</b> linha de base, metas anuais, dados auditáveis, responsável por indicador. Mensal: <b>disponibilidade (uptime, falhas, tempo de reparo) e uso</b>. Trimestral: financeiros e governança (SLA, penalidades, reclamações). Semestral ou anual: impactos ambientais, sociais e econômicos. <b>Painel público</b> e auditoria independente.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Que peças do edital costumam ser operacionais <span class="tag amber">prática de mercado</span></summary>
+      <div>
+        <p class="note small"><span>Isto <b>não está escrito pela FGV</b>. É como editais de PPP de infraestrutura costumam se organizar no Brasil. Confirmar na Mentoria Operacional de 17/02/2027.</span></p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Peça do edital / anexo</th><th>O que contém</th><th>Com quem</th></tr></thead>
+          <tbody>
+            <tr><td><b>Caderno de encargos</b> (especificações e padrões de serviço)</td><td>o que o parceiro tem de entregar e manter: tipos de carregador, horários, manutenção, atendimento</td><td>Operacional lidera</td></tr>
+            <tr><td><b>Sistema de mensuração de desempenho</b></td><td>indicadores, fórmulas, metas e como a nota mexe no pagamento</td><td>Operacional + Econômico</td></tr>
+            <tr><td><b>Plano de implantação</b></td><td>fases, locais, gatilhos de expansão, cronograma de investimentos</td><td>Operacional + Econômico</td></tr>
+            <tr><td><b>Matriz de riscos</b></td><td>quem assume cada risco (demanda, energia, tecnologia, vandalismo…)</td><td>os três</td></tr>
+            <tr><td><b>Fiscalização</b></td><td>como o Município acompanha e quem verifica os dados (verificador independente)</td><td>Operacional + Jurídico</td></tr>
+            <tr><td><b>Inventário de áreas e bens</b></td><td>áreas públicas cedidas e o que volta ao Município no fim do contrato</td><td>Operacional + Jurídico</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </details>
+
+    <p><b>Lacuna conhecida:</b> a parte de energia (potência disponível, conexão com a distribuidora, custo de reforço da rede). Não é papel do Operacional projetar a rede. É papel dele saber o que perguntar e trazer a resposta para o desenho do serviço.</p>
+  </section>
+
+  <!-- 5 -->
+  <section id="brasilia" aria-labelledby="h-bsb">
+    <h2 id="h-bsb"><span class="num">5</span>A semana em Brasília</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Quando</th><th>O quê</th></tr></thead>
+      <tbody>
+        <tr><td class="n">24/11 · 9h–12h</td><td><b>Abertura e Oficina Action</b>. O pitch provavelmente entra aqui. <span class="muted">O cronograma não diz isso; a regra dos 3 min veio por mensagem.</span></td></tr>
+        <tr><td class="n">24/11 · 13h30–17h30</td><td>Disciplina 1: Fundamentos das PPPs e Concessões</td></tr>
+        <tr><td class="n">25/11 · 9h–12h30 e 14h–17h30</td><td>Disciplina 1, com role play e dinâmicas de grupo</td></tr>
+        <tr><td class="n">30/11 e 02/12 · 19h</td><td>Disciplina 1, online</td></tr>
+        <tr><td class="n">07/12 · 19h</td><td>Oficina Action da Disciplina 1</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note small"><span>A Disciplina 1 tem 24 h/a, sendo 12 presenciais. Quem faltar a Brasília fica com no máximo 50% de frequência nela, abaixo dos 75%.</span></p>
+  </section>
+
+  <!-- 6 -->
+  <section id="pitch" aria-labelledby="h-pitch">
+    <h2 id="h-pitch"><span class="num">6</span>O pitch slide a slide</h2>
+    <p>O pitch v1 tem 10 slides, com o texto da fala nas notas. A equipe montou antes da substituição. Abaixo, cada slide com o que mostra, o que se fala e a checagem dos dados feita em 21/11.</p>
+
+    <div class="grid">
+      <div class="stat"><b>472</b><span>palavras nas notas</span></div>
+      <div class="stat"><b>185 s</b><span>soma dos tempos marcados</span></div>
+      <div class="stat"><b>153/min</b><span>ritmo que isso exige: rápido</span></div>
+      <div class="stat"><b>~400</b><span>palavras: meta para caber com folga</span></div>
+    </div>
+    <p class="small muted">Os tempos reais só se medem ensaiando com cronômetro. Os números acima são contas sobre o texto, não medições de fala.</p>
+
+    <details><summary><span class="num">01</span>Abertura <span class="time">10 s</span></summary><div>
+      <p>Título, "proposta em estruturação", nomes da equipe.</p>
+      <div class="quote"><p>"Somos a equipe de São Bernardo do Campo e vamos apresentar o Hub Municipal de Eletromobilidade e Infraestrutura Sustentável, uma proposta ainda em estruturação de PPP ou concessão."</p></div>
+    </div></details>
+
+    <details><summary><span class="num">02</span>Quem somos <span class="time">20 s</span> <span class="tag amber">atualizar</span></summary><div>
+      <p>Cidade do automóvel, eixo Anchieta–Rodoanel–Porto de Santos, ecossistema automotivo e os três perfis da equipe.</p>
+      <p><span class="ok">Confere:</span> 810.729 habitantes (IBGE, Censo 2022).</p>
+      <p><span class="warn">Atualizar:</span> o cartão e a nota do perfil técnico-operacional ainda trazem a integrante anterior.</p>
+      <p class="small muted">Corte sugerido: dizer "polo automotivo do ABC" em vez de listar as marcas. A tela já mostra.</p>
+    </div></details>
+
+    <details><summary><span class="num">03</span>O problema <span class="time">25 s</span></summary><div>
+      <p>A demanda cresce e a infraestrutura não acompanha. Termina na pergunta do problema público.</p>
+      <ul class="plain">
+        <li><span class="ok">Confere:</span> 223.912 eletrificados vendidos em 2025, +26% sobre 2024 (ABVE).</li>
+        <li><span class="warn">Aproximado:</span> "~21 veículos plug-in por ponto público". O dado mais próximo encontrado é <b>19,6</b> (fev/2026: 411.869 veículos para 21.061 pontos, ABVE/Tupi).</li>
+        <li><span class="warn">Aproximado:</span> "27% dos eletropostos em SP". Em ago/2026, SP tinha 7.864 de 29.896 pontos, ou <b>26,3%</b> (ABVE/Tupi).</li>
+      </ul>
+      <p class="small">Na fala, o seguro é dizer "<b>cerca de 20</b> veículos por ponto" e "<b>um quarto</b> dos eletropostos está em SP".</p>
+    </div></details>
+
+    <details><summary><span class="num">04</span>A solução: seis núcleos <span class="time">20 s</span></summary><div>
+      <p>Rede de recarga · recarga rápida · frota pesada · energia solar com baterias · plataforma digital · inovação com a indústria. Integrado e expansível por etapas.</p>
+      <p class="small muted">Esse é o objeto que o Operacional vai detalhar: o quê, onde e em que fases.</p>
+    </div></details>
+
+    <details><summary><span class="num">05</span>Como a PPP viabiliza <span class="time">25 s</span></summary><div>
+      <p>Município: planeja, regula e fiscaliza. Parceiro: investe, opera, mantém e inova. Receitas: recarga, serviços, estacionamento, publicidade, e uma possível contraprestação pública.</p>
+      <div class="quote"><p>"Não partimos da premissa de que a PPP é a resposta: vamos comparar os modelos com base em viabilidade e Value for Money."</p></div>
+      <p class="small muted">Modelos em avaliação: concessão comum, PPP administrativa, híbrido, concessão de uso de áreas públicas.</p>
+    </div></details>
+
+    <details><summary><span class="num">06</span>Quem se beneficia <span class="time">15 s</span></summary><div>
+      <p>Motoristas, transporte coletivo e frotas públicas, logística e aplicativos, indústria, trabalhadores, investidores.</p>
+      <p class="small muted">Corte sugerido: citar três públicos e deixar a tela mostrar o resto.</p>
+    </div></details>
+
+    <details><summary><span class="num">07</span>Diferenciais <span class="time">15 s</span> <span class="tag amber">texto longo</span></summary><div>
+      <p>9+ empresas-âncora no território; integração entre mobilidade, energia e tecnologia; modular; atende indústria e logística; energia renovável; plataforma com transparência; SBC como cidade-âncora do ABC.</p>
+      <p class="small"><span class="warn">A nota tem 59 palavras para 15 s.</span> Corte sugerido: falar dois diferenciais, o território industrial e a plataforma com transparência, mais a frase da cidade-âncora.</p>
+    </div></details>
+
+    <details><summary><span class="num">08</span>Desafios <span class="time">20 s</span></summary><div>
+      <p>Seis eixos: econômico-financeiro, técnico (conexão elétrica, alta potência), regulatório, tecnológico, ambiental e social, institucional.</p>
+      <div class="quote"><p>"Por isso a matriz de riscos estará no centro da modelagem."</p></div>
+    </div></details>
+
+    <details><summary><span class="num">09</span>Etapas até a licitação <span class="time">25 s</span></summary><div>
+      <p>M1–3 governança e inventário → M3–6 diagnóstico de demanda e rede → até M9 pré-viabilidade → até M15 modelagem → M15–18 consultas → até M24 decisão municipal. Se for favorável: licitação, contratação, piloto, expansão.</p>
+      <p class="small muted">Resultado esperado ao fim do MBA: uma decisão fundamentada e, se for o caso, edital e contrato prontos para licitar.</p>
+    </div></details>
+
+    <details><summary><span class="num">10</span>Encerramento <span class="time">10 s</span></summary><div>
+      <div class="quote"><p>"Mais do que instalar pontos de recarga, queremos preparar São Bernardo para uma nova infraestrutura de mobilidade, energia e desenvolvimento sustentável."</p></div>
+    </div></details>
+
+    <div class="card">
+      <h3>A combinar entre nós antes de terça</h3>
+      <ul class="plain">
+        <li>Quem fala: uma pessoa, com as outras só se apresentando, ou divididos por bloco?</li>
+        <li>Se for dividido, uma sugestão por afinidade de perfil: <b>slides 1–3 e 5</b> (problema e modelo) com o Econômico; <b>6–7</b> (benefícios e indústria) com o Jurídico; <b>4, 8–9</b> (solução, desafios e etapas) com o Operacional.</li>
+        <li>Ensaio por chamada, com cronômetro, antes do embarque.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Fontes:</b> programa do curso (jul/2026), cronograma ajustado da Turma 9, 5º edital (v5) e retificação, pré-projeto do Hub e pitch v1; site do curso na FGV. Dados de mercado: <a href="https://www.ibge.gov.br/cidades-e-estados/sp/sao-bernardo-do-campo.html">IBGE</a>, <a href="https://www.autoo.com.br/eletrificados-alta-de-26-em-2025-e-total-de-224-mil-unidades-veja-ranking/">ABVE via Autoo</a>, <a href="https://www.autodata.com.br/mobility/2026/09/24/brasil-se-aproxima-dos-30-mil-pontos-de-recarga-para-veiculos-eletrificados/136076/">ABVE/Tupi via Autodata</a>.</p>
+    <p>Documento vivo: correções e acréscimos são bem-vindos.</p>
+  </footer>
+</div>

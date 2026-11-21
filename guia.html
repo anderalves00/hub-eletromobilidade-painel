@@ -57,6 +57,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 3px; cur
 .page { max-width: 1440px; margin: 0 auto; padding: 32px clamp(16px, 3vw, 40px) 72px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px 44px; }
 .hero { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: end; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
 .hero-text { display: grid; gap: 14px; }
+.hero-stats { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .eyebrow { font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
 .lead { font-size: 1.08rem; max-width: 70ch; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -87,11 +88,11 @@ section:target { animation: flash 1.6s ease-out; }
 }
 
 /* Blocos */
-.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(var(--min, 240px), 1fr)); }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(var(--min, 240px), 100%), 1fr)); }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; transition: transform .2s, box-shadow .2s, border-color .2s; }
 .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; }
-.stat b { font-family: var(--font-display); font-size: 1.45rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat b { font-family: var(--font-display); font-size: clamp(1.1rem, 1.6vw, 1.4rem); font-variant-numeric: tabular-nums; }
 .stat span { color: var(--muted); font-size: .86rem; }
 .box { border-left: 4px solid var(--c, var(--accent)); background: var(--c-soft, var(--accent-soft)); padding: 12px 16px; border-radius: 0 10px 10px 0; display: grid; gap: 6px; }
 .box.amber { --c: var(--amber); --c-soft: var(--amber-soft); }
@@ -109,6 +110,7 @@ section:target { animation: flash 1.6s ease-out; }
 .ope { --c: var(--ope); --c-soft: var(--ope-soft); }
 .area { border-top: 5px solid var(--c); }
 .area h3 { color: var(--c); }
+.area .who { color: var(--muted); font-size: .9rem; font-weight: 500; }
 .area .q { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; line-height: 1.35; }
 .area dt { font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 600; margin-top: 4px; }
 .area dd { margin: 0; }
@@ -138,7 +140,7 @@ tr:last-child td { border-bottom: 0; }
 td.d { font-family: var(--font-mono); white-space: nowrap; }
 
 /* Brasília */
-.days { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.days { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
 .slot { display: grid; grid-template-columns: 7.2em minmax(0, 1fr); gap: 10px; padding: 8px 0; border-top: 1px dashed var(--line); }
 .slot:first-of-type { border-top: 0; }
 .slot .h { font-family: var(--font-mono); font-size: .84rem; color: var(--muted); white-space: nowrap; }
@@ -162,7 +164,7 @@ td.d { font-family: var(--font-mono); white-space: nowrap; }
 .split .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 
 /* Glossário */
-dl.gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 0; }
+dl.gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 12px; margin: 0; }
 dl.gloss div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; scroll-margin-top: 20px; }
 dl.gloss div:target { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 dl.gloss dt { font-family: var(--font-display); font-weight: 600; }
@@ -183,7 +185,7 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
         <a class="chip ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">Edital (PDF)</a>
       </div>
     </div>
-    <div class="grid" style="--min: 150px">
+    <div class="hero-stats">
       <div class="stat"><b>432 horas-aula</b><span>de 24/11/2026 a 19/04/2028</span></div>
       <div class="stat"><b>Seg. e qua.</b><span>aulas ao vivo, das 19h às 22h30</span></div>
       <div class="stat"><b>3 encontros</b><span>presenciais: Brasília, Pernambuco e São Paulo</span></div>
@@ -268,7 +270,7 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
       <div class="legend"><span class="eco"><span class="dot"></span>Econômico-financeiro</span><span class="jur"><span class="dot"></span>Jurídico-institucional</span><span class="ope"><span class="dot"></span>Técnico-operacional</span></div>
       <div class="grid" style="--min: 280px">
         <article class="card area eco">
-          <h3>Econômico-financeiro · Thiago Belão</h3>
+          <div><h3>Econômico-financeiro</h3><p class="who">Thiago Belão</p></div>
           <p class="q">A conta fecha?</p>
           <dl>
             <dt>Perfil (edital 6.1)</dt><dd>análise econômica e financeira, modelagem, estruturação de projetos, investimentos</dd>
@@ -277,7 +279,7 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
           </dl>
         </article>
         <article class="card area jur">
-          <h3>Jurídico-institucional · Giovanna Falcaro</h3>
+          <div><h3>Jurídico-institucional</h3><p class="who">Giovanna Falcaro</p></div>
           <p class="q">Pode ser feito, e em que modelo?</p>
           <dl>
             <dt>Perfil (edital 6.3)</dt><dd>regulação, gestão contratual, concessões, PPPs, governança; questões jurídicas e institucionais</dd>
@@ -286,7 +288,7 @@ footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top
           </dl>
         </article>
         <article class="card area ope">
-          <h3>Técnico-operacional · Anderson Alves</h3>
+          <div><h3>Técnico-operacional</h3><p class="who">Anderson Alves</p></div>
           <p class="q">Como o serviço funciona, e como se mede que funciona?</p>
           <dl>
             <dt>Perfil (edital 6.2)</dt><dd>gestão, planejamento, infraestrutura, operação de serviços públicos, <b>com conhecimento prático do serviço</b></dd>

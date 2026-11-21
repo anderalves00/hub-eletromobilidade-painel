@@ -4,411 +4,447 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro Pessoal — o Operacional no Hub</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro pessoal — o Operacional no Hub</title>
+<!-- Montado sobre DevMode/configuracao/templates/html/painel-base.html (padrão do painel do Selo WWC). O publicar-quadro.ps1 injeta doctype e head. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>.
+-->
 <style>
-/* Roteiro pessoal. Padrão: DevMode/configuracao/docs/padrao-html.md (largura total, grid, cores por área) */
 :root {
-  --bg: #f2f5f8; --surface: #ffffff; --surface-2: #f7f9fb; --ink: #142131; --muted: #5a6879; --line: #d9e0e8;
-  --accent: #0a62c2; --accent-soft: #e3eefb;
-  --eco: #0d7a5c; --eco-soft: #e0f3ec; --jur: #6a3dbd; --jur-soft: #eee7fa; --ope: #c04a0a; --ope-soft: #fdeadf;
-  --amber: #8f5600; --amber-soft: #fbefd6; --green: #17734a; --green-soft: #def3e8;
-  --shadow: 0 6px 18px rgba(20, 33, 49, .10);
-  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0c131b; --surface: #141e29; --surface-2: #18232f; --ink: #e6edf4; --muted: #9eadbd; --line: #283646;
-    --accent: #64abf3; --accent-soft: #14304d;
-    --eco: #4fd0a4; --eco-soft: #0f2f26; --jur: #b597f5; --jur-soft: #261c3d; --ope: #ff9a5c; --ope-soft: #3a2114;
-    --amber: #f3bb5e; --amber-soft: #3a2a10; --green: #5fd39b; --green-soft: #12301f;
-    --shadow: 0 6px 18px rgba(0, 0, 0, .35); color-scheme: dark;
-  }
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --vermelho: #b3261e; --vermelho-claro: #fbe9e7;
+  --roxo: #6a3dbd; --roxo-claro: #f0eafb;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
-body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; hyphens: manual; }
-h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); line-height: 1.12; font-weight: 700; }
-h2 { font-size: clamp(1.25rem, 2vw, 1.55rem); font-weight: 600; }
-h3 { font-size: 1.04rem; font-weight: 600; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+a:hover { color: var(--azul-esc); }
+a.ext::after { content: " ↗"; font-size: .85em; }
+abbr[title] { text-decoration: underline dotted; cursor: help; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
-ul { margin: 0; padding-left: 1.15em; display: grid; gap: 5px; }
-a { color: var(--accent); text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size .2s; }
-a:hover, a:focus-visible { background-size: 100% 1.5px; }
-a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-a.ext::after { content: " ↗"; font-size: .8em; }
 .nw { white-space: nowrap; }
-.muted { color: var(--muted); }
-.small { font-size: .88rem; }
 
-.page { max-width: 1440px; margin: 0 auto; padding: 32px clamp(16px, 3vw, 40px) 72px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px 44px; }
-.hero { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: end; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
-.hero-text { display: grid; gap: 14px; }
-.hero-stats { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.eyebrow { font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
-.private { justify-self: start; background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: .82rem; padding: 4px 12px; border-radius: 999px; }
-.lead { font-size: 1.08rem; max-width: 70ch; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { display: inline-flex; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: .86rem; font-weight: 500; transition: border-color .2s, transform .2s, box-shadow .2s; }
-.chip:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow); }
-aside.toc { position: sticky; top: 20px; align-self: start; display: grid; gap: 10px; }
-aside.toc p { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
-aside.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; border-left: 2px solid var(--line); }
-aside.toc a { display: block; padding: 5px 12px; margin-left: -2px; border-left: 2px solid transparent; color: var(--muted); font-size: .92rem; background: none; transition: color .2s, border-color .2s; }
-aside.toc a:hover { color: var(--ink); border-left-color: var(--muted); }
-aside.toc a.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
-main { display: grid; gap: 56px; min-width: 0; }
-section { display: grid; gap: 18px; scroll-margin-top: 20px; border-radius: 12px; }
-section:target { animation: flash 1.6s ease-out; }
-@keyframes flash { from { box-shadow: 0 0 0 6px var(--accent-soft); } to { box-shadow: 0 0 0 6px transparent; } }
-.sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.sec-num { font-family: var(--font-mono); color: var(--accent); font-size: .9rem; }
-.sec-head .more { margin-left: auto; font-size: .88rem; }
-@media (max-width: 1100px) {
-  .page { grid-template-columns: minmax(0, 1fr); }
-  .hero { grid-template-columns: minmax(0, 1fr); }
-  aside.toc { top: 0; z-index: 5; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line); }
-  aside.toc p { display: none; }
-  aside.toc ol { display: flex; overflow-x: auto; border-left: 0; gap: 4px; scrollbar-width: thin; }
-  aside.toc a { white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; margin: 0; }
-  aside.toc a.on { border-bottom-color: var(--accent); }
-  section { scroll-margin-top: 64px; }
+/* Cabeçalho */
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 22px 32px 20px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .selos { display: flex; flex-wrap: wrap; gap: 8px; }
+.topo .atualizado { font-size: 13px; background: rgba(255,255,255,.14); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.topo .privado { font-size: 13px; background: var(--laranja); color: #fff; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+
+/* Barra de ferramentas */
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
+.grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-filtro { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.botao { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; text-decoration: none; }
+.botao:hover { background: var(--azul-claro); }
+
+/* Estrutura */
+.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
+.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
+.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); margin: 10px 4px 6px; }
+.lateral h2:first-child { margin-top: 0; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 14px; }
+.lateral a:hover, .lateral a.ativo { background: var(--azul-claro); }
+.lateral a .cod { font-weight: 700; min-width: 30px; }
+.lateral a .tit { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-suave); font-size: 13px; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5ccd3; }
+.ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.azul { background: var(--azul); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
+main { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+
+/* Seções: a primeira aberta (section), as demais recolhidas (details) */
+section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px 24px; box-shadow: var(--sombra); }
+section.bloco > h2, details.bloco > summary h2 { font-size: 19px; color: var(--azul-esc); display: flex; align-items: center; gap: 10px; }
+section.bloco > h2 { margin-bottom: 14px; }
+section.bloco > h2::before, details.bloco > summary h2::before { content: ""; width: 5px; height: 20px; background: var(--laranja); border-radius: 3px; flex: none; }
+details.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+details.bloco > summary, details.item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+details > summary::-webkit-details-marker { display: none; }
+details.bloco > summary { padding: 16px 24px; }
+details.bloco > summary .cont { font-size: 13px; color: var(--texto-suave); font-weight: 600; margin-left: auto; }
+details.bloco > .bloco-corpo { padding: 0 24px 22px; display: grid; gap: 16px; }
+.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--azul-claro); color: var(--azul); font-weight: 800; transition: transform .15s; flex: none; }
+details[open] > summary .seta { transform: rotate(90deg); }
+.subtitulo-bloco { font-size: 15px; color: var(--azul-esc); text-transform: uppercase; letter-spacing: .04em; margin-top: 6px; }
+
+/* Item recolhível dentro de uma seção (o "critério" do Selo) */
+details.item { border: 1px solid var(--borda); border-radius: var(--raio); background: var(--cartao); }
+details.item[open] { border-color: #b9cfe0; }
+details.item > summary { padding: 14px 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
+.cod-grande { font-size: 20px; font-weight: 800; color: var(--azul); min-width: 40px; }
+.sum-tit { font-size: 16px; font-weight: 700; }
+.sum-sub { font-size: 13px; color: var(--texto-suave); }
+.sum-dir { font-size: 13px; color: var(--texto-suave); font-weight: 600; white-space: nowrap; }
+.item-corpo { padding: 14px 18px 18px; border-top: 1px solid var(--borda); display: grid; gap: 10px; }
+
+/* Indicadores */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.kpi { border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px 16px; background: #fff; }
+.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); font-weight: 600; }
+.kpi .val { font-size: 30px; font-weight: 800; color: var(--azul-esc); line-height: 1.15; margin-top: 4px; }
+.kpi .val small { font-size: 15px; font-weight: 600; color: var(--texto-suave); }
+.kpi .det { font-size: 13px; color: var(--texto-suave); margin-top: 2px; }
+.kpi.destaque { border-color: var(--laranja); background: var(--laranja-claro); }
+.kpi.destaque .val { color: var(--laranja-esc); }
+.progresso { margin-top: 18px; }
+.rotulo { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 14px; border-radius: 999px; background: #e9eef2; overflow: hidden; }
+.trilho span { height: 100%; }
+.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13px; color: var(--texto-suave); }
+.legenda-barra i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.contexto { margin: 16px 0 0; padding-left: 20px; color: var(--texto-suave); }
+.contexto li { margin: 3px 0; }
+
+/* Tabelas */
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-suave); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+tbody tr:hover td { background: var(--azul-claro); }
+
+/* Etiquetas */
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
+.t-azul { background: var(--azul-claro); color: var(--azul-esc); }
+.t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
+.t-verde { background: var(--verde-claro); color: var(--verde); }
+.t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
+.t-roxo { background: var(--roxo-claro); color: var(--roxo); }
+.t-cinza { background: #eef1f4; color: var(--texto-suave); }
+.t-forte { background: var(--laranja); color: #fff; }
+
+/* Caixas */
+.definicao { padding: 12px 14px; background: var(--azul-claro); border-radius: 8px; }
+.resumo { padding: 12px 14px; border-left: 4px solid var(--laranja); background: var(--laranja-claro); border-radius: 0 8px 8px 0; }
+.alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
+.fala { padding: 10px 12px; border-left: 3px solid var(--azul); background: #f4f7fa; font-size: 14px; border-radius: 0 6px 6px 0; font-style: italic; }
+.nota { color: var(--texto-suave); font-size: 14px; }
+.lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
+
+/* Grades de cartões */
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 14px; }
+.coluna { border-radius: 8px; padding: 12px 14px; border: 1px solid var(--borda); border-top: 5px solid var(--cor, var(--azul)); background: #fff; }
+.coluna > h4 { font-size: 15px; margin-bottom: 8px; color: var(--cor, var(--azul-esc)); }
+.coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
+.pend { border: 1px solid var(--borda); border-left: 5px solid var(--laranja); border-radius: 8px; padding: 12px 14px; }
+.pend h3 { font-size: 15px; margin-bottom: 6px; }
+.cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
+.cenario { border: 1px solid var(--borda); border-radius: 8px; padding: 12px 14px; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.cenario.rec { border: 2px solid var(--verde); }
+.cen-topo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* Lista de tarefas */
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.checklist label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 10px; border-radius: 6px; background: #f7f9fb; cursor: pointer; }
+.checklist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--verde); flex: none; }
+.checklist input:checked + span { color: var(--texto-suave); text-decoration: line-through; }
+
+.oculto { display: none !important; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
+
+@media (max-width: 900px) {
+  .barra-ferramentas { position: static; }
+  html { scroll-padding-top: 12px; }
+  .layout { grid-template-columns: 1fr; padding: 16px; }
+  .lateral { position: static; max-height: none; }
+  .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  footer { padding: 0 16px 24px; }
+  section.bloco { padding: 16px; }
+  details.bloco > summary { padding: 14px 16px; }
+  details.bloco > .bloco-corpo { padding: 0 16px 16px; }
+  details.item > summary { grid-template-columns: minmax(0, 1fr) auto; }
+  details.item > summary .cod-grande, details.item > summary .sum-dir { grid-column: 1 / -1; }
 }
-
-.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(var(--min, 260px), 100%), 1fr)); }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; transition: transform .2s, box-shadow .2s, border-color .2s; }
-.card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; }
-.stat b { font-family: var(--font-display); font-size: clamp(1.1rem, 1.6vw, 1.35rem); }
-.stat span { color: var(--muted); font-size: .86rem; }
-.box { border-left: 4px solid var(--c, var(--accent)); background: var(--c-soft, var(--accent-soft)); padding: 12px 16px; border-radius: 0 10px 10px 0; display: grid; gap: 6px; }
-.box.amber { --c: var(--amber); --c-soft: var(--amber-soft); }
-.tag { display: inline-block; font-size: .72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; background: var(--c-soft, var(--accent-soft)); color: var(--c, var(--accent)); }
-.tag.amber { --c: var(--amber); --c-soft: var(--amber-soft); }
-.tag.green { --c: var(--green); --c-soft: var(--green-soft); }
-.eco { --c: var(--eco); --c-soft: var(--eco-soft); }
-.jur { --c: var(--jur); --c-soft: var(--jur-soft); }
-.ope { --c: var(--ope); --c-soft: var(--ope-soft); }
-.area { border-top: 5px solid var(--c); }
-.area h3 { color: var(--c); }
-.card-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.card-head .right { margin-left: auto; }
-
-/* Comparação lado a lado */
-.compare { display: grid; grid-template-columns: 10em minmax(0, 1fr) minmax(0, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.compare > div { padding: 12px 16px; border-bottom: 1px solid var(--line); }
-.compare .hd { font-family: var(--font-display); font-weight: 600; font-size: .9rem; background: var(--surface-2); }
-.compare .hd.new { color: var(--ope); }
-.compare .k { font-weight: 600; color: var(--muted); font-size: .9rem; }
-.compare .new { background: var(--ope-soft); }
-.compare .hd.new { background: var(--ope-soft); }
-.compare > div:nth-last-child(-n+3) { border-bottom: 0; }
-@media (max-width: 700px) {
-  .compare { grid-template-columns: minmax(0, 1fr); }
-  .compare .hd:first-child { display: none; }
-  .compare .k { background: var(--surface-2); border-bottom: 0; padding-bottom: 4px; }
-  .compare > div:not(.hd)::before { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); display: block; }
-  .compare > div.old:not(.hd)::before { content: "hoje"; }
-  .compare > div.new:not(.hd)::before { content: "possível"; }
-  .compare .hd { display: none; }
+@media print {
+  .barra-ferramentas, .lateral { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  details { break-inside: avoid-page; }
+  .seta { display: none; }
+  body { background: #fff; }
 }
-
-/* Trilhas */
-.track { border-top: 5px solid var(--c, var(--accent)); }
-.when { font-family: var(--font-mono); font-size: .78rem; color: var(--muted); white-space: nowrap; }
-.bar { height: 6px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
-.bar i { display: block; height: 100%; width: 0; background: var(--c, var(--accent)); transition: width .3s; }
-.count { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); }
-.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.check label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; padding: 4px 6px; margin: 0 -6px; border-radius: 6px; transition: background .15s; }
-.check label:hover { background: var(--surface-2); }
-.check input { margin-top: 5px; accent-color: var(--c, var(--accent)); flex: none; }
-.check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.check input:checked + span { color: var(--muted); text-decoration: line-through; }
-code { font-family: var(--font-mono); font-size: .88em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
-
-/* Falas */
-.say { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; display: grid; gap: 8px; }
-.say p::before { content: "“"; }
-.say p::after { content: "”"; }
-.why { font-size: .9rem; color: var(--muted); }
-details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; transition: box-shadow .2s, border-color .2s; }
-details:hover { box-shadow: var(--shadow); }
-details[open] { border-color: var(--accent); }
-summary { cursor: pointer; font-weight: 600; }
-details > div { margin-top: 12px; display: grid; gap: 8px; }
-.qa { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); align-items: start; }
-@media (max-width: 460px) { .qa { grid-template-columns: minmax(0, 1fr); } }
-footer { grid-column: 1 / -1; color: var(--muted); font-size: .84rem; border-top: 1px solid var(--line); padding-top: 16px; }
 </style>
-
-<div class="page">
-  <header class="hero">
-    <div class="hero-text">
-      <p class="eyebrow">MBA em Parcerias Público-Privadas e Concessões Sustentáveis · Hub de Eletromobilidade · Área técnico-operacional</p>
-      <h1>Roteiro pessoal: seu lugar no Hub e os próximos passos</h1>
-      <span class="private">Só para você · não compartilhar este link</span>
-      <p class="lead">Complementa o guia da equipe, que tem o curso, o projeto e o pitch. Aqui fica o que é só seu: onde você entra, o que estudar, o que fazer e o que falar.</p>
-      <div class="chips">
-        <a class="chip" href="guia.html">Guia da equipe</a>
-        <a class="chip" href="./">Painel de indicadores</a>
-        <a class="chip" href="roteiro-conversa.html">Roteiro da conversa com a equipe</a>
-        <a class="chip ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">Edital (PDF)</a>
-      </div>
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">MBA em Parcerias Público-Privadas e Concessões Sustentáveis · Hub de Eletromobilidade · Área técnico-operacional</div>
+      <h1>Roteiro pessoal — o Operacional no Hub</h1>
+      <div class="subtitulo">Onde você entra · O que estudar · O que fazer · O que falar</div>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><b>24/11, 9h</b><span>abertura em Brasília, momento provável do pitch</span></div>
-      <div class="stat"><b>17/02/2027</b><span>sua 1ª mentoria operacional</span></div>
-      <div class="stat"><b>3 trilhas</b><span>pitch, logística e papel na equipe</span></div>
-      <div class="stat"><b>4 disciplinas</b><span>pesam mais para você: 9, 10, 13 e 16</span></div>
-    </div>
-  </header>
+    <div class="selos"><span class="privado">Só para você · não compartilhar</span><span class="atualizado">Atualizado em 21/11/2026</span></div>
+  </div>
+</header>
 
-  <aside class="toc" aria-label="Sumário">
-    <p>Nesta página</p>
-    <ol>
-      <li><a href="#encaixe">1 · Onde você se encaixa</a></li>
-      <li><a href="#divisao">2 · Seu e dividido</a></li>
-      <li><a href="#aprender">3 · O que aprender</a></li>
-      <li><a href="#trilhas">4 · Trilhas de ação</a></li>
-      <li><a href="#falar">5 · Se tiver de falar</a></li>
-      <li><a href="#perguntas">6 · Perguntas prováveis</a></li>
-    </ol>
-  </aside>
+<div class="barra-ferramentas">
+  <div class="barra-int">
+    <input type="search" id="busca" placeholder="Buscar nas tarefas, nos estudos e nas falas…" aria-label="Buscar">
+    <div class="grupo-filtro" role="group" aria-label="Filtrar por prazo">
+      <button class="chip-filtro" data-filtro="todas" aria-pressed="true">Tudo</button>
+      <button class="chip-filtro" data-filtro="agora" aria-pressed="false"><span class="ponto laranja"></span>Até terça</button>
+      <button class="chip-filtro" data-filtro="depois" aria-pressed="false"><span class="ponto azul"></span>Depois de Brasília</button>
+    </div>
+    <button class="botao" id="expandir">Expandir tudo</button>
+    <button class="botao" id="recolher">Recolher tudo</button>
+    <button class="botao" id="imprimir">Imprimir</button>
+    <a class="botao" href="guia.html">Guia da equipe</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="lateral" aria-label="Navegação">
+    <h2>Painel</h2>
+    <a href="#visao-geral">Visão geral</a>
+    <h2>Seu papel</h2>
+    <a href="#encaixe">Onde você se encaixa</a>
+    <a href="#divisao">O que é seu e o que é dividido</a>
+    <a href="#aprender">O que aprender</a>
+    <h2>Trilhas de ação</h2>
+    <a href="#trilha-a"><span class="ponto azul"></span><span class="cod">A</span><span class="tit">Pitch · até 24/11</span></a>
+    <a href="#trilha-b"><span class="ponto laranja"></span><span class="cod">B</span><span class="tit">Logística · até 23/11</span></a>
+    <a href="#trilha-c"><span class="ponto verde"></span><span class="cod">C</span><span class="tit">Papel na equipe · depois</span></a>
+    <h2>Pitch</h2>
+    <a href="#falar">Se você tiver de falar</a>
+    <a href="#perguntas">Perguntas prováveis</a>
+    <h2>Outras páginas</h2>
+    <a href="guia.html">Guia da equipe</a>
+    <a href="./">Painel de indicadores</a>
+    <a href="roteiro-conversa.html">Roteiro da conversa</a>
+  </nav>
 
   <main>
-    <!-- 1 -->
-    <section id="encaixe" aria-labelledby="h-fit">
-      <div class="sec-head"><span class="sec-num">1</span><h2 id="h-fit">Onde você se encaixa</h2><a class="more" href="guia.html#areas">as três áreas no guia →</a></div>
-      <p style="max-width: 90ch">O núcleo do Operacional é fixo: <b>como o serviço funciona e como se mede que funciona</b>. O modelo de operação e os indicadores não se repassam. O que dá para redividir é a articulação com a indústria e outros parceiros.</p>
-      <div class="compare">
-        <div class="hd"></div><div class="hd">Hoje (herdado do pitch)</div><div class="hd new">Possível (a combinar)</div>
-        <div class="k">Cartão do pitch</div><div class="old">"Infraestrutura, indústria, <i>stakeholders</i> (partes interessadas) e <abbr title="ambiental, social e governança">ESG</abbr>"</div><div class="new">Operação, indicadores de desempenho e plataforma digital</div>
-        <div class="k">Indústria</div><div class="old">com o Operacional</div><div class="new">Giovanna puxa, porque já faz isso no cargo; você organiza a agenda e registra</div>
-        <div class="k">Sua força</div><div class="old">não aparece</div><div class="new">indicadores e Power BI; gestão de projetos (o acompanhamento das 40 emendas); sistemas, que é a plataforma do Hub</div>
-        <div class="k">Lacuna</div><div class="old">não aparece</div><div class="new">energia e rede elétrica: saber perguntar, não projetar</div>
+    <section class="bloco" id="visao-geral">
+      <h2>Visão geral</h2>
+      <div class="kpis">
+        <div class="kpi destaque"><div class="rot">Tarefas feitas</div><div class="val" id="kpi-feitas">0 <small>/ 15</small></div><div class="det">nas três trilhas · salvo neste navegador</div></div>
+        <div class="kpi"><div class="rot">Pitch</div><div class="val">24/11 <small>9h</small></div><div class="det">abertura em Brasília (a confirmar)</div></div>
+        <div class="kpi"><div class="rot">Sua 1ª mentoria</div><div class="val">17/02 <small>/2027</small></div><div class="det">mentoria operacional do FGV Action</div></div>
+        <div class="kpi"><div class="rot">Disciplinas-chave</div><div class="val">9 · 10 · 13 · 16</div><div class="det">planejamento, riscos, contratos, monitoramento</div></div>
       </div>
-      <div class="box ope"><p><b>O argumento para a visão nova:</b> o edital avalia o Operacional por <b>gestão de projetos</b> e <b>monitoramento da performance</b> (itens 7.2.2.4 e 7.2.2.5). É o que você já faz no dia a dia.</p></div>
+      <div class="progresso" id="barras"></div>
+      <ul class="contexto">
+        <li>O núcleo do Operacional é fixo: <b>como o serviço funciona e como se mede que funciona</b>. Modelo de operação e indicadores não se repassam (<a href="#encaixe">ver o encaixe</a>).</li>
+        <li>Sua força está no que o edital avalia: gestão de projetos e monitoramento da performance (itens 7.2.2.4 e 7.2.2.5).</li>
+        <li>Lacuna: energia e rede elétrica. Saber perguntar, não projetar (<a href="#aprender">ver o que aprender</a>).</li>
+      </ul>
     </section>
 
-    <!-- 2 -->
-    <section id="divisao" aria-labelledby="h-div">
-      <div class="sec-head"><span class="sec-num">2</span><h2 id="h-div">O que é seu, o que é dividido</h2><a class="more" href="guia.html#operacional">o Operacional em detalhe no guia →</a></div>
-      <div class="grid" style="--min: 280px">
-        <div class="card area ope">
-          <h3>Só seu</h3>
-          <ul>
-            <li>O desenho do serviço: quantos pontos de recarga, onde, de que tipo e em que fases, com gatilhos de expansão.</li>
+    <details class="bloco" id="encaixe" data-busca>
+      <summary><h2>Onde você se encaixa</h2><span class="cont">hoje × possível</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Tema</th><th>Hoje (herdado do pitch)</th><th>Possível (a combinar)</th></tr></thead>
+          <tbody>
+            <tr><td><b>Cartão do pitch</b></td><td>"Infraestrutura, indústria, <i>stakeholders</i> (partes interessadas) e <abbr title="ambiental, social e governança">ESG</abbr>"</td><td>Operação, indicadores de desempenho e plataforma digital</td></tr>
+            <tr><td><b>Indústria</b></td><td>com o Operacional</td><td>Giovanna puxa, porque já faz isso no cargo; você organiza a agenda e registra</td></tr>
+            <tr><td><b>Sua força</b></td><td>não aparece</td><td>indicadores e Power BI; gestão de projetos (o acompanhamento das 40 emendas); sistemas, que é a plataforma do Hub</td></tr>
+            <tr><td><b>Lacuna</b></td><td>não aparece</td><td>energia e rede elétrica: saber perguntar, não projetar</td></tr>
+          </tbody>
+        </table></div>
+        <div class="definicao"><b>O argumento para a visão nova:</b> o edital avalia o Operacional por gestão de projetos e monitoramento da performance, e é o que você já faz no dia a dia. As três áreas completas estão no <a href="guia.html#areas">guia da equipe</a>.</div>
+      </div>
+    </details>
+
+    <details class="bloco" id="divisao" data-busca>
+      <summary><h2>O que é seu e o que é dividido</h2><span class="cont">você · Thiago · Giovanna</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna c-laranja"><h4>Só seu</h4><ul class="lista">
+            <li>O desenho do serviço: quantos pontos, onde, de que tipo e em que fases, com gatilhos de expansão.</li>
             <li>O caderno de encargos: padrões de serviço, manutenção e atendimento.</li>
-            <li>Os indicadores e o plano de monitoramento. O <a href="./">painel</a> já é o rascunho.</li>
-            <li>O inventário de ativos e áreas (meses 1 a 3) e o diagnóstico de demanda e de rede (meses 3 a 6).</li>
-          </ul>
-        </div>
-        <div class="card area eco">
-          <h3>Com o Thiago (Econômico)</h3>
-          <ul>
+            <li>Os indicadores e o plano de monitoramento; o <a href="./">painel</a> já é o rascunho.</li>
+            <li>O inventário de ativos e áreas (meses 1 a 3) e o diagnóstico de demanda e de rede (meses 3 a 6).</li></ul></div>
+          <div class="coluna c-verde"><h4>Com o Thiago · Econômico</h4><ul class="lista">
             <li>Quanto do pagamento depende da nota de desempenho.</li>
             <li>Os custos de operação e manutenção que entram no modelo.</li>
-            <li>O nível de uso que justifica abrir mais pontos.</li>
-          </ul>
-        </div>
-        <div class="card area jur">
-          <h3>Com a Giovanna (Jurídico)</h3>
-          <ul>
+            <li>O nível de uso que justifica abrir mais pontos.</li></ul></div>
+          <div class="coluna c-roxo"><h4>Com a Giovanna · Jurídico</h4><ul class="lista">
             <li>As metas que viram cláusulas e penalidades.</li>
             <li>As regras de fiscalização e quem confere os dados.</li>
-            <li>O que volta ao Município no fim do contrato.</li>
-          </ul>
+            <li>O que volta ao Município no fim do contrato.</li></ul></div>
+        </div>
+        <div class="pend-grid">
+          <div class="pend"><h3>Os três juntos</h3><p>A matriz de riscos: quem assume cada risco (demanda, energia, tecnologia).</p></div>
+          <div class="resumo">A divisão em peças do edital é <b>prática de mercado</b>, não está escrita pela FGV. Confirmar na mentoria de 17/02/2027 (<a href="guia.html#operacional">detalhe no guia</a>).</div>
         </div>
       </div>
-      <div class="grid" style="--min: 320px">
-        <div class="box"><p><b>Os três juntos:</b> a matriz de riscos, que diz quem assume cada risco (demanda, energia, tecnologia).</p></div>
-        <div class="box amber"><p>A divisão em peças do edital é <b>prática de mercado</b>, não está escrita pela FGV. Confirme na mentoria de 17/02/2027.</p></div>
-      </div>
-    </section>
+    </details>
 
-    <!-- 3 -->
-    <section id="aprender" aria-labelledby="h-learn">
-      <div class="sec-head"><span class="sec-num">3</span><h2 id="h-learn">O que aprender</h2></div>
-      <div class="grid" style="--min: 300px">
-        <div class="card">
-          <div class="card-head"><h3>Antes de terça</h3><span class="tag amber right">urgente</span></div>
-          <p class="why">Vocabulário mínimo. As definições completas estão no <a href="guia.html#glossario">glossário do guia</a>.</p>
-          <ul>
-            <li><a href="guia.html#g-conc">Concessão comum</a>: o usuário paga a tarifa.</li>
-            <li><a href="guia.html#g-ppp">PPP administrativa</a>: o Município paga. Na <b>patrocinada</b>, é tarifa mais complemento público.</li>
-            <li><a href="guia.html#g-vfm">Value for Money</a>: a PPP vale mais que a obra pública pelo mesmo dinheiro?</li>
-            <li><a href="guia.html#g-sla">Acordo de nível de serviço</a>: o serviço falha, o parceiro recebe menos.</li>
-            <li><a href="guia.html#g-tm">Teoria da Mudança</a>: problema → atividades → produtos → resultados → impacto.</li>
-          </ul>
-          <p class="why">Leitura: pré-projeto, itens 3.1, 3.5, 3.7 e 3.10 (cerca de 15 minutos).</p>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>Módulo 1</h3><span class="when right">até 19/04/2027</span></div>
-          <ul>
-            <li>Disciplina 1: por que o Estado intervém (falhas de mercado) e a Teoria da Mudança aplicada ao Hub.</li>
-            <li>Disciplina 2: análise com vários critérios e Value for Money. A pergunta é se o Hub deve mesmo ser PPP.</li>
-            <li><b>Energia, o básico:</b> potência, em quilowatts, × energia, em <span class="nw">quilowatts-hora</span>. Recarga em corrente alternada (lenta) × corrente contínua (rápida). O que a distribuidora precisa saber para ligar um ponto de alta potência.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>Ao longo do curso</h3><span class="when right">até 2028</span></div>
-          <ul>
-            <li><b>Disciplina 9:</b> Planejamento Estratégico, presencial em Pernambuco, ago/2027.</li>
-            <li><b>Disciplina 10:</b> Avaliação e Gestão de Riscos.</li>
-            <li><b>Disciplina 13:</b> Governança na Gestão Contratual em PPPs.</li>
-            <li><b>Disciplina 16:</b> Monitoramento e Avaliação. É o seu tema.</li>
-            <li><b>Eletiva 15-A:</b> Inovação em Mobilidade Urbana. A ementa cita "mobilidade elétrica".</li>
-          </ul>
+    <details class="bloco" id="aprender" data-busca>
+      <summary><h2>O que aprender</h2><span class="cont">antes de terça · módulo 1 · curso todo</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna c-laranja" data-area="agora"><h4>Antes de terça <span class="tag t-laranja">urgente</span></h4>
+            <ul class="lista">
+              <li><a href="guia.html#g-conc">Concessão comum</a>: o usuário paga a tarifa.</li>
+              <li><a href="guia.html#g-ppp">PPP administrativa</a>: o Município paga. Na patrocinada, tarifa mais complemento público.</li>
+              <li><a href="guia.html#g-vfm">Value for Money</a>: a PPP vale mais que a obra pública pelo mesmo dinheiro?</li>
+              <li><a href="guia.html#g-sla">Acordo de nível de serviço</a>: o serviço falha, o parceiro recebe menos.</li>
+              <li><a href="guia.html#g-tm">Teoria da Mudança</a>: problema → atividades → produtos → resultados → impacto.</li></ul>
+            <p class="nota">Leitura: pré-projeto, itens 3.1, 3.5, 3.7 e 3.10 (cerca de 15 minutos).</p></div>
+          <div class="coluna c-azul" data-area="depois"><h4>Módulo 1 <span class="tag t-azul">até 19/04/2027</span></h4>
+            <ul class="lista">
+              <li>Disciplina 1: por que o Estado intervém (falhas de mercado) e a Teoria da Mudança aplicada ao Hub.</li>
+              <li>Disciplina 2: análise com vários critérios e Value for Money. A pergunta é se o Hub deve mesmo ser PPP.</li>
+              <li><b>Energia, o básico:</b> potência, em quilowatts, e energia, em <span class="nw">quilowatts-hora</span>; recarga em corrente alternada (lenta) e em corrente contínua (rápida); o que a distribuidora precisa saber para ligar um ponto de alta potência.</li></ul></div>
+          <div class="coluna c-azul" data-area="depois"><h4>Ao longo do curso <span class="tag t-azul">até 2028</span></h4>
+            <ul class="lista">
+              <li><b>Disciplina 9:</b> Planejamento Estratégico, presencial em Pernambuco, ago/2027.</li>
+              <li><b>Disciplina 10:</b> Avaliação e Gestão de Riscos.</li>
+              <li><b>Disciplina 13:</b> Governança na Gestão Contratual em PPPs.</li>
+              <li><b>Disciplina 16:</b> Monitoramento e Avaliação, o seu tema.</li>
+              <li><b>Eletiva 15-A:</b> Inovação em Mobilidade Urbana; a ementa cita "mobilidade elétrica".</li></ul></div>
         </div>
       </div>
-    </section>
+    </details>
 
-    <!-- 4 -->
-    <section id="trilhas" aria-labelledby="h-plan">
-      <div class="sec-head"><span class="sec-num">4</span><h2 id="h-plan">Trilhas de ação</h2></div>
-      <p class="why">As trilhas A e B correm em paralelo até segunda. A trilha C começa em Brasília. O que você marcar fica salvo neste navegador.</p>
-      <div class="grid" style="--min: 300px">
-        <div class="card track" style="--c: var(--accent)">
-          <div class="card-head"><h3>A · Pitch</h3><span class="when right">até 24/11 · em sequência</span></div>
-          <div class="bar" data-track="a"><i></i></div><span class="count" data-track="a"></span>
-          <ul class="check" data-track="a">
-            <li><label for="a1"><input type="checkbox" id="a1"><span>Ler o <a href="guia.html">guia da equipe</a> e o pré-projeto (itens 3.1, 3.5, 3.7 e 3.10).</span></label></li>
-            <li><label for="a2"><input type="checkbox" id="a2"><span>Slide 2: nome, cartão do perfil e nota. Decidir a lotação que vai no cartão.</span></label></li>
-            <li><label for="a3"><input type="checkbox" id="a3"><span>Mandar à equipe a nova versão e o link do <code>guia.html</code>, nunca o desta página. Perguntar quem fala e qual é a regra exata.</span></label></li>
-            <li><label for="a4"><input type="checkbox" id="a4"><span>Propor os <a href="guia.html#pitch">cortes do roteiro</a>, de 472 para cerca de 400 palavras.</span></label></li>
-            <li><label for="a5"><input type="checkbox" id="a5"><span>Ensaio por chamada, com cronômetro, antes do voo de segunda às 20h20.</span></label></li>
-            <li><label for="a6"><input type="checkbox" id="a6"><span>Terça: chegar cedo e combinar a ordem com a equipe.</span></label></li>
-          </ul>
+    <details class="bloco" id="trilhas" data-busca>
+      <summary><h2>Trilhas de ação</h2><span class="cont" id="cont-trilhas">A e B em paralelo até segunda · C a partir de Brasília</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna c-azul" id="trilha-a" data-area="agora"><h4>A · Pitch <span class="tag t-azul">até 24/11 · em sequência</span></h4>
+            <ul class="checklist" data-trilha="a">
+              <li><label><input type="checkbox" id="a1"><span>Ler o <a href="guia.html">guia da equipe</a> e o pré-projeto (itens 3.1, 3.5, 3.7 e 3.10).</span></label></li>
+              <li><label><input type="checkbox" id="a2"><span>Slide 2: nome, cartão do perfil e nota. Decidir a lotação que vai no cartão.</span></label></li>
+              <li><label><input type="checkbox" id="a3"><span>Mandar à equipe a nova versão e o link do guia (nunca o desta página). Perguntar quem fala e qual é a regra exata.</span></label></li>
+              <li><label><input type="checkbox" id="a4"><span>Propor os <a href="guia.html#pitch">cortes do roteiro</a>, de 472 para cerca de 400 palavras.</span></label></li>
+              <li><label><input type="checkbox" id="a5"><span>Ensaio por chamada, com cronômetro, antes do voo de segunda às 20h20.</span></label></li>
+              <li><label><input type="checkbox" id="a6"><span>Terça: chegar cedo e combinar a ordem com a equipe.</span></label></li></ul></div>
+          <div class="coluna c-laranja" id="trilha-b" data-area="agora"><h4>B · Logística <span class="tag t-laranja">até 23/11 · em paralelo</span></h4>
+            <ul class="checklist" data-trilha="b">
+              <li><label><input type="checkbox" id="b1"><span>Confirmar que a autorização das diárias saiu no seu nome.</span></label></li>
+              <li><label><input type="checkbox" id="b2"><span>Avisar o hotel que você chega por volta das 22h30; o check-in vai até meia-noite.</span></label></li>
+              <li><label><input type="checkbox" id="b3"><span>Acompanhar o aceite da FGV. Se não vier até segunda, perguntar à coordenação como fica a presença em 24/11.</span></label></li>
+              <li><label><input type="checkbox" id="b4"><span>Abrir o painel e o guia no celular, com internet, para garantir que carregam.</span></label></li></ul></div>
+          <div class="coluna c-verde" id="trilha-c" data-area="depois"><h4>C · Papel na equipe <span class="tag t-verde">de Brasília em diante</span></h4>
+            <ul class="checklist" data-trilha="c">
+              <li><label><input type="checkbox" id="c1"><span>Conversa sobre a divisão de papéis: ouvir primeiro, depois propor (<a href="roteiro-conversa.html">roteiro da conversa</a>).</span></label></li>
+              <li><label><input type="checkbox" id="c2"><span>Revisar o <a href="./">painel de indicadores</a> com o retorno da equipe e mandar até 30/11.</span></label></li>
+              <li><label><input type="checkbox" id="c3"><span>Ler o contrato individual da FGV antes de assinar.</span></label></li>
+              <li><label><input type="checkbox" id="c4"><span>Montar as perguntas para a distribuidora: capacidade em cada local, prazo de conexão e custo de reforço da rede.</span></label></li>
+              <li><label><input type="checkbox" id="c5"><span>Levar à mentoria de 17/02/2027: painel revisado, esboço das fases e as perguntas à distribuidora.</span></label></li></ul></div>
         </div>
-        <div class="card track" style="--c: var(--amber)">
-          <div class="card-head"><h3>B · Logística</h3><span class="when right">até 23/11 · em paralelo</span></div>
-          <div class="bar" data-track="b"><i></i></div><span class="count" data-track="b"></span>
-          <ul class="check" data-track="b">
-            <li><label for="b1"><input type="checkbox" id="b1"><span>Confirmar que a autorização das diárias saiu no seu nome.</span></label></li>
-            <li><label for="b2"><input type="checkbox" id="b2"><span>Avisar o hotel que você chega por volta das 22h30. O check-in vai até meia-noite.</span></label></li>
-            <li><label for="b3"><input type="checkbox" id="b3"><span>Acompanhar o aceite da FGV. Se não vier até segunda, perguntar à coordenação do curso como fica a presença em 24/11.</span></label></li>
-            <li><label for="b4"><input type="checkbox" id="b4"><span>Abrir o painel e o guia no celular, com internet, para garantir que carregam.</span></label></li>
-          </ul>
-        </div>
-        <div class="card track" style="--c: var(--ope)">
-          <div class="card-head"><h3>C · Papel na equipe</h3><span class="when right">de Brasília em diante</span></div>
-          <div class="bar" data-track="c"><i></i></div><span class="count" data-track="c"></span>
-          <ul class="check" data-track="c">
-            <li><label for="c1"><input type="checkbox" id="c1"><span>Conversa sobre a divisão de papéis: ouvir primeiro, depois propor (<a href="roteiro-conversa.html">roteiro da conversa</a>).</span></label></li>
-            <li><label for="c2"><input type="checkbox" id="c2"><span>Revisar o <a href="./">painel de indicadores</a> com o retorno da equipe e mandar até 30/11.</span></label></li>
-            <li><label for="c3"><input type="checkbox" id="c3"><span>Ler o contrato individual da FGV antes de assinar.</span></label></li>
-            <li><label for="c4"><input type="checkbox" id="c4"><span>Montar as perguntas para a distribuidora: capacidade disponível em cada local, prazo de conexão e custo de reforço da rede.</span></label></li>
-            <li><label for="c5"><input type="checkbox" id="c5"><span>Levar à mentoria de 17/02/2027: painel revisado, esboço das fases e as perguntas à distribuidora.</span></label></li>
-          </ul>
+        <div class="pend-grid">
+          <div class="pend"><h3>Na equipe</h3><p>Chegue com algo concreto. Rascunho na mão convence mais que discussão aberta.</p></div>
+          <div class="pend"><h3>No curso</h3><p>Traga cada disciplina para o Hub; é o que cada oficina do FGV Action pede.</p></div>
+          <div class="pend"><h3>Com o Claude</h3><p>Dúvidas de conceito, revisão de entregas, evolução do painel e destas páginas, conferência de dados antes de virarem slide.</p></div>
         </div>
       </div>
-      <div class="grid" style="--min: 260px">
-        <div class="box"><p><b>Na equipe:</b> chegue com algo concreto. Rascunho na mão convence mais que discussão aberta.</p></div>
-        <div class="box"><p><b>No curso:</b> traga cada disciplina para o Hub. É isso que cada oficina do FGV Action pede.</p></div>
-        <div class="box"><p><b>Com o Claude:</b> tirar dúvidas de conceito, revisar entregas, evoluir o painel e estas páginas, conferir dados antes de virarem slide.</p></div>
-      </div>
-    </section>
+    </details>
 
-    <!-- 5 -->
-    <section id="falar" aria-labelledby="h-speak">
-      <div class="sec-head"><span class="sec-num">5</span><h2 id="h-speak">Se você tiver de falar no pitch</h2><a class="more" href="guia.html#pitch">o pitch slide a slide →</a></div>
-      <div class="grid" style="--min: 300px">
-        <div class="card">
-          <div class="card-head"><h3>Só se apresenta</h3><span class="tag green right">mais provável · 10 s</span></div>
-          <p class="why">Diga o que você faz, não o cargo.</p>
-          <div class="say"><p>Anderson Alves, área técnico-operacional. Minha parte é garantir que o Hub funcione no dia a dia e que isso seja medido: disponibilidade, tempo de reparo e uso viram indicadores no contrato, e o parceiro recebe conforme o desempenho.</p></div>
+    <details class="bloco" id="falar" data-area="agora" data-busca>
+      <summary><h2>Se você tiver de falar no pitch</h2><span class="cont">3 cenários</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="cenarios">
+          <div class="cenario rec"><div class="cen-topo"><b>Só se apresenta</b><span class="tag t-verde">mais provável · 10 s</span></div>
+            <p class="nota">Diga o que você faz, não o cargo.</p>
+            <div class="fala">Anderson Alves, área técnico-operacional. Minha parte é garantir que o Hub funcione no dia a dia e que isso seja medido: disponibilidade, tempo de reparo e uso viram indicadores no contrato, e o parceiro recebe conforme o desempenho.</div></div>
+          <div class="cenario"><div class="cen-topo"><b>Fala um trecho</b><span class="tag t-azul">slides 8 e 9 · 45 s</span></div>
+            <p class="nota">São o "como vamos fazer" e casam com a sua área (<a href="guia.html#slide-8">ver no guia</a>). Feche com o gancho operacional:</p>
+            <div class="fala">…por isso o primeiro passo é o inventário e o diagnóstico de demanda e de rede elétrica: não dá para contratar o que não se mediu.</div></div>
+          <div class="cenario"><div class="cen-topo"><b>Fala tudo</b><span class="tag t-laranja">3 minutos</span></div>
+            <p>Use o roteiro enxuto. Decore só a abertura, a pergunta do problema (slide 3) e o fecho; o resto, fale a partir do título de cada slide.</p></div>
         </div>
-        <div class="card">
-          <div class="card-head"><h3>Fala um trecho</h3><span class="tag right">slides 8 e 9 · 45 s</span></div>
-          <p class="why">São o "como vamos fazer" e casam com a sua área. Fale a partir das notas e feche com o gancho operacional:</p>
-          <div class="say"><p>…por isso o primeiro passo é o inventário e o diagnóstico de demanda e de rede elétrica: não dá para contratar o que não se mediu.</p></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>Fala tudo</h3><span class="tag amber right">3 minutos</span></div>
-          <p>Use o roteiro enxuto. Decore só a abertura, a pergunta do problema (slide 3) e o fecho. O resto você fala a partir do título de cada slide.</p>
-        </div>
+        <div class="definicao"><b>Em qualquer cenário:</b> uma ideia por slide, sem ler a tela · números arredondados (224 mil, cerca de 20 por ponto, um quarto no estado de São Paulo) · nada de pedir desculpas por ter chegado agora: você é o Operacional da equipe.</div>
       </div>
-      <div class="box"><p><b>Em qualquer cenário:</b> uma ideia por slide, sem ler a tela · números arredondados (224 mil, cerca de 20 por ponto, um quarto no estado de São Paulo) · nada de pedir desculpas por ter chegado agora. Você é o Operacional da equipe.</p></div>
-    </section>
+    </details>
 
-    <!-- 6 -->
-    <section id="perguntas" aria-labelledby="h-qa">
-      <div class="sec-head"><span class="sec-num">6</span><h2 id="h-qa">Perguntas prováveis</h2></div>
-      <p class="why">As respostas são sugestões. Combine com a equipe antes de usá-las como posição do grupo.</p>
-      <div class="qa">
-        <details>
-          <summary>"Por que a própria Prefeitura não instala os carregadores?"</summary>
-          <div><div class="say"><p>Porque o investimento é alto, e o risco de tecnologia e de demanda também. A tecnologia muda rápido. A PPP passa esses riscos a quem sabe operar, e o Value for Money vai dizer se compensa.</p></div></div>
-        </details>
-        <details>
-          <summary>"Quantos pontos, e onde?"</summary>
-          <div><div class="say"><p>Ainda não temos esse número, e é de propósito. Ele sai do diagnóstico de demanda e de rede, nos meses 3 a 6. A implantação é em fases, e cada nova fase abre quando o uso atinge uma meta.</p></div></div>
-        </details>
-        <details>
-          <summary>"A rede elétrica aguenta recarga rápida e ônibus?"</summary>
-          <div><div class="say"><p>Esse é exatamente o ponto do diagnóstico com a distribuidora: capacidade disponível em cada local, prazo e custo de conexão. Está no cronograma antes de qualquer definição de local.</p></div></div>
-        </details>
-        <details>
-          <summary>"Como vocês vão saber se o parceiro está entregando?"</summary>
-          <div><div class="say"><p>Com indicadores no contrato, medidos todo mês: disponibilidade, tempo de reparo e uso. Eles mexem no pagamento e aparecem num painel público, com auditoria dos dados críticos.</p></div></div>
-        </details>
-        <details>
-          <summary>"Isso não concorre com os eletropostos privados?"</summary>
-          <div><div class="say"><p>O diagnóstico vai mostrar onde o mercado já atende. O foco do Hub é onde ele não chega sozinho: frotas públicas, veículos pesados e áreas sem cobertura.</p></div><p class="why">É a resposta menos amarrada no pré-projeto. Vale alinhar com o Thiago.</p></div>
-        </details>
+    <details class="bloco" id="perguntas" data-area="agora" data-busca>
+      <summary><h2>Perguntas prováveis</h2><span class="cont">5 perguntas · respostas a combinar com a equipe</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <details class="item" data-busca><summary><span class="cod-grande">1</span><span class="sum-tit">Por que a própria Prefeitura não instala os carregadores?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Porque o investimento é alto, e o risco de tecnologia e de demanda também. A tecnologia muda rápido. A PPP passa esses riscos a quem sabe operar, e o Value for Money vai dizer se compensa.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">2</span><span class="sum-tit">Quantos pontos, e onde?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Ainda não temos esse número, de propósito. Ele sai do diagnóstico de demanda e de rede, nos meses 3 a 6. A implantação é em fases, e cada nova fase abre quando o uso atinge uma meta.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">3</span><span class="sum-tit">A rede elétrica aguenta recarga rápida e ônibus?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Esse é exatamente o ponto do diagnóstico com a distribuidora: capacidade disponível em cada local, prazo e custo de conexão. Está no cronograma antes de qualquer definição de local.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">4</span><span class="sum-tit">Como vocês vão saber se o parceiro está entregando?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Com indicadores no contrato, medidos todo mês: disponibilidade, tempo de reparo e uso. Eles mexem no pagamento e aparecem num painel público, com auditoria dos dados críticos.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">5</span><span class="sum-tit">Isso não concorre com os eletropostos privados?</span><span class="tag t-laranja">alinhar com o Thiago</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">O diagnóstico vai mostrar onde o mercado já atende. O foco do Hub é onde ele não chega sozinho: frotas públicas, veículos pesados e áreas sem cobertura.</div><p class="nota">É a resposta menos amarrada no pré-projeto.</p></div></details>
       </div>
-    </section>
+    </details>
   </main>
-
-  <footer>
-    <p>Preparado em 21/11/2026 a partir do edital (itens 6.2 e 7.2.2), do programa e do cronograma da Turma 9, do pré-projeto e do pitch. Página escondida, não privada: nenhuma página pública tem link para ela, mas quem abrir o repositório no GitHub vê o arquivo.</p>
-  </footer>
 </div>
+<footer>Página só do Andy. Escondida, não privada: nenhuma página pública tem link para ela, mas quem abrir o repositório no GitHub vê o arquivo.</footer>
 
 <script>
 (function () {
-  const KEY = "roteiro-pessoal-check";
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
-  function progress() {
-    ["a", "b", "c"].forEach(function (t) {
-      const boxes = document.querySelectorAll('.check[data-track="' + t + '"] input');
-      const done = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
-      document.querySelector('.bar[data-track="' + t + '"] i').style.width = (100 * done / boxes.length) + "%";
-      document.querySelector('.count[data-track="' + t + '"]').textContent = done + " de " + boxes.length + " feitos";
+  const norm = s => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const todos = () => document.querySelectorAll("main details");
+  document.getElementById("expandir").onclick = () => todos().forEach(d => d.open = true);
+  document.getElementById("recolher").onclick = () => todos().forEach(d => d.open = false);
+  document.getElementById("imprimir").onclick = () => { todos().forEach(d => d.open = true); window.print(); };
+
+  // Link interno abre o details de destino e os que o contêm
+  function abrir(id) {
+    const alvo = id && document.getElementById(id);
+    if (!alvo) return;
+    for (let d = alvo; d; d = d.parentElement) if (d.tagName === "DETAILS") d.open = true;
+    alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); abrir(a.getAttribute("href").slice(1));
+  });
+  if (location.hash) abrir(location.hash.slice(1));
+
+  // Busca e filtro por categoria (data-area); itens sem data-area não são filtrados
+  let filtro = "todas";
+  function aplicar() {
+    const q = norm(document.getElementById("busca").value.trim());
+    document.querySelectorAll("[data-area], [data-busca]").forEach(el => {
+      const a = el.dataset.area;
+      const areaOk = !a || filtro === "todas" || a === filtro || a === "todas";
+      const bate = !el.hasAttribute("data-busca") || !q || norm(el.textContent).includes(q);
+      el.classList.toggle("oculto", !areaOk || !bate);
+      if (q && bate && areaOk && el.tagName === "DETAILS") el.open = true;
     });
   }
-  document.querySelectorAll(".check input").forEach(function (cb) {
-    if (saved[cb.id]) cb.checked = true;
-    cb.addEventListener("change", function () {
-      saved[cb.id] = cb.checked;
-      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
-      progress();
-    });
+  document.getElementById("busca").addEventListener("input", aplicar);
+  document.querySelectorAll(".chip-filtro[data-filtro]").forEach(b => b.onclick = () => {
+    filtro = b.dataset.filtro;
+    document.querySelectorAll(".chip-filtro[data-filtro]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    aplicar();
   });
-  progress();
-
-  const links = Array.from(document.querySelectorAll("aside.toc a"));
-  const map = new Map(links.map(function (a) { return [a.getAttribute("href").slice(1), a]; }));
-  const obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      links.forEach(function (a) { a.classList.remove("on"); });
-      const a = map.get(e.target.id);
-      if (!a) return;
-      a.classList.add("on");
-      const bar = a.closest("ol");
-      if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: a.offsetLeft - 16, behavior: "smooth" });
+})();
+</script>
+<script>
+(function () {
+  const KEY = "roteiro-pessoal-check";
+  let s = {};
+  try { s = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { s = {}; }
+  const cor = { a: "var(--azul)", b: "var(--laranja)", c: "var(--verde)" };
+  const nome = { a: "A · Pitch", b: "B · Logística", c: "C · Papel na equipe" };
+  function atualizar() {
+    let tot = 0, feitas = 0, html = "";
+    ["a", "b", "c"].forEach(t => {
+      const bx = Array.from(document.querySelectorAll('.checklist[data-trilha="' + t + '"] input'));
+      const f = bx.filter(b => b.checked).length; tot += bx.length; feitas += f;
+      html += '<div class="rotulo" style="margin-top:10px"><span><a href="#trilha-' + t + '">Trilha ' + nome[t] + '</a></span><span>' + f + ' de ' + bx.length + '</span></div>' +
+              '<div class="trilho"><span style="width:' + (100 * f / bx.length) + '%;background:' + cor[t] + '"></span></div>';
     });
-  }, { rootMargin: "-35% 0px -60% 0px" });
-  map.forEach(function (_, id) { const s = document.getElementById(id); if (s) obs.observe(s); });
+    document.getElementById("barras").innerHTML = '<div class="rotulo"><span><b>Andamento das trilhas</b></span><span>' + feitas + ' de ' + tot + ' tarefas</span></div>' + html;
+    document.getElementById("kpi-feitas").innerHTML = feitas + " <small>/ " + tot + "</small>";
+  }
+  document.querySelectorAll(".checklist input").forEach(cb => {
+    if (s[cb.id]) cb.checked = true;
+    cb.addEventListener("change", () => { s[cb.id] = cb.checked; try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} atualizar(); });
+  });
+  atualizar();
 })();
 </script>

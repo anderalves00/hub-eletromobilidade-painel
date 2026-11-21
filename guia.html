@@ -148,6 +148,12 @@ tbody tr:hover td { background: var(--teal-claro); }
 .pend { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-left: 5px solid var(--ambar); }
 .pend h3 { font-size: 16px; color: var(--tinta); margin-bottom: 6px; }
 
+.origem { font-size: 14px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 10px; margin-top: 4px; }
+.origem b { color: var(--teal); }
+.t-sintese { background: #E9EEF0; color: var(--ardosia); }
+details.sub { background: #fff; border-radius: 8px; padding: 8px 12px; }
+details.sub > summary { cursor: pointer; font-weight: 700; color: var(--tinta); font-size: 15px; }
+details.sub[open] > summary { margin-bottom: 6px; }
 .oculto { display: none !important; }
 footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
 
@@ -213,7 +219,6 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
     <a href="#area-eco"><span class="ponto verde"></span><span class="cod">ECO</span><span class="tit">Econômico-financeiro</span></a>
     <a href="#area-jur"><span class="ponto roxo"></span><span class="cod">JUR</span><span class="tit">Jurídico-institucional</span></a>
     <a href="#area-ope"><span class="ponto laranja"></span><span class="cod">OPE</span><span class="tit">Técnico-operacional</span></a>
-    <a href="#operacional"><span class="ponto laranja"></span><span class="cod"></span><span class="tit">Operacional em detalhe</span></a>
     <h2>Pitch · 24/11</h2>
     <a href="#slide-1"><span class="ponto verde"></span><span class="cod">01</span><span class="tit">Abertura</span></a>
     <a href="#slide-2"><span class="ponto laranja"></span><span class="cod">02</span><span class="tit">Quem somos</span></a>
@@ -234,41 +239,28 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
     <section class="bloco" id="visao-geral">
       <h2>Visão geral</h2>
       <div class="kpis">
-        <div class="kpi destaque"><div class="rot">Pitch da equipe</div><div class="val">24/11 <small>9h</small></div><div class="det">Abertura e Oficina <span class="termo" tabindex="0" data-def="Disciplina que liga as demais ao projeto aplicado: 11 oficinas para a equipe aplicar cada disciplina ao Hub e 6 mentorias, duas por área.">FGV Action</span>, em Brasília · 3 minutos</div></div>
+        <div class="kpi destaque"><div class="rot">Pitch da equipe</div><div class="val">24/11 <small>9h</small></div><div class="det">Abertura e Oficina <span class="termo" tabindex="0" data-def="Disciplina 17 do programa, a integradora: 11 oficinas e 6 mentorias em que a equipe aplica cada disciplina ao próprio projeto.">FGV Action</span>, em Brasília · 3 minutos</div></div>
         <div class="kpi"><div class="rot">Carga do curso</div><div class="val">432 <small>horas-aula</small></div><div class="det">de 24/11/2026 a 19/04/2028</div></div>
         <div class="kpi"><div class="rot">Módulos</div><div class="val">4</div><div class="det">uma entrega da equipe ao fim de cada</div></div>
-        <div class="kpi"><div class="rot">Mentorias</div><div class="val">6</div><div class="det">duas por área · a 1ª operacional é em 17/02/2027</div></div>
-        <div class="kpi"><div class="rot">Roteiro do pitch</div><div class="val">472 <small>palavras</small></div><div class="det">meta: cerca de 400, para caber em 3 minutos</div></div>
+        <div class="kpi"><div class="rot">Mentorias</div><div class="val">6</div><div class="det">duas por área, dentro do FGV Action</div></div>
       </div>
-      <div class="progresso">
-        <div class="rotulo"><span>Linha do tempo do curso — cada módulo termina com uma entrega</span><span>nov/2026 a abr/2028</span></div>
-        <div class="trilho"><span style="width:29.8%;background:#0B2E3C"></span><span style="width:22.2%;background:#0F7C7A"></span><span style="width:19.2%;background:#3FB8A8"></span><span style="width:28.8%;background:#9ED9CF"></span></div>
-        <div class="legenda-barra"><span><i style="background:#0B2E3C"></i>1 · Descubra, até 19/04/2027</span><span><i style="background:#0F7C7A"></i>2 · Inove, até 06/08/2027</span><span><i style="background:#3FB8A8"></i>3 · Construa, até 08/11/2027</span><span><i style="background:#9ED9CF"></i>4 · Avalie, até 28/03/2028</span></div>
-      </div>
-      <div class="progresso">
-        <div class="rotulo"><span>Tempo do pitch — soma dos tempos marcados nas notas</span><span>185 s para um limite de 180 s</span></div>
-        <div class="trilho"><span style="width:5.4%;background:var(--teal)"></span><span style="width:10.8%;background:var(--laranja)"></span><span style="width:13.5%;background:#3FB8A8"></span><span style="width:10.8%;background:var(--teal)"></span><span style="width:13.5%;background:#3FB8A8"></span><span style="width:8.1%;background:var(--teal)"></span><span style="width:8.1%;background:var(--laranja)"></span><span style="width:10.8%;background:#3FB8A8"></span><span style="width:13.5%;background:var(--teal)"></span><span style="width:5.4%;background:var(--vermelho)"></span></div>
-        <div class="legenda-barra"><span><i style="background:var(--laranja)"></i>slides 2 e 7: pedem ajuste</span><span><i style="background:var(--vermelho)"></i>slide 10: passa dos 3 minutos</span><span><i style="background:var(--teal)"></i>demais slides, alternando tons</span></div>
-      </div>
-      <ul class="contexto">
-        <li>O trabalho final do curso, o Trabalho de Conclusão de Curso (<span class="termo" tabindex="0" data-def="Trabalho de Conclusão de Curso">TCC</span>), é o <b>edital da Parceria Público-Privada (<span class="termo" tabindex="0" data-def="Parceria Público-Privada">PPP</span>) ou concessão, com os anexos</b>, construído aos poucos ao longo dos módulos.</li>
-        <li>A equipe tem uma pessoa em cada área: econômico-financeira, jurídico-institucional e técnico-operacional (<a href="#areas">ver as três áreas</a>).</li>
-        <li>O pré-projeto <b>não parte de que a PPP é a resposta</b>: a escolha do modelo sai da comparação e do <a class="termo" href="#g-vfm" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</a>.</li>
-        <li>Brasília é obrigatória: 12 das 24 horas-aula da Disciplina 1 são lá, e sem elas a presença máxima seria de 50% (<a href="#brasilia">ver a semana</a>).</li>
-      </ul>
+      <p class="origem"><b>De onde vem:</b> carga, módulos e mentorias, do <a href="#fontes">programa do curso</a>; datas, do <a href="#fontes">cronograma da Turma 9</a>. O limite de 3 minutos do pitch foi informado pela equipe; o site da FGV não fala do pitch.</p>
     </section>
 
     <details class="bloco" id="curso" data-busca>
       <summary><h2>O curso</h2><span class="cont">4 módulos · 16 disciplinas · FGV Action</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
+        <div class="definicao"><b>O trabalho final</b> (<span class="termo" tabindex="0" data-def="Trabalho de Conclusão de Curso.">TCC</span>) é um <b>edital de Parceria Público-Privada (PPP) ou concessão, com os principais anexos</b>, construído pela equipe aos poucos, ao longo dos quatro módulos, e apresentado a uma banca no fim.</div>
+        <h3 class="subtitulo-bloco">Os quatro módulos</h3>
+        <p class="nota">Os nomes vêm da metodologia <span class="termo" tabindex="0" data-def="Descubra, Inove, Construa, Avalie: método do FGV In Company para cursos que resolvem um desafio real de uma instituição. Cada letra é uma fase.">DICA</span>, do FGV In Company. Cada módulo é uma fase da preparação de uma PPP, na ordem em que ela acontece de verdade, e termina com uma entrega da equipe.</p>
         <div class="colunas">
-          <div class="coluna c-teal"><h4>1 · Descubra</h4><p><span class="tag t-teal">entrega em 19/04/2027</span></p><p class="nota">Qual é o problema público, e a PPP faz sentido para ele?</p></div>
-          <div class="coluna c-teal"><h4>2 · Inove</h4><p><span class="tag t-teal">entrega em 06/08/2027</span></p><p class="nota">A estratégia: resultados, governança, partes interessadas e as primeiras escolhas jurídicas, financeiras e operacionais.</p></div>
-          <div class="coluna c-teal"><h4>3 · Construa</h4><p><span class="tag t-teal">entrega em 08/11/2027</span></p><p class="nota">As peças do edital: modelagem, matriz de riscos, remuneração e garantias, indicadores de desempenho.</p></div>
-          <div class="coluna c-teal"><h4>4 · Avalie</h4><p><span class="tag t-teal">entrega em 28/03/2028</span></p><p class="nota">Revisão do conjunto, gestão do contrato, monitoramento e a banca final.</p></div>
+          <div class="coluna c-teal"><h4>1 · Descubra</h4><p><span class="tag t-teal">entrega em 19/04/2027</span></p><p>Entender o problema público: as causas, os limites da Prefeitura e se uma PPP ou concessão faz sentido para ele.</p><p class="nota">Disciplinas 1 a 4</p></div>
+          <div class="coluna c-teal"><h4>2 · Inove</h4><p><span class="tag t-teal">entrega em 06/08/2027</span></p><p>Transformar o diagnóstico em estratégia: resultados pretendidos, governança, quem precisa ser envolvido e o esboço das soluções jurídica, financeira e operacional.</p><p class="nota">Disciplinas 5 a 8</p></div>
+          <div class="coluna c-teal"><h4>3 · Construa</h4><p><span class="tag t-teal">entrega em 08/11/2027</span></p><p>Escrever as peças do edital: modelagem jurídica, econômico-financeira e operacional, matriz de riscos, remuneração e garantias, indicadores de desempenho.</p><p class="nota">Disciplinas 9 a 12</p></div>
+          <div class="coluna c-teal"><h4>4 · Avalie</h4><p><span class="tag t-teal">entrega em 28/03/2028</span></p><p>Revisar se tudo fecha do problema ao contrato; gestão do contrato, monitoramento e avaliação; apresentação à banca.</p><p class="nota">Disciplinas 13 a 16</p></div>
         </div>
-        <h3 class="subtitulo-bloco">FGV Action — mentorias por área</h3>
-        <p class="nota">É a disciplina que liga as demais ao projeto: 11 oficinas para a equipe aplicar cada disciplina ao Hub e 6 mentorias, duas por área. Cada mentoria tem dois horários (19h–20h30 ou 21h–22h30), conforme o grupo; o nosso ainda não foi informado.</p>
+        <h3 class="subtitulo-bloco">FGV Action — a disciplina que amarra as outras</h3>
+        <p>É a disciplina 17 do programa. Depois de cada disciplina, a equipe tem uma <b>oficina</b> (aplicar o conteúdo ao Hub) ou uma <b>mentoria</b> (orientação de um especialista sobre o que a equipe já produziu). São 11 oficinas e 6 mentorias. No cronograma, aparecem como "Action – disciplina N (Oficina Síncrona)" ou "(Mentoria Operacional / Jurídico / Econômico)".</p>
         <div class="tabela-wrap"><table>
           <thead><tr><th>Área</th><th>1ª mentoria</th><th>2ª mentoria</th></tr></thead>
           <tbody>
@@ -277,90 +269,89 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
             <tr data-area="eco"><td><span class="tag t-verde">Econômico</span></td><td class="nw">17/05/2027</td><td class="nw">20/10/2027</td></tr>
           </tbody>
         </table></div>
+        <p class="nota">Cada mentoria tem dois horários, 19h–20h30 ou 21h–22h30, conforme o grupo. O grupo da equipe ainda não foi informado.</p>
         <div class="pend-grid">
           <div class="pend"><h3>Como se passa</h3><ul class="lista">
-            <li><b>Nota 7</b> e <b>75% de presença</b> em <b>cada</b> disciplina.</li>
-            <li><b>Nota 7</b> no projeto aplicado (FGV Action).</li>
-            <li>Presença na aula ao vivo vem do relatório da videoconferência: entrar com nome e sobrenome.</li>
+            <li>Média mínima <b>7,0</b> e <b>75% de frequência em cada disciplina</b>.</li>
+            <li>Presença em aula ao vivo vem do relatório da videoconferência: entrar com nome e sobrenome.</li>
             <li>Presença em encontro presencial só conta com a pessoa no local.</li></ul></div>
           <div class="pend"><h3>Encontros presenciais</h3><ul class="lista">
             <li><b>Brasília</b>, <span class="nw">24 e 25/11/2026</span>: abertura e Disciplina 1.</li>
             <li><b>Pernambuco</b>, <span class="nw">09 a 11/08/2027</span>: Disciplina 9, Planejamento Estratégico.</li>
             <li><b>São Paulo</b>, <span class="nw">18 e 19/04/2028</span>: FGV Action final e encerramento.</li></ul></div>
-          <div class="pend" id="g-tm-curso"><h3>O fio condutor: Teoria da Mudança</h3><p>Problema público → atividades → produtos → resultados → impacto. O curso pede que o projeto seja montado nessa cadeia desde a Disciplina 1.</p></div>
+          <div class="pend" id="g-tm-curso"><h3>O fio condutor: Teoria da Mudança</h3>
+            <p>É o jeito que o curso pede para montar o projeto: começar pelo <b>problema público</b> e encadear o que será feito (atividades), o que isso entrega (produtos), o que muda para a cidade (resultados) e o efeito de longo prazo (impacto).</p>
+            <p class="nota">Para que serve: cada peça do edital precisa se justificar pelo problema. Aparece na apresentação do programa e nas Disciplinas 1, 9 e 10.</p></div>
         </div>
+        <p class="origem"><b>De onde vem:</b> módulos, FGV Action e Teoria da Mudança, do <a href="#fontes">programa do curso</a> (Estrutura Pedagógica e disciplina 17); datas e mentorias, do <a href="#fontes">cronograma da Turma 9</a>; nota e frequência, do <a href="#fontes">5º edital</a> (início do edital). A divisão das disciplinas por módulo está no cronograma.</p>
       </div>
     </details>
 
     <details class="bloco" id="projeto" data-busca>
-      <summary><h2>O projeto</h2><span class="cont">pré-projeto aprovado no 5º edital</span><span class="seta" aria-hidden="true">›</span></summary>
+      <summary><h2>O projeto</h2><span class="cont">o que o pré-projeto diz e o que ainda não diz</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
-        <div class="definicao"><b>Problema público:</b> como preparar São Bernardo do Campo para a eletromobilidade sem pôr no orçamento municipal os altos investimentos e riscos dessa nova infraestrutura?</div>
+        <div class="definicao"><b>Problema público:</b> São Bernardo precisa preparar a cidade para a eletrificação dos veículos (pontos de recarga, conexão elétrica, gestão de energia, operação confiável). Se o Município fizer tudo sozinho, concentra investimentos altos e os riscos de tecnologia, de demanda e de operação. <span class="tag t-sintese">resumo do item 3.1</span></div>
         <div class="colunas">
-          <div class="coluna c-teal"><h4>A hipótese</h4><p>Um Hub modular com seis frentes: rede de recarga, recarga rápida, frota pesada, energia solar com baterias, plataforma digital e inovação com a indústria. Um parceiro privado implanta, opera e mantém; o Município planeja, regula e fiscaliza.</p></div>
-          <div class="coluna c-laranja"><h4>Em aberto</h4><p>Se o modelo será PPP, <a class="termo" href="#g-conc" data-def="O parceiro é remunerado pela tarifa do usuário, sem pagamento do Município.">concessão comum</a> ou um modelo híbrido. A resposta sai da comparação entre os modelos e do <a class="termo" href="#g-vfm" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</a>.</p></div>
-          <div class="coluna c-laranja"><h4>Ainda não existe</h4><p>Investimento e custo de operação (<a class="termo" href="#g-capex" data-def="CAPEX: investimento inicial (equipamentos, obras). OPEX: custo de operar e manter ao longo do contrato.">CAPEX e OPEX</a>), quantos pontos de recarga, onde ficam, e o estudo da rede elétrica. São as primeiras entregas: governança e inventário nos meses 1 a 3, diagnóstico nos meses 3 a 6 (<a href="#slide-9">ver as etapas</a>).</p></div>
+          <div class="coluna c-teal"><h4>A proposta</h4>
+            <p>Um Hub modular, que cresce por etapas. O pitch o divide em <b>seis núcleos</b>: rede de recarga, recarga rápida, frota pesada, energia renovável (solar com baterias), plataforma digital e inovação com a indústria local.</p>
+            <p>Um parceiro privado implanta, opera e mantém; o Município planeja, regula e fiscaliza.</p>
+            <p class="nota">O pré-projeto (3.1) lista os mesmos componentes, menos o de inovação, que aparece só no pitch (slide 4).</p></div>
+          <div class="coluna c-laranja"><h4>Em aberto, de propósito</h4>
+            <p>O modelo: PPP, <a class="termo" href="#g-conc" data-def="O parceiro é remunerado pela tarifa do usuário, sem pagamento do Município.">concessão comum</a> ou "arranjo equivalente". O pré-projeto diz que a modalidade "será definida pelos estudos" (3.6), comparando os modelos e o <a class="termo" href="#g-vfm" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</a> (3.2).</p></div>
+          <div class="coluna c-laranja"><h4>Ainda não existe</h4>
+            <p>Investimento e custo de operação (<a class="termo" href="#g-capex" data-def="CAPEX: investimento inicial (equipamentos, obras). OPEX: custo de operar e manter ao longo do contrato.">CAPEX e OPEX</a>), quantos pontos e de que potência, e o estudo de conexão elétrica. O pré-projeto diz que "não é tecnicamente responsável" apresentar esses valores agora: dependem de estudos que são as primeiras entregas (3.2).</p>
+            <p class="nota">Cronograma do pré-projeto (3.7): governança e inventário nos meses 1 a 3, diagnóstico de demanda e rede nos meses 3 a 6 (<a href="#slide-9">ver as etapas</a>).</p></div>
         </div>
+        <p class="origem"><b>De onde vem:</b> <a href="#fontes">pré-projeto</a> do Hub (itens 3.1, 3.2, 3.6 e 3.7) e <a href="#fontes">pitch</a> da equipe (slides 4 e 5). Os números entre parênteses são os itens do pré-projeto.</p>
       </div>
     </details>
 
     <details class="bloco" id="areas" data-busca>
-      <summary><h2>As três áreas</h2><span class="cont">o que o edital pede de cada uma</span><span class="seta" aria-hidden="true">›</span></summary>
+      <summary><h2>As três áreas</h2><span class="cont">o perfil de cada especialista no edital</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
-        <p class="nota">O curso parte de que estruturar uma PPP exige juntar três áreas. O <a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">edital</a> define o perfil de cada uma no item 6 e o que se avalia no item 7.2.</p>
+        <p>O <a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">5º edital</a> pediu que cada município indicasse <b>três especialistas</b>, um por área. O <b>item 6</b> define o perfil de cada um.</p>
+        <div class="resumo"><b>Atenção ao item 7.2:</b> ele lista o que foi <b>pontuado na inscrição</b> para escolher os municípios (até 30 pontos pela equipe). Não é a avaliação durante o curso: no curso, a nota vem das disciplinas (média 7,0 e 75% de frequência em cada uma).</div>
         <div class="colunas">
           <div class="coluna c-verde" id="area-eco" data-area="eco"><h4>Econômico-financeiro · Thiago Belão</h4>
             <div class="definicao">A conta fecha?</div>
-            <p><b>Perfil (6.1):</b> análise econômica e financeira, modelagem, estruturação de projetos, investimentos.</p>
-            <p><b>O que se avalia (7.2.1):</b> viabilidade, custo-benefício, conhecimento de mercado, monitoramento e avaliação de políticas públicas.</p>
-            <p><b>No Hub:</b> investimento e custo de operação, receitas, financiamento, Value for Money, <span class="termo" tabindex="0" data-def="Ajuste do contrato quando um evento fora do controle do parceiro muda a conta prevista, para que nenhum dos lados ganhe ou perca com isso.">reequilíbrio do contrato</span>.</p></div>
+            <p><b>Perfil (6.1):</b> experiência em análise econômica, financeira, modelagem, estruturação de projetos, investimentos, gestão ou áreas correlatas; responsável pela análise econômica e financeira do projeto.</p>
+            <details class="sub"><summary>Pontuado na inscrição (7.2.1, até 5 pontos)</summary><ol class="lista">
+              <li>Conhecimento em análise econômica, financeira, modelagem, investimentos ou estruturação de projetos.</li>
+              <li>Experiência em viabilidade financeira, custo-benefício e modelagem financeira.</li>
+              <li>Experiência em PPPs ou concessões.</li>
+              <li>Conhecimento de mercado: fatores econômicos que podem afetar o projeto.</li>
+              <li>Monitoramento e avaliação de políticas públicas: métodos quantitativos, estatística, Teoria da Mudança e modelo lógico.</li></ol></details></div>
           <div class="coluna c-roxo" id="area-jur" data-area="jur"><h4>Jurídico-institucional · Giovanna Falcaro</h4>
             <div class="definicao">Pode ser feito, e em que modelo?</div>
-            <p><b>Perfil (6.3):</b> regulação, gestão contratual, concessões, PPPs, governança; questões jurídicas e institucionais.</p>
-            <p><b>O que se avalia (7.2.3):</b> regulação e direito público, elaboração e análise de editais e contratos, negociação e resolução de conflitos.</p>
-            <p><b>No Hub:</b> marco legal, modelo contratual, cláusulas e penalidades, o edital.</p></div>
+            <p><b>Perfil (6.3):</b> experiência em regulação, gestão contratual, concessões, PPPs, governança ou áreas correlatas; apto a atuar em questões jurídicas, regulatórias e institucionais do projeto.</p>
+            <details class="sub"><summary>Pontuado na inscrição (7.2.3, até 5 pontos)</summary><ol class="lista">
+              <li>Conhecimento em regulação, gestão contratual, direito público, concessões ou PPPs, incluindo elaborar e analisar editais e contratos.</li>
+              <li>Experiência em legislação regulatória e direito administrativo.</li>
+              <li>Experiência em PPPs ou concessões.</li>
+              <li>Análise jurídica: interpretar e aplicar leis e regulamentos complexos.</li>
+              <li>Negociação e resolução de conflitos.</li></ol></details></div>
           <div class="coluna c-laranja" id="area-ope" data-area="ope"><h4>Técnico-operacional · Anderson Alves</h4>
             <div class="definicao">Como o serviço funciona, e como se mede que funciona?</div>
-            <p><b>Perfil (6.2):</b> gestão, planejamento, infraestrutura, operação de serviços públicos, com conhecimento prático do serviço.</p>
-            <p><b>O que se avalia (7.2.2):</b> gestão operacional, experiência em PPP, gestão de projetos, monitoramento da performance.</p>
-            <p><b>No Hub:</b> o serviço e as fases, quem faz o quê, operação e manutenção, indicadores, riscos operacionais, fiscalização (<a href="#operacional">em detalhe</a>).</p></div>
+            <p><b>Perfil (6.2):</b> experiência em gestão, planejamento, infraestrutura, políticas públicas, operação de serviços públicos ou áreas correlatas, com conhecimento prático do serviço, da infraestrutura ou da política pública objeto da PPP.</p>
+            <details class="sub"><summary>Pontuado na inscrição (7.2.2, até 5 pontos)</summary><ol class="lista">
+              <li>Conhecimento em gestão, planejamento, operação de serviços públicos, infraestrutura ou políticas públicas.</li>
+              <li>Experiência prática em políticas públicas e na gestão operacional de serviços ou infraestruturas públicas.</li>
+              <li>Experiência em PPPs ou concessões.</li>
+              <li>Gestão de projetos: planejar e executar.</li>
+              <li>Monitoramento: acompanhar a performance dos projetos.</li></ol></details></div>
         </div>
-        <h3 class="subtitulo-bloco">Como as áreas se alimentam</h3>
+        <div class="pend-grid">
+          <div class="pend"><h3>Capacidade colaborativa (7.2.4, até 5 pontos)</h3><p>A equipe inteira: trabalho integrado e interdisciplinar, comunicação e compromisso com o curso e o projeto.</p></div>
+          <div class="pend"><h3>Diversidade da equipe (7.2.5, até 10 pontos)</h3><p>Equipes com mulheres, pessoas negras, indígenas, LGBTQIAPN+ ou com deficiência foram valorizadas.</p></div>
+          <div class="pend"><h3>A conta dos 30 pontos</h3><p>3 especialistas × 5 + colaboração 5 + diversidade 10 = 30. Pós-graduação comprovada somava pontos extras (0,5 a 2), dentro do teto.</p></div>
+        </div>
+        <h3 class="subtitulo-bloco">Como as áreas se alimentam <span class="tag t-sintese">síntese, não está no edital</span></h3>
         <div class="pend-grid">
           <div class="pend" data-area="ope"><h3>Operacional → Econômico</h3><p>Quantidade de pontos, fases, custos de manutenção e uso esperado entram no modelo financeiro.</p></div>
           <div class="pend" data-area="ope"><h3>Operacional → Jurídico</h3><p>Metas e indicadores viram cláusulas, penalidades e regras de fiscalização.</p></div>
           <div class="pend" data-area="jur"><h3>Econômico ↔ Jurídico</h3><p>Remuneração, garantias e reequilíbrio precisam caber no modelo contratual escolhido.</p></div>
         </div>
-      </div>
-    </details>
-
-    <details class="bloco" id="operacional" data-area="ope" data-busca>
-      <summary><h2>O Operacional em detalhe</h2><span class="cont">edital · pré-projeto · peças do edital</span><span class="seta" aria-hidden="true">›</span></summary>
-      <div class="bloco-corpo">
-        <p class="nota">Nem o site nem o edital descrevem as tarefas do Operacional no trabalho final. O que existe está espalhado em três fontes.</p>
-        <div class="colunas">
-          <div class="coluna c-laranja"><h4>O que a FGV escreveu</h4>
-            <div class="definicao">"Profissional com experiência em gestão, planejamento, infraestrutura, políticas públicas, operação de serviços públicos ou áreas correlatas, com conhecimento prático relacionado ao serviço, infraestrutura ou política pública objeto do projeto de PPP." <span class="nota">— Edital, item 6.2</span></div>
-            <p><b>O que se avalia (7.2.2):</b> gestão operacional de serviços ou infraestruturas públicas · experiência em PPP · gestão de projetos · monitoramento da performance.</p>
-            <p><b>Programa:</b> no módulo Construa entram a "modelagem operacional", a matriz de riscos e os "indicadores de desempenho".</p></div>
-          <div class="coluna c-laranja"><h4>O que o pré-projeto já atribui</h4><ul class="lista">
-            <li><b>Riscos (3.5):</b> custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos. Mitigação: estudo de rede, padrões abertos, <a class="termo" href="#g-sla" data-def="Metas de qualidade do serviço; se o parceiro não cumpre, recebe menos. Em inglês, Service Level Agreement (SLA).">acordo de nível de serviço</a> com remuneração por desempenho.</li>
-            <li><b>Implementação (3.7):</b> inventário de ativos; diagnóstico de demanda, rede e locais; implantação em fases com gatilhos de expansão.</li>
-            <li><b>Monitoramento (3.10):</b> linha de base e metas anuais. Todo mês: disponibilidade, falhas, tempo de reparo e uso. Tudo num <a href="./">painel público</a>.</li></ul></div>
-        </div>
-        <h3 class="subtitulo-bloco">Peças do edital que costumam ser operacionais <span class="tag t-laranja">prática de mercado · confirmar na mentoria de 17/02/2027</span></h3>
-        <div class="tabela-wrap"><table>
-          <thead><tr><th>Peça</th><th>O que contém</th><th>Quem faz</th></tr></thead>
-          <tbody>
-            <tr><td><b>Caderno de encargos</b></td><td>o que o parceiro entrega e mantém: tipos de carregador, horários, manutenção, atendimento</td><td><span class="tag t-laranja">Operacional</span></td></tr>
-            <tr><td><b>Sistema de mensuração de desempenho</b></td><td>indicadores, fórmulas, metas e como a nota mexe no pagamento</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span></td></tr>
-            <tr><td><b>Plano de implantação</b></td><td>fases, locais, gatilhos de expansão, cronograma de investimentos</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span></td></tr>
-            <tr><td><b>Matriz de riscos</b></td><td>quem assume cada risco: demanda, energia, tecnologia, vandalismo</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span> <span class="tag t-roxo">Jurídico</span></td></tr>
-            <tr><td><b>Fiscalização</b></td><td>como o Município acompanha e quem confere os dados (<span class="termo" tabindex="0" data-def="Empresa contratada para medir o desempenho do parceiro sem depender só dos dados que ele mesmo informa.">verificador independente</span>)</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
-            <tr><td><b>Inventário de áreas e bens</b></td><td>áreas públicas cedidas e o que volta ao Município no fim do contrato</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
-          </tbody>
-        </table></div>
-        <div class="resumo"><b>Lacuna conhecida — energia:</b> potência disponível em cada local, conexão com a distribuidora e custo de reforço da rede. Projetar a rede não é papel do Operacional; saber o que perguntar e levar a resposta para o desenho do serviço é.</div>
+        <p class="origem"><b>De onde vem:</b> perfis e pontuação, do <a href="#fontes">5º edital</a>, itens 6 e 7.2 (texto resumido; o original está no edital). "Como as áreas se alimentam" é leitura do programa, que pede integrar as três dimensões no FGV Action, não uma regra escrita.</p>
       </div>
     </details>
 
@@ -378,6 +369,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
           </tbody>
         </table></div>
         <div class="alerta">A Disciplina 1 tem 24 horas-aula, e 12 delas são em Brasília. Quem não for fica com no máximo 50% de presença, abaixo dos 75% exigidos.</div>
+        <p class="origem"><b>De onde vem:</b> <a href="#fontes">cronograma da Turma 9</a> (datas e horários) e <a href="#fontes">programa</a> (12 das 24 horas-aula da Disciplina 1 são presenciais).</p>
       </div>
     </details>
 
@@ -404,7 +396,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
             <div class="resumo">Na fala, o seguro é "<b>cerca de 20</b> veículos por ponto" e "<b>um quarto</b> dos eletropostos está no estado de São Paulo".</div></div></details>
 
         <details class="item" id="slide-4" data-busca data-area="ope"><summary><span class="cod-grande">04</span><span><span class="sum-tit">A solução</span><br><span class="sum-sub">as seis frentes do Hub</span></span><span class="sum-dir">20 s</span><span class="seta" aria-hidden="true">›</span></summary>
-          <div class="item-corpo"><p>Rede de recarga, recarga rápida, frota pesada, energia solar com baterias, plataforma digital e inovação com a indústria. Tudo integrado e crescendo por etapas.</p><p class="nota">É o objeto que o Operacional vai detalhar: o quê, onde e em que fases (<a href="#operacional">ver o Operacional em detalhe</a>).</p></div></details>
+          <div class="item-corpo"><p>Rede de recarga, recarga rápida, frota pesada, energia solar com baterias, plataforma digital e inovação com a indústria. Tudo integrado e crescendo por etapas.</p><p class="nota">É o objeto que o Operacional vai detalhar: o quê, onde e em que fases.</p></div></details>
 
         <details class="item" id="slide-5" data-busca><summary><span class="cod-grande">05</span><span><span class="sum-tit">Como a PPP viabiliza</span><br><span class="sum-sub">papéis do Município e do parceiro, receitas</span></span><span class="sum-dir">25 s</span><span class="seta" aria-hidden="true">›</span></summary>
           <div class="item-corpo"><p>O Município planeja, regula e fiscaliza. O parceiro investe, opera, mantém e inova. Receitas: recarga, serviços, estacionamento, publicidade e uma possível <a class="termo" href="#g-contra" data-def="Pagamento do Município ao parceiro numa PPP; pode variar conforme o desempenho.">contraprestação</a> pública.</p><div class="fala">Não partimos da premissa de que a PPP é a resposta: vamos comparar os modelos com base em viabilidade e Value for Money.</div></div></details>
@@ -437,6 +429,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
           <li>Quem fala: uma pessoa, com as outras só se apresentando, ou a fala dividida por blocos?</li>
           <li>Se for dividida, uma sugestão por afinidade de área: <span class="tag t-verde">Econômico</span> slides <a href="#slide-1">1</a> a <a href="#slide-3">3</a> e <a href="#slide-5">5</a> · <span class="tag t-roxo">Jurídico</span> slides <a href="#slide-6">6</a> e <a href="#slide-7">7</a> · <span class="tag t-laranja">Operacional</span> slides <a href="#slide-4">4</a>, <a href="#slide-8">8</a> e <a href="#slide-9">9</a>.</li>
           <li>Ensaio por chamada, com cronômetro, antes do embarque.</li></ul></div>
+        <p class="origem"><b>De onde vem:</b> slides e notas de fala do <a href="#fontes">pitch da equipe</a>; os tempos são os marcados nas notas. Os dados foram conferidos em 21/11, com o link de cada fonte no slide.</p>
       </div>
     </details>
 
@@ -451,20 +444,29 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
           <tr id="g-vfm"><td><b>Value for Money</b></td><td>Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.</td></tr>
           <tr id="g-capex"><td><b>CAPEX e OPEX</b></td><td>CAPEX: investimento inicial (equipamentos, obras). OPEX: custo de operar e manter ao longo do contrato.</td></tr>
           <tr id="g-sla"><td><b>Acordo de nível de serviço</b></td><td>Metas de qualidade do serviço; se o parceiro não cumpre, recebe menos. Em inglês, <i>Service Level Agreement</i> (SLA).</td></tr>
-          <tr id="g-tm"><td><b>Teoria da Mudança</b></td><td>A cadeia que liga o problema às atividades, aos produtos, aos resultados e ao impacto. É o método que guia o curso.</td></tr>
+          <tr id="g-action"><td><b>FGV Action</b></td><td>Disciplina 17 do programa, a integradora: 11 oficinas (aplicar a disciplina ao Hub) e 6 mentorias (orientação de um especialista sobre o que a equipe produziu).</td></tr>
+          <tr id="g-dica"><td><b>DICA</b></td><td>Descubra, Inove, Construa, Avalie: o método do FGV In Company que dá nome aos quatro módulos.</td></tr>
+          <tr id="g-tm"><td><b>Teoria da Mudança</b></td><td>A cadeia que liga o problema público às atividades, aos produtos, aos resultados e ao impacto. É o método que guia o curso: cada peça do edital precisa se justificar pelo problema.</td></tr>
           <tr id="g-tcc"><td><b>Trabalho de Conclusão de Curso (TCC)</b></td><td>No MBA, é o edital da PPP ou concessão com os anexos, apresentado a uma banca.</td></tr>
           <tr id="g-abc"><td><b>Grande ABC</b></td><td>Região de Santo André, São Bernardo do Campo, São Caetano do Sul e vizinhos, polo da indústria automotiva.</td></tr>
         </tbody></table></div></div>
     </details>
 
     <details class="bloco" id="fontes" data-busca>
-      <summary><h2>Fontes</h2><span class="cont">documentos usados neste guia</span><span class="seta" aria-hidden="true">›</span></summary>
-      <div class="bloco-corpo"><ul class="lista">
-        <li><a class="ext" href="https://educacao-executiva-in-company.fgv.br/parceria/curso/mba-executivo-em-parcerias-publico-privada-sustentaveis" target="_blank" rel="noopener">Página do curso na FGV</a></li>
-        <li><a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-07/Programa_MBA%20em%20Parcerias%20P%C3%BAblico-Privada%20Sustent%C3%A1veis.pdf" target="_blank" rel="noopener">Programa do curso</a> (jul/2026)</li>
-        <li><a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">5º edital</a> (itens 6 e 7.2)</li>
-        <li>Cronograma ajustado da Turma 9 (nov/2026, recebido por e-mail; o do site é a versão preliminar)</li>
-        <li>Pré-projeto do Hub e pitch da equipe</li></ul></div>
+      <summary><h2>Fontes</h2><span class="cont">os cinco documentos por trás deste guia</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Documento</th><th>O que é</th><th>De onde veio</th><th>O que alimenta aqui</th></tr></thead>
+          <tbody>
+            <tr><td><b><a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-07/Programa_MBA%20em%20Parcerias%20P%C3%BAblico-Privada%20Sustent%C3%A1veis.pdf" target="_blank" rel="noopener">Programa do curso</a></b></td><td>A estrutura pedagógica, a lista de disciplinas com a carga de cada uma, as ementas e o FGV Action</td><td>Site da FGV, versão de jul/2026</td><td>Carga, módulos, FGV Action, Teoria da Mudança</td></tr>
+            <tr><td><b><a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">5º edital</a></b></td><td>As regras da seleção dos municípios: quem podia se inscrever, o perfil dos três especialistas e como as inscrições foram pontuadas</td><td>Site da FGV, versão 5 (set/2026)</td><td>Aprovação (média 7,0 e 75%), as três áreas (itens 6 e 7.2)</td></tr>
+            <tr><td><b>Cronograma da Turma 9</b></td><td>Data, horário e local de cada aula, oficina, mentoria e entrega</td><td>Versão ajustada recebida por e-mail em nov/2026; a do site é preliminar</td><td>Todas as datas</td></tr>
+            <tr><td><b>Pré-projeto do Hub</b></td><td>A proposta que o município inscreveu: problema, viabilidade, riscos, base legal, plano de implementação, monitoramento</td><td>Equipe (versão do Thiago)</td><td>O projeto; riscos e monitoramento</td></tr>
+            <tr><td><b>Pitch da equipe</b> (v1)</td><td>Os 10 slides com notas de fala para os 3 minutos de 24/11</td><td>Equipe</td><td>O pitch, slide a slide; os seis núcleos do Hub</td></tr>
+          </tbody>
+        </table></div>
+        <p class="nota">Dados externos citados no pitch (IBGE, ABVE, levantamento de eletropostos) têm o link no próprio slide, no box do pitch.</p>
+      </div>
     </details>
   </main>
 </div>

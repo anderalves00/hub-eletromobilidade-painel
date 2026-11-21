@@ -150,6 +150,7 @@ tbody tr:hover td { background: var(--papel); }
 .checklist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--tinta); flex: none; }
 .checklist input:checked + span { color: var(--texto-suave); text-decoration: line-through; }
 
+.subtitulo-bloco { font: italic 700 15px var(--serifa); color: var(--tinta); margin-top: 6px; }
 .oculto { display: none !important; }
 footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(--serifa); }
 
@@ -209,6 +210,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
     <h2>Seu papel</h2>
     <a href="#encaixe">Onde você se encaixa</a>
     <a href="#divisao">O que é seu e o que é dividido</a>
+    <a href="#operacional">O Operacional em detalhe</a>
     <a href="#aprender">O que aprender</a>
     <h2>Trilhas de ação</h2>
     <a href="#trilha-a"><span class="ponto azul"></span><span class="cod">A</span><span class="tit">Pitch · até 24/11</span></a>
@@ -235,7 +237,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="progresso" id="barras"></div>
       <ul class="contexto">
         <li>O núcleo do Operacional é fixo: <b>como o serviço funciona e como se mede que funciona</b>. Modelo de operação e indicadores não se repassam (<a href="#encaixe">ver o encaixe</a>).</li>
-        <li>Sua força está no que o edital avalia: gestão de projetos e monitoramento da performance (itens 7.2.2.4 e 7.2.2.5).</li>
+        <li>Sua força está em dois dos cinco pontos que o edital usou para pontuar o Operacional na inscrição: gestão de projetos e monitoramento da performance (7.2.2.4 e 7.2.2.5).</li>
         <li>Lacuna: energia e rede elétrica. Saber perguntar, não projetar (<a href="#aprender">ver o que aprender</a>).</li>
       </ul>
     </section>
@@ -252,7 +254,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
             <tr><td><b>Lacuna</b></td><td>não aparece</td><td>energia e rede elétrica: saber perguntar, não projetar</td></tr>
           </tbody>
         </table></div>
-        <div class="definicao"><b>O argumento para a visão nova:</b> o edital avalia o Operacional por gestão de projetos e monitoramento da performance, e é o que você já faz no dia a dia. As três áreas completas estão no <a href="guia.html#areas">guia da equipe</a>.</div>
+        <div class="definicao"><b>O argumento para a visão nova:</b> na inscrição, o edital pontuou o Operacional também por gestão de projetos e monitoramento da performance (7.2.2.4 e 7.2.2.5), e é o que você já faz no dia a dia. As três áreas completas estão no <a href="guia.html#areas">guia da equipe</a>.</div>
       </div>
     </details>
 
@@ -276,8 +278,38 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         </div>
         <div class="pend-grid">
           <div class="pend"><h3>Os três juntos</h3><p>A <span class="termo" tabindex="0" data-def="Tabela do contrato que diz quem assume cada risco (o Município, o parceiro ou os dois) e o que acontece se ele ocorrer.">matriz de riscos</span>: quem assume cada risco (demanda, energia, tecnologia).</p></div>
-          <div class="resumo">A divisão em peças do edital é <b>prática de mercado</b>, não está escrita pela FGV. Confirmar na mentoria de 17/02/2027 (<a href="guia.html#operacional">detalhe no guia</a>).</div>
+          <div class="resumo">A divisão em peças do edital é <b>prática de mercado</b>, não está escrita pela FGV. Confirmar na mentoria de 17/02/2027 (<a href="#operacional">ver o Operacional em detalhe</a>).</div>
         </div>
+      </div>
+    </details>
+
+    <details class="bloco" id="operacional" data-busca>
+      <summary><h2>O Operacional em detalhe</h2><span class="cont">edital · programa · pré-projeto · peças do edital</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <p class="nota">Nem o site nem o edital descrevem as tarefas do Operacional no trabalho final. O que existe está espalhado em três fontes.</p>
+        <div class="colunas">
+          <div class="coluna c-laranja"><h4>O que a FGV escreveu</h4>
+            <div class="definicao">"Profissional com experiência em gestão, planejamento, infraestrutura, políticas públicas, operação de serviços públicos ou áreas correlatas, com conhecimento prático relacionado ao serviço, infraestrutura ou política pública objeto do projeto de PPP." <span class="nota">— Edital, item 6.2</span></div>
+            <p><b>Pontuado na inscrição (7.2.2):</b> conhecimento da área · experiência prática em gestão operacional · experiência em PPP · gestão de projetos · monitoramento da performance. <span class="nota">Serviu para escolher a equipe; não é a avaliação do curso.</span></p>
+            <p><b>Programa:</b> no módulo Construa entram a "modelagem operacional", a matriz de riscos e os "indicadores de desempenho".</p></div>
+          <div class="coluna c-laranja"><h4>O que o pré-projeto já atribui</h4><ul class="lista">
+            <li><b>Riscos (3.5):</b> custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos. Mitigação: estudo de rede, padrões abertos, <a class="termo" href="guia.html#g-sla" data-def="Metas de qualidade do serviço; se o parceiro não cumpre, recebe menos. Em inglês, Service Level Agreement (SLA).">acordo de nível de serviço</a> com remuneração por desempenho.</li>
+            <li><b>Implementação (3.7):</b> inventário de ativos; diagnóstico de demanda, rede e locais; implantação em fases com gatilhos de expansão.</li>
+            <li><b>Monitoramento (3.10):</b> linha de base e metas anuais. Todo mês: disponibilidade, falhas, tempo de reparo e uso. Tudo num <a href="./">painel público</a>.</li></ul></div>
+        </div>
+        <h3 class="subtitulo-bloco">Peças do edital que costumam ser operacionais <span class="tag t-laranja">prática de mercado · confirmar na mentoria de 17/02/2027</span></h3>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Peça</th><th>O que contém</th><th>Quem faz</th></tr></thead>
+          <tbody>
+            <tr><td><b>Caderno de encargos</b></td><td>o que o parceiro entrega e mantém: tipos de carregador, horários, manutenção, atendimento</td><td><span class="tag t-laranja">Operacional</span></td></tr>
+            <tr><td><b>Sistema de mensuração de desempenho</b></td><td>indicadores, fórmulas, metas e como a nota mexe no pagamento</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span></td></tr>
+            <tr><td><b>Plano de implantação</b></td><td>fases, locais, gatilhos de expansão, cronograma de investimentos</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span></td></tr>
+            <tr><td><b>Matriz de riscos</b></td><td>quem assume cada risco: demanda, energia, tecnologia, vandalismo</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span> <span class="tag t-roxo">Jurídico</span></td></tr>
+            <tr><td><b>Fiscalização</b></td><td>como o Município acompanha e quem confere os dados (<span class="termo" tabindex="0" data-def="Empresa contratada para medir o desempenho do parceiro sem depender só dos dados que ele mesmo informa.">verificador independente</span>)</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
+            <tr><td><b>Inventário de áreas e bens</b></td><td>áreas públicas cedidas e o que volta ao Município no fim do contrato</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
+          </tbody>
+        </table></div>
+        <div class="resumo"><b>Lacuna conhecida — energia:</b> potência disponível em cada local, conexão com a distribuidora e custo de reforço da rede. Projetar a rede não é papel do Operacional; saber o que perguntar e levar a resposta para o desenho do serviço é.</div>
       </div>
     </details>
 

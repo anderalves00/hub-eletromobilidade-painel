@@ -5,155 +5,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Guia da equipe — Hub Municipal de Eletromobilidade</title>
-<!-- Montado sobre DevMode/configuracao/templates/html/painel-base.html (padrão do painel do Selo WWC). O publicar-quadro.ps1 injeta doctype e head. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Identidade: a do pitch da equipe (feito pela SDETJ), por decisão do Andy em 2026-11-21 — ver DecisoesProj.md. Mecânica do esqueleto DevMode/configuracao/templates/html/painel-base.html. O publicar-quadro.ps1 injeta doctype e head. -->
 <style>
 :root {
-  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
-  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
-  --verde: #288827; --verde-claro: #e6f4e6;
-  --vermelho: #b3261e; --vermelho-claro: #fbe9e7;
-  --roxo: #6a3dbd; --roxo-claro: #f0eafb;
-  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
-  --fundo: #f3f6f9; --cartao: #ffffff;
-  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  /* Paleta do pitch (tema do pptx) */
+  --tinta: #0B2E3C; --tinta-2: #13262F; --teal: #0F7C7A; --teal-esc: #0A5C5B; --teal-claro: #EEF6F5;
+  --menta: #3FB8A8; --lima: #B6F03C; --ambar: #F2A93B; --ardosia: #5E7B85;
+  /* Áreas (cores fixas do projeto) e estados */
+  --verde: #2E9E5B; --verde-claro: #E5F4EB;
+  --roxo: #6A4C9C; --roxo-claro: #F0EBF7;
+  --laranja: #E0922A; --laranja-esc: #9A5B0E; --laranja-claro: #FDF1E0;
+  --vermelho: #B3261E; --vermelho-claro: #FBE9E7;
+  --texto: #1F3540; --texto-suave: #5E7B85; --borda: #D6E4E2;
+  --fundo: #F5F9F8; --cartao: #ffffff;
+  --raio: 12px; --sombra: 0 1px 3px rgba(11, 46, 60, .08);
+  --fonte: Calibri, Carlito, "Segoe UI", Arial, sans-serif;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
-body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
-a { color: var(--azul); }
-a:hover { color: var(--azul-esc); }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 16px/1.55 var(--fonte); }
+a { color: var(--teal); }
+a:hover { color: var(--teal-esc); }
 a.ext::after { content: " ↗"; font-size: .85em; }
-abbr[title] { text-decoration: underline dotted; cursor: help; }
 h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
 .nw { white-space: nowrap; }
 
-/* Cabeçalho */
-.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
-.topo-int { padding: 22px 32px 20px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
-.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
-.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
-.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+/* Hover de termo: <span class="termo" tabindex="0" data-def="significado">TERMO</span> */
+.termo { position: relative; text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.termo:hover::after, .termo:focus::after { content: attr(data-def); position: absolute; left: 0; top: calc(100% + 4px); z-index: 30; width: max-content; max-width: min(340px, 80vw); background: var(--tinta); color: #fff; font-size: 14px; font-weight: 400; font-style: normal; line-height: 1.45; padding: 8px 10px; border-radius: 6px; white-space: normal; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
+
+/* Cabeçalho: a capa do pitch */
+.topo { background: var(--tinta); color: #fff; }
+.topo-int { padding: 26px 32px 24px; display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: flex-end; justify-content: space-between; }
+.kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--lima); }
+.topo h1 { font-size: 30px; font-weight: 700; margin-top: 8px; }
+.topo .subtitulo { font-size: 16px; opacity: .85; margin-top: 6px; }
 .topo .selos { display: flex; flex-wrap: wrap; gap: 8px; }
-.topo .atualizado { font-size: 13px; background: rgba(255,255,255,.14); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
-.topo .privado { font-size: 13px; background: var(--laranja); color: #fff; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.sigla-mista { text-transform: none; }
+.pilula { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--lima); color: var(--tinta); padding: 6px 14px; border-radius: 999px; white-space: nowrap; }
+.pilula.suave { background: rgba(255,255,255,.12); color: #fff; }
 
 /* Barra de ferramentas */
 .barra-ferramentas { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
 .barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
 .barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
 .grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip-filtro { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-.chip-filtro[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
-.botao { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; text-decoration: none; }
-.botao:hover { background: var(--azul-claro); }
+.chip-filtro { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 700 14px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.botao { border: 1px solid var(--teal); background: #fff; color: var(--teal); padding: 6px 12px; border-radius: 8px; font: 700 14px var(--fonte); cursor: pointer; text-decoration: none; }
+.botao:hover { background: var(--teal-claro); }
 
 /* Estrutura */
 .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
 .lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
-.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); margin: 10px 4px 6px; }
+.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--teal); margin: 12px 4px 6px; }
 .lateral h2:first-child { margin-top: 0; }
-.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 14px; }
-.lateral a:hover, .lateral a.ativo { background: var(--azul-claro); }
-.lateral a .cod { font-weight: 700; min-width: 30px; }
-.lateral a .tit { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-suave); font-size: 13px; }
-.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5ccd3; }
-.ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.azul { background: var(--azul); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
-main { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 15px; }
+.lateral a:hover, .lateral a.ativo { background: var(--teal-claro); }
+.lateral a .cod { font-weight: 700; min-width: 30px; color: var(--tinta); }
+.lateral a .tit { color: var(--texto-suave); font-size: 14px; overflow-wrap: anywhere; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5d3d6; }
+.ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
+main { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
 
 /* Seções: a primeira aberta (section), as demais recolhidas (details) */
-section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px 24px; box-shadow: var(--sombra); }
-section.bloco > h2, details.bloco > summary h2 { font-size: 19px; color: var(--azul-esc); display: flex; align-items: center; gap: 10px; }
-section.bloco > h2 { margin-bottom: 14px; }
-section.bloco > h2::before, details.bloco > summary h2::before { content: ""; width: 5px; height: 20px; background: var(--laranja); border-radius: 3px; flex: none; }
+section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 22px 26px; box-shadow: var(--sombra); }
+section.bloco > h2, details.bloco > summary h2 { font-size: 22px; color: var(--tinta); display: flex; align-items: center; gap: 10px; }
+section.bloco > h2 { margin-bottom: 16px; }
+section.bloco > h2::before, details.bloco > summary h2::before { content: ""; width: 5px; height: 22px; background: var(--teal); border-radius: 3px; flex: none; }
 details.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
 details.bloco > summary, details.item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 details > summary::-webkit-details-marker { display: none; }
-details.bloco > summary { padding: 16px 24px; }
-details.bloco > summary .cont { font-size: 13px; color: var(--texto-suave); font-weight: 600; margin-left: auto; }
-details.bloco > .bloco-corpo { padding: 0 24px 22px; display: grid; gap: 16px; }
-.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--azul-claro); color: var(--azul); font-weight: 800; transition: transform .15s; flex: none; }
+details.bloco > summary { padding: 16px 26px; }
+details.bloco > summary .cont { font-size: 14px; color: var(--texto-suave); font-weight: 700; margin-left: auto; }
+details.bloco > .bloco-corpo { padding: 0 26px 24px; display: grid; gap: 16px; }
+.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--teal-claro); color: var(--teal); font-weight: 800; transition: transform .15s; flex: none; }
 details[open] > summary .seta { transform: rotate(90deg); }
-.subtitulo-bloco { font-size: 15px; color: var(--azul-esc); text-transform: uppercase; letter-spacing: .04em; margin-top: 6px; }
+.subtitulo-bloco { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .14em; margin-top: 6px; }
 
-/* Item recolhível dentro de uma seção (o "critério" do Selo) */
+/* Item recolhível dentro de uma seção */
 details.item { border: 1px solid var(--borda); border-radius: var(--raio); background: var(--cartao); }
-details.item[open] { border-color: #b9cfe0; }
+details.item[open] { border-color: var(--menta); }
 details.item > summary { padding: 14px 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
-.cod-grande { font-size: 20px; font-weight: 800; color: var(--azul); min-width: 40px; }
-.sum-tit { font-size: 16px; font-weight: 700; }
-.sum-sub { font-size: 13px; color: var(--texto-suave); }
-.sum-dir { font-size: 13px; color: var(--texto-suave); font-weight: 600; white-space: nowrap; }
+.cod-grande { font-size: 20px; font-weight: 700; color: var(--teal); min-width: 40px; letter-spacing: .06em; }
+.sum-tit { font-size: 17px; font-weight: 700; color: var(--tinta); }
+.sum-sub { font-size: 14px; color: var(--texto-suave); }
+.sum-dir { font-size: 14px; color: var(--texto-suave); font-weight: 700; white-space: nowrap; }
 .item-corpo { padding: 14px 18px 18px; border-top: 1px solid var(--borda); display: grid; gap: 10px; }
 
 /* Indicadores */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
-.kpi { border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px 16px; background: #fff; }
-.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); font-weight: 600; }
-.kpi .val { font-size: 30px; font-weight: 800; color: var(--azul-esc); line-height: 1.15; margin-top: 4px; }
-.kpi .val small { font-size: 15px; font-weight: 600; color: var(--texto-suave); }
-.kpi .det { font-size: 13px; color: var(--texto-suave); margin-top: 2px; }
-.kpi.destaque { border-color: var(--laranja); background: var(--laranja-claro); }
-.kpi.destaque .val { color: var(--laranja-esc); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 14px; }
+.kpi { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); }
+.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); font-weight: 700; }
+.kpi .val { font-size: 32px; font-weight: 700; color: var(--tinta); line-height: 1.15; margin-top: 4px; }
+.kpi .val small { font-size: 16px; font-weight: 700; color: var(--texto-suave); }
+.kpi .det { font-size: 14px; color: var(--texto-suave); margin-top: 2px; }
+.kpi.destaque { background: var(--tinta); }
+.kpi.destaque .rot { color: var(--lima); }
+.kpi.destaque .val { color: #fff; }
+.kpi.destaque .val small, .kpi.destaque .det { color: rgba(255,255,255,.8); }
 .progresso { margin-top: 18px; }
-.rotulo { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
-.trilho { display: flex; height: 14px; border-radius: 999px; background: #e9eef2; overflow: hidden; }
+.rotulo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 14px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 14px; border-radius: 999px; background: #e3ecea; overflow: hidden; }
 .trilho span { height: 100%; }
-.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13px; color: var(--texto-suave); }
+.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 14px; color: var(--texto-suave); }
 .legenda-barra i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
-.contexto { margin: 16px 0 0; padding-left: 20px; color: var(--texto-suave); }
-.contexto li { margin: 3px 0; }
+.contexto { margin: 16px 0 0; padding-left: 20px; }
+.contexto li { margin: 4px 0; }
 
 /* Tabelas */
 .tabela-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-suave); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
 td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
-tbody tr:hover td { background: var(--azul-claro); }
+tbody tr:hover td { background: var(--teal-claro); }
 
 /* Etiquetas */
-.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
-.t-azul { background: var(--azul-claro); color: var(--azul-esc); }
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.t-teal { background: var(--teal-claro); color: var(--teal-esc); }
 .t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
 .t-verde { background: var(--verde-claro); color: var(--verde); }
 .t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
 .t-roxo { background: var(--roxo-claro); color: var(--roxo); }
-.t-cinza { background: #eef1f4; color: var(--texto-suave); }
-.t-forte { background: var(--laranja); color: #fff; }
 
 /* Caixas */
-.definicao { padding: 12px 14px; background: var(--azul-claro); border-radius: 8px; }
-.resumo { padding: 12px 14px; border-left: 4px solid var(--laranja); background: var(--laranja-claro); border-radius: 0 8px 8px 0; }
+.definicao { padding: 12px 14px; background: var(--teal-claro); border-radius: 8px; }
+.resumo { padding: 12px 14px; border-left: 4px solid var(--ambar); background: #FEF5E6; border-radius: 0 8px 8px 0; }
 .alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
-.fala { padding: 10px 12px; border-left: 3px solid var(--azul); background: #f4f7fa; font-size: 14px; border-radius: 0 6px 6px 0; font-style: italic; }
-.nota { color: var(--texto-suave); font-size: 14px; }
+.fala { padding: 10px 12px; border-left: 3px solid var(--teal); background: var(--teal-claro); font-size: 15px; border-radius: 0 6px 6px 0; font-style: italic; }
+.nota { color: var(--texto-suave); font-size: 15px; }
 .lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
 
 /* Grades de cartões */
-.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 14px; }
-.coluna { border-radius: 8px; padding: 12px 14px; border: 1px solid var(--borda); border-top: 5px solid var(--cor, var(--azul)); background: #fff; }
-.coluna > h4 { font-size: 15px; margin-bottom: 8px; color: var(--cor, var(--azul-esc)); }
-.coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
-.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
-.pend { border: 1px solid var(--borda); border-left: 5px solid var(--laranja); border-radius: 8px; padding: 12px 14px; }
-.pend h3 { font-size: 15px; margin-bottom: 6px; }
-.cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
-.cenario { border: 1px solid var(--borda); border-radius: 8px; padding: 12px 14px; min-width: 0; display: grid; gap: 8px; align-content: start; }
-.cenario.rec { border: 2px solid var(--verde); }
-.cen-topo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-
-/* Lista de tarefas */
-.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.checklist label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 10px; border-radius: 6px; background: #f7f9fb; cursor: pointer; }
-.checklist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--verde); flex: none; }
-.checklist input:checked + span { color: var(--texto-suave); text-decoration: line-through; }
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px; }
+.coluna { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-top: 5px solid var(--cor, var(--teal)); display: grid; gap: 8px; align-content: start; }
+.coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
+.coluna .definicao { background: #fff; }
+.coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-teal { --cor: var(--teal); }
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 14px; }
+.pend { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-left: 5px solid var(--ambar); }
+.pend h3 { font-size: 16px; color: var(--tinta); margin-bottom: 6px; }
 
 .oculto { display: none !important; }
-footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
 
 @media (max-width: 900px) {
   .barra-ferramentas { position: static; }
@@ -161,6 +157,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   .layout { grid-template-columns: 1fr; padding: 16px; }
   .lateral { position: static; max-height: none; }
   .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  .topo h1 { font-size: 24px; }
   footer { padding: 0 16px 24px; }
   section.bloco { padding: 16px; }
   details.bloco > summary { padding: 14px 16px; }
@@ -174,18 +171,20 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   details { break-inside: avoid-page; }
   .seta { display: none; }
   body { background: #fff; }
+  .topo, .kpi.destaque { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 <header class="topo">
   <div class="topo-int">
     <div>
-      <div class="sobre">Prefeitura de São Bernardo do Campo · MBA em Parcerias Público-Privadas e Concessões Sustentáveis (FGV e Banco do Brasil)</div>
+      <div class="kicker">Projeto aplicado · <span class="termo" tabindex="0" data-def="Master of Business Administration: pós-graduação executiva. Este é o MBA em Parcerias Público-Privadas e Concessões Sustentáveis da Fundação Getulio Vargas com o Banco do Brasil.">MBA</span> em <span class="termo sigla-mista" tabindex="0" data-def="Parcerias Público-Privadas: contratos longos em que um parceiro privado investe e opera um serviço público e é pago, total ou parcialmente, pelo poder público.">PPPs</span> e Concessões Sustentáveis · <span class="termo" tabindex="0" data-def="Fundação Getulio Vargas, que oferece o curso em parceria com o Banco do Brasil.">FGV</span></div>
       <h1>Hub Municipal de Eletromobilidade — guia da equipe</h1>
-      <div class="subtitulo">O curso · O projeto · As três áreas · O pitch de 24/11 — apoio ao trabalho da equipe</div>
+      <div class="subtitulo">O curso · o projeto · as três áreas · o pitch de 24/11 — Prefeitura de São Bernardo do Campo</div>
     </div>
-    <div class="selos"><span class="atualizado">Atualizado em 21/11/2026</span></div>
+    <div class="selos"><span class="pilula">Proposta em estruturação</span><span class="pilula suave">Atualizado em 21/11/2026</span></div>
   </div>
 </header>
+
 
 <div class="barra-ferramentas">
   <div class="barra-int">
@@ -235,7 +234,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     <section class="bloco" id="visao-geral">
       <h2>Visão geral</h2>
       <div class="kpis">
-        <div class="kpi destaque"><div class="rot">Pitch da equipe</div><div class="val">24/11 <small>9h</small></div><div class="det">Abertura e Oficina FGV Action, em Brasília · 3 minutos</div></div>
+        <div class="kpi destaque"><div class="rot">Pitch da equipe</div><div class="val">24/11 <small>9h</small></div><div class="det">Abertura e Oficina <span class="termo" tabindex="0" data-def="Disciplina que liga as demais ao projeto aplicado: 11 oficinas para a equipe aplicar cada disciplina ao Hub e 6 mentorias, duas por área.">FGV Action</span>, em Brasília · 3 minutos</div></div>
         <div class="kpi"><div class="rot">Carga do curso</div><div class="val">432 <small>horas-aula</small></div><div class="det">de 24/11/2026 a 19/04/2028</div></div>
         <div class="kpi"><div class="rot">Módulos</div><div class="val">4</div><div class="det">uma entrega da equipe ao fim de cada</div></div>
         <div class="kpi"><div class="rot">Mentorias</div><div class="val">6</div><div class="det">duas por área · a 1ª operacional é em 17/02/2027</div></div>
@@ -243,18 +242,18 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       </div>
       <div class="progresso">
         <div class="rotulo"><span>Linha do tempo do curso — cada módulo termina com uma entrega</span><span>nov/2026 a abr/2028</span></div>
-        <div class="trilho"><span style="width:29.8%;background:#0b558a"></span><span style="width:22.2%;background:#0f71b3"></span><span style="width:19.2%;background:#4f9bd0"></span><span style="width:28.8%;background:#8fc0e3"></span></div>
-        <div class="legenda-barra"><span><i style="background:#0b558a"></i>1 · Descubra, até 19/04/2027</span><span><i style="background:#0f71b3"></i>2 · Inove, até 06/08/2027</span><span><i style="background:#4f9bd0"></i>3 · Construa, até 08/11/2027</span><span><i style="background:#8fc0e3"></i>4 · Avalie, até 28/03/2028</span></div>
+        <div class="trilho"><span style="width:29.8%;background:#0B2E3C"></span><span style="width:22.2%;background:#0F7C7A"></span><span style="width:19.2%;background:#3FB8A8"></span><span style="width:28.8%;background:#9ED9CF"></span></div>
+        <div class="legenda-barra"><span><i style="background:#0B2E3C"></i>1 · Descubra, até 19/04/2027</span><span><i style="background:#0F7C7A"></i>2 · Inove, até 06/08/2027</span><span><i style="background:#3FB8A8"></i>3 · Construa, até 08/11/2027</span><span><i style="background:#9ED9CF"></i>4 · Avalie, até 28/03/2028</span></div>
       </div>
       <div class="progresso">
         <div class="rotulo"><span>Tempo do pitch — soma dos tempos marcados nas notas</span><span>185 s para um limite de 180 s</span></div>
-        <div class="trilho"><span style="width:5.4%;background:var(--azul)"></span><span style="width:10.8%;background:var(--laranja)"></span><span style="width:13.5%;background:#4f9bd0"></span><span style="width:10.8%;background:var(--azul)"></span><span style="width:13.5%;background:#4f9bd0"></span><span style="width:8.1%;background:var(--azul)"></span><span style="width:8.1%;background:var(--laranja)"></span><span style="width:10.8%;background:#4f9bd0"></span><span style="width:13.5%;background:var(--azul)"></span><span style="width:5.4%;background:var(--vermelho)"></span></div>
-        <div class="legenda-barra"><span><i style="background:var(--laranja)"></i>slides 2 e 7: pedem ajuste</span><span><i style="background:var(--vermelho)"></i>slide 10: passa dos 3 minutos</span><span><i style="background:var(--azul)"></i>demais slides, alternando tons</span></div>
+        <div class="trilho"><span style="width:5.4%;background:var(--teal)"></span><span style="width:10.8%;background:var(--laranja)"></span><span style="width:13.5%;background:#3FB8A8"></span><span style="width:10.8%;background:var(--teal)"></span><span style="width:13.5%;background:#3FB8A8"></span><span style="width:8.1%;background:var(--teal)"></span><span style="width:8.1%;background:var(--laranja)"></span><span style="width:10.8%;background:#3FB8A8"></span><span style="width:13.5%;background:var(--teal)"></span><span style="width:5.4%;background:var(--vermelho)"></span></div>
+        <div class="legenda-barra"><span><i style="background:var(--laranja)"></i>slides 2 e 7: pedem ajuste</span><span><i style="background:var(--vermelho)"></i>slide 10: passa dos 3 minutos</span><span><i style="background:var(--teal)"></i>demais slides, alternando tons</span></div>
       </div>
       <ul class="contexto">
-        <li>O trabalho final do curso, o Trabalho de Conclusão de Curso (<abbr title="Trabalho de Conclusão de Curso">TCC</abbr>), é o <b>edital da Parceria Público-Privada (<abbr title="Parceria Público-Privada">PPP</abbr>) ou concessão, com os anexos</b>, construído aos poucos ao longo dos módulos.</li>
+        <li>O trabalho final do curso, o Trabalho de Conclusão de Curso (<span class="termo" tabindex="0" data-def="Trabalho de Conclusão de Curso">TCC</span>), é o <b>edital da Parceria Público-Privada (<span class="termo" tabindex="0" data-def="Parceria Público-Privada">PPP</span>) ou concessão, com os anexos</b>, construído aos poucos ao longo dos módulos.</li>
         <li>A equipe tem uma pessoa em cada área: econômico-financeira, jurídico-institucional e técnico-operacional (<a href="#areas">ver as três áreas</a>).</li>
-        <li>O pré-projeto <b>não parte de que a PPP é a resposta</b>: a escolha do modelo sai da comparação e do <a href="#g-vfm">Value for Money</a>.</li>
+        <li>O pré-projeto <b>não parte de que a PPP é a resposta</b>: a escolha do modelo sai da comparação e do <a class="termo" href="#g-vfm" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</a>.</li>
         <li>Brasília é obrigatória: 12 das 24 horas-aula da Disciplina 1 são lá, e sem elas a presença máxima seria de 50% (<a href="#brasilia">ver a semana</a>).</li>
       </ul>
     </section>
@@ -263,10 +262,10 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <summary><h2>O curso</h2><span class="cont">4 módulos · 16 disciplinas · FGV Action</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
         <div class="colunas">
-          <div class="coluna c-azul"><h4>1 · Descubra</h4><p><span class="tag t-azul">entrega em 19/04/2027</span></p><p class="nota">Qual é o problema público, e a PPP faz sentido para ele?</p></div>
-          <div class="coluna c-azul"><h4>2 · Inove</h4><p><span class="tag t-azul">entrega em 06/08/2027</span></p><p class="nota">A estratégia: resultados, governança, partes interessadas e as primeiras escolhas jurídicas, financeiras e operacionais.</p></div>
-          <div class="coluna c-azul"><h4>3 · Construa</h4><p><span class="tag t-azul">entrega em 08/11/2027</span></p><p class="nota">As peças do edital: modelagem, matriz de riscos, remuneração e garantias, indicadores de desempenho.</p></div>
-          <div class="coluna c-azul"><h4>4 · Avalie</h4><p><span class="tag t-azul">entrega em 28/03/2028</span></p><p class="nota">Revisão do conjunto, gestão do contrato, monitoramento e a banca final.</p></div>
+          <div class="coluna c-teal"><h4>1 · Descubra</h4><p><span class="tag t-teal">entrega em 19/04/2027</span></p><p class="nota">Qual é o problema público, e a PPP faz sentido para ele?</p></div>
+          <div class="coluna c-teal"><h4>2 · Inove</h4><p><span class="tag t-teal">entrega em 06/08/2027</span></p><p class="nota">A estratégia: resultados, governança, partes interessadas e as primeiras escolhas jurídicas, financeiras e operacionais.</p></div>
+          <div class="coluna c-teal"><h4>3 · Construa</h4><p><span class="tag t-teal">entrega em 08/11/2027</span></p><p class="nota">As peças do edital: modelagem, matriz de riscos, remuneração e garantias, indicadores de desempenho.</p></div>
+          <div class="coluna c-teal"><h4>4 · Avalie</h4><p><span class="tag t-teal">entrega em 28/03/2028</span></p><p class="nota">Revisão do conjunto, gestão do contrato, monitoramento e a banca final.</p></div>
         </div>
         <h3 class="subtitulo-bloco">FGV Action — mentorias por área</h3>
         <p class="nota">É a disciplina que liga as demais ao projeto: 11 oficinas para a equipe aplicar cada disciplina ao Hub e 6 mentorias, duas por área. Cada mentoria tem dois horários (19h–20h30 ou 21h–22h30), conforme o grupo; o nosso ainda não foi informado.</p>
@@ -298,9 +297,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <div class="bloco-corpo">
         <div class="definicao"><b>Problema público:</b> como preparar São Bernardo do Campo para a eletromobilidade sem pôr no orçamento municipal os altos investimentos e riscos dessa nova infraestrutura?</div>
         <div class="colunas">
-          <div class="coluna c-azul"><h4>A hipótese</h4><p>Um Hub modular com seis frentes: rede de recarga, recarga rápida, frota pesada, energia solar com baterias, plataforma digital e inovação com a indústria. Um parceiro privado implanta, opera e mantém; o Município planeja, regula e fiscaliza.</p></div>
-          <div class="coluna c-laranja"><h4>Em aberto</h4><p>Se o modelo será PPP, <a href="#g-conc">concessão comum</a> ou um modelo híbrido. A resposta sai da comparação entre os modelos e do <a href="#g-vfm">Value for Money</a>.</p></div>
-          <div class="coluna c-laranja"><h4>Ainda não existe</h4><p>Investimento e custo de operação (<a href="#g-capex">CAPEX e OPEX</a>), quantos pontos de recarga, onde ficam, e o estudo da rede elétrica. São as primeiras entregas: governança e inventário nos meses 1 a 3, diagnóstico nos meses 3 a 6 (<a href="#slide-9">ver as etapas</a>).</p></div>
+          <div class="coluna c-teal"><h4>A hipótese</h4><p>Um Hub modular com seis frentes: rede de recarga, recarga rápida, frota pesada, energia solar com baterias, plataforma digital e inovação com a indústria. Um parceiro privado implanta, opera e mantém; o Município planeja, regula e fiscaliza.</p></div>
+          <div class="coluna c-laranja"><h4>Em aberto</h4><p>Se o modelo será PPP, <a class="termo" href="#g-conc" data-def="O parceiro é remunerado pela tarifa do usuário, sem pagamento do Município.">concessão comum</a> ou um modelo híbrido. A resposta sai da comparação entre os modelos e do <a class="termo" href="#g-vfm" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</a>.</p></div>
+          <div class="coluna c-laranja"><h4>Ainda não existe</h4><p>Investimento e custo de operação (<a class="termo" href="#g-capex" data-def="CAPEX: investimento inicial (equipamentos, obras). OPEX: custo de operar e manter ao longo do contrato.">CAPEX e OPEX</a>), quantos pontos de recarga, onde ficam, e o estudo da rede elétrica. São as primeiras entregas: governança e inventário nos meses 1 a 3, diagnóstico nos meses 3 a 6 (<a href="#slide-9">ver as etapas</a>).</p></div>
         </div>
       </div>
     </details>
@@ -314,7 +313,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
             <div class="definicao">A conta fecha?</div>
             <p><b>Perfil (6.1):</b> análise econômica e financeira, modelagem, estruturação de projetos, investimentos.</p>
             <p><b>O que se avalia (7.2.1):</b> viabilidade, custo-benefício, conhecimento de mercado, monitoramento e avaliação de políticas públicas.</p>
-            <p><b>No Hub:</b> investimento e custo de operação, receitas, financiamento, Value for Money, reequilíbrio do contrato.</p></div>
+            <p><b>No Hub:</b> investimento e custo de operação, receitas, financiamento, Value for Money, <span class="termo" tabindex="0" data-def="Ajuste do contrato quando um evento fora do controle do parceiro muda a conta prevista, para que nenhum dos lados ganhe ou perca com isso.">reequilíbrio do contrato</span>.</p></div>
           <div class="coluna c-roxo" id="area-jur" data-area="jur"><h4>Jurídico-institucional · Giovanna Falcaro</h4>
             <div class="definicao">Pode ser feito, e em que modelo?</div>
             <p><b>Perfil (6.3):</b> regulação, gestão contratual, concessões, PPPs, governança; questões jurídicas e institucionais.</p>
@@ -345,7 +344,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
             <p><b>O que se avalia (7.2.2):</b> gestão operacional de serviços ou infraestruturas públicas · experiência em PPP · gestão de projetos · monitoramento da performance.</p>
             <p><b>Programa:</b> no módulo Construa entram a "modelagem operacional", a matriz de riscos e os "indicadores de desempenho".</p></div>
           <div class="coluna c-laranja"><h4>O que o pré-projeto já atribui</h4><ul class="lista">
-            <li><b>Riscos (3.5):</b> custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos. Mitigação: estudo de rede, padrões abertos, <a href="#g-sla">acordo de nível de serviço</a> com remuneração por desempenho.</li>
+            <li><b>Riscos (3.5):</b> custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos. Mitigação: estudo de rede, padrões abertos, <a class="termo" href="#g-sla" data-def="Metas de qualidade do serviço; se o parceiro não cumpre, recebe menos. Em inglês, Service Level Agreement (SLA).">acordo de nível de serviço</a> com remuneração por desempenho.</li>
             <li><b>Implementação (3.7):</b> inventário de ativos; diagnóstico de demanda, rede e locais; implantação em fases com gatilhos de expansão.</li>
             <li><b>Monitoramento (3.10):</b> linha de base e metas anuais. Todo mês: disponibilidade, falhas, tempo de reparo e uso. Tudo num <a href="./">painel público</a>.</li></ul></div>
         </div>
@@ -357,7 +356,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
             <tr><td><b>Sistema de mensuração de desempenho</b></td><td>indicadores, fórmulas, metas e como a nota mexe no pagamento</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span></td></tr>
             <tr><td><b>Plano de implantação</b></td><td>fases, locais, gatilhos de expansão, cronograma de investimentos</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span></td></tr>
             <tr><td><b>Matriz de riscos</b></td><td>quem assume cada risco: demanda, energia, tecnologia, vandalismo</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-verde">Econômico</span> <span class="tag t-roxo">Jurídico</span></td></tr>
-            <tr><td><b>Fiscalização</b></td><td>como o Município acompanha e quem confere os dados (verificador independente)</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
+            <tr><td><b>Fiscalização</b></td><td>como o Município acompanha e quem confere os dados (<span class="termo" tabindex="0" data-def="Empresa contratada para medir o desempenho do parceiro sem depender só dos dados que ele mesmo informa.">verificador independente</span>)</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
             <tr><td><b>Inventário de áreas e bens</b></td><td>áreas públicas cedidas e o que volta ao Município no fim do contrato</td><td><span class="tag t-laranja">Operacional</span> <span class="tag t-roxo">Jurídico</span></td></tr>
           </tbody>
         </table></div>
@@ -393,7 +392,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         <details class="item" id="slide-2" data-busca><summary><span class="cod-grande">02</span><span><span class="sum-tit">Quem somos</span><br><span class="sum-sub">cidade do automóvel e as três áreas da equipe</span></span><span class="sum-dir"><span class="tag t-laranja">atualizar</span> 20 s</span><span class="seta" aria-hidden="true">›</span></summary>
           <div class="item-corpo">
             <p>A cidade no eixo Anchieta–Rodoanel–Porto de Santos, o ecossistema automotivo e a equipe.</p>
-            <p><span class="tag t-verde">confere</span> 810.729 habitantes (Censo 2022, <a class="ext" href="https://www.ibge.gov.br/cidades-e-estados/sp/sao-bernardo-do-campo.html" target="_blank" rel="noopener">IBGE</a>).</p>
+            <p><span class="tag t-verde">confere</span> 810.729 habitantes (Censo 2022, <a class="ext" href="https://www.ibge.gov.br/cidades-e-estados/sp/sao-bernardo-do-campo.html" target="_blank" rel="noopener"><span class="termo" data-def="Instituto Brasileiro de Geografia e Estatística, responsável pelo Censo.">IBGE</span></a>).</p>
             <p><span class="tag t-laranja">atualizar</span> o cartão e a nota do perfil técnico-operacional ainda trazem a integrante anterior.</p>
             <p class="nota">Corte sugerido: dizer "polo automotivo do Grande ABC" em vez de listar as marcas; a tela já mostra.</p></div></details>
 
@@ -401,20 +400,20 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
           <div class="item-corpo">
             <p><span class="tag t-verde">confere</span> 223.912 veículos eletrificados vendidos em 2025, 26% a mais que em 2024 (Associação Brasileira do Veículo Elétrico, <a class="ext" href="https://www.autoo.com.br/eletrificados-alta-de-26-em-2025-e-total-de-224-mil-unidades-veja-ranking/" target="_blank" rel="noopener">reportagem</a>).</p>
             <p><span class="tag t-laranja">aproximado</span> "~21 veículos por ponto público": o dado mais próximo encontrado é <b>19,6</b> (fev/2026).</p>
-            <p><span class="tag t-laranja">aproximado</span> "27% dos eletropostos no estado de São Paulo": em ago/2026 eram <b>26,3%</b>, 7.864 de 29.896 (<a class="ext" href="https://www.autodata.com.br/mobility/2026/09/24/brasil-se-aproxima-dos-30-mil-pontos-de-recarga-para-veiculos-eletrificados/136076/" target="_blank" rel="noopener">levantamento <abbr title="Associação Brasileira do Veículo Elétrico">ABVE</abbr> e Tupi Mobilidade</a>).</p>
+            <p><span class="tag t-laranja">aproximado</span> "27% dos <span class="termo" tabindex="0" data-def="Pontos públicos de recarga de veículos elétricos.">eletropostos</span> no estado de São Paulo": em ago/2026 eram <b>26,3%</b>, 7.864 de 29.896 (<a class="ext" href="https://www.autodata.com.br/mobility/2026/09/24/brasil-se-aproxima-dos-30-mil-pontos-de-recarga-para-veiculos-eletrificados/136076/" target="_blank" rel="noopener">levantamento <span class="termo" tabindex="0" data-def="Associação Brasileira do Veículo Elétrico">ABVE</span> e Tupi Mobilidade</a>).</p>
             <div class="resumo">Na fala, o seguro é "<b>cerca de 20</b> veículos por ponto" e "<b>um quarto</b> dos eletropostos está no estado de São Paulo".</div></div></details>
 
         <details class="item" id="slide-4" data-busca data-area="ope"><summary><span class="cod-grande">04</span><span><span class="sum-tit">A solução</span><br><span class="sum-sub">as seis frentes do Hub</span></span><span class="sum-dir">20 s</span><span class="seta" aria-hidden="true">›</span></summary>
           <div class="item-corpo"><p>Rede de recarga, recarga rápida, frota pesada, energia solar com baterias, plataforma digital e inovação com a indústria. Tudo integrado e crescendo por etapas.</p><p class="nota">É o objeto que o Operacional vai detalhar: o quê, onde e em que fases (<a href="#operacional">ver o Operacional em detalhe</a>).</p></div></details>
 
         <details class="item" id="slide-5" data-busca><summary><span class="cod-grande">05</span><span><span class="sum-tit">Como a PPP viabiliza</span><br><span class="sum-sub">papéis do Município e do parceiro, receitas</span></span><span class="sum-dir">25 s</span><span class="seta" aria-hidden="true">›</span></summary>
-          <div class="item-corpo"><p>O Município planeja, regula e fiscaliza. O parceiro investe, opera, mantém e inova. Receitas: recarga, serviços, estacionamento, publicidade e uma possível <a href="#g-contra">contraprestação</a> pública.</p><div class="fala">Não partimos da premissa de que a PPP é a resposta: vamos comparar os modelos com base em viabilidade e Value for Money.</div></div></details>
+          <div class="item-corpo"><p>O Município planeja, regula e fiscaliza. O parceiro investe, opera, mantém e inova. Receitas: recarga, serviços, estacionamento, publicidade e uma possível <a class="termo" href="#g-contra" data-def="Pagamento do Município ao parceiro numa PPP; pode variar conforme o desempenho.">contraprestação</a> pública.</p><div class="fala">Não partimos da premissa de que a PPP é a resposta: vamos comparar os modelos com base em viabilidade e Value for Money.</div></div></details>
 
         <details class="item" id="slide-6" data-busca><summary><span class="cod-grande">06</span><span><span class="sum-tit">Quem se beneficia</span><br><span class="sum-sub">públicos atendidos</span></span><span class="sum-dir">15 s</span><span class="seta" aria-hidden="true">›</span></summary>
           <div class="item-corpo"><p>Motoristas, transporte coletivo e frotas públicas, logística e aplicativos, indústria, trabalhadores, investidores.</p><p class="nota">Corte sugerido: citar três públicos e deixar a tela mostrar o resto.</p></div></details>
 
         <details class="item" id="slide-7" data-busca><summary><span class="cod-grande">07</span><span><span class="sum-tit">Diferenciais</span><br><span class="sum-sub">o que torna a proposta única</span></span><span class="sum-dir"><span class="tag t-laranja">texto longo</span> 15 s</span><span class="seta" aria-hidden="true">›</span></summary>
-          <div class="item-corpo"><p>Mais de 9 empresas-âncora; mobilidade, energia e tecnologia juntas; crescimento por etapas; indústria e logística; energia renovável; plataforma com transparência; São Bernardo como cidade-âncora do <a href="#g-abc">Grande ABC</a>.</p><div class="resumo">A nota tem 59 palavras para 15 segundos. Corte sugerido: dois diferenciais (território industrial e plataforma com transparência) e a frase da cidade-âncora.</div></div></details>
+          <div class="item-corpo"><p>Mais de 9 empresas-âncora; mobilidade, energia e tecnologia juntas; crescimento por etapas; indústria e logística; energia renovável; plataforma com transparência; São Bernardo como cidade-âncora do <a class="termo" href="#g-abc" data-def="Região de Santo André, São Bernardo do Campo, São Caetano do Sul e vizinhos, polo da indústria automotiva.">Grande ABC</a>.</p><div class="resumo">A nota tem 59 palavras para 15 segundos. Corte sugerido: dois diferenciais (território industrial e plataforma com transparência) e a frase da cidade-âncora.</div></div></details>
 
         <details class="item" id="slide-8" data-busca data-area="ope"><summary><span class="cod-grande">08</span><span><span class="sum-tit">Desafios</span><br><span class="sum-sub">seis frentes de risco</span></span><span class="sum-dir">20 s</span><span class="seta" aria-hidden="true">›</span></summary>
           <div class="item-corpo"><p>Econômico-financeira, técnica (conexão elétrica e alta potência), regulatória, tecnológica, ambiental e social, institucional.</p><div class="fala">Por isso a matriz de riscos estará no centro da modelagem.</div></div></details>

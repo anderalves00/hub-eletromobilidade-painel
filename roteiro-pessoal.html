@@ -5,162 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro pessoal — o Operacional no Hub</title>
-<!-- Montado sobre DevMode/configuracao/templates/html/painel-base.html (padrão do painel do Selo WWC). O publicar-quadro.ps1 injeta doctype e head. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Identidade própria (caderno de estudo), diferente da do guia, por decisão do Andy em 2026-11-21 — ver DecisoesProj.md. As cores das áreas são as mesmas do guia. Mecânica do esqueleto DevMode/configuracao/templates/html/painel-base.html. O publicar-quadro.ps1 injeta doctype e head. -->
 <style>
 :root {
-  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
-  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
-  --verde: #288827; --verde-claro: #e6f4e6;
-  --vermelho: #b3261e; --vermelho-claro: #fbe9e7;
-  --roxo: #6a3dbd; --roxo-claro: #f0eafb;
-  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
-  --fundo: #f3f6f9; --cartao: #ffffff;
-  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  /* Caderno: papel, tinta e caneta azul; marca-texto para o que pede atenção */
+  --papel: #FBF8F1; --papel-2: #F3EEE2; --tinta: #1E2A44; --azul: #2F4B8A; --azul-esc: #1E2A44; --azul-claro: #E9EDF6;
+  --marca: #F6E27A; --marca-claro: #FFF7CC; --pauta: #E4DCCB;
+  /* Áreas (cores fixas do projeto, as mesmas do guia) e estados */
+  --verde: #2E9E5B; --verde-claro: #E5F4EB;
+  --roxo: #6A4C9C; --roxo-claro: #F0EBF7;
+  --laranja: #E0922A; --laranja-esc: #9A5B0E; --laranja-claro: #FDF1E0;
+  --vermelho: #B3261E; --vermelho-claro: #FBE9E7;
+  --texto: #2A2F3A; --texto-suave: #6B6F78; --borda: #E4DCCB;
+  --cartao: #ffffff;
+  --raio: 6px; --sombra: 0 1px 2px rgba(30, 42, 68, .06);
+  --serifa: Georgia, "Times New Roman", serif;
+  --fonte: "Segoe UI", system-ui, Arial, sans-serif;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
-body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
-a { color: var(--azul); }
-a:hover { color: var(--azul-esc); }
+body { margin: 0; background: var(--papel); color: var(--texto); font: 15px/1.6 var(--fonte); }
+a { color: var(--azul); text-underline-offset: 2px; }
+a:hover { color: var(--tinta); }
 a.ext::after { content: " ↗"; font-size: .85em; }
-abbr[title] { text-decoration: underline dotted; cursor: help; }
-h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; font-family: var(--serifa); font-weight: 700; color: var(--tinta); }
 p { margin: 0; }
 .nw { white-space: nowrap; }
 
-/* Cabeçalho */
-.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
-.topo-int { padding: 22px 32px 20px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
-.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
-.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
-.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+/* Hover de termo: <span class="termo" tabindex="0" data-def="significado">TERMO</span> */
+.termo { position: relative; text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.termo:hover::after, .termo:focus::after { content: attr(data-def); position: absolute; left: 0; top: calc(100% + 4px); z-index: 30; width: max-content; max-width: min(340px, 80vw); background: var(--tinta); color: #fff; font: 400 13px/1.45 var(--fonte); font-style: normal; padding: 8px 10px; border-radius: 6px; white-space: normal; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
+
+/* Cabeçalho: folha de rosto do caderno */
+.topo { background: var(--papel); border-bottom: 2px solid var(--tinta); }
+.topo-int { padding: 26px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; color: var(--texto-suave); letter-spacing: .02em; }
+.topo h1 { font-size: 32px; margin-top: 6px; }
+.topo .subtitulo { font: italic 16px var(--serifa); color: var(--texto-suave); margin-top: 6px; }
 .topo .selos { display: flex; flex-wrap: wrap; gap: 8px; }
-.topo .atualizado { font-size: 13px; background: rgba(255,255,255,.14); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
-.topo .privado { font-size: 13px; background: var(--laranja); color: #fff; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.topo .atualizado { font-size: 13px; color: var(--texto-suave); border: 1px solid var(--pauta); padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+.topo .privado { font-size: 13px; background: var(--marca); color: var(--tinta); font-weight: 700; padding: 5px 12px; border-radius: 3px; white-space: nowrap; }
 
 /* Barra de ferramentas */
-.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--papel); border-bottom: 1px solid var(--pauta); }
 .barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
-.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--pauta); border-radius: 6px; font: inherit; background: #fff; }
 .grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip-filtro { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-.chip-filtro[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
-.botao { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; text-decoration: none; }
-.botao:hover { background: var(--azul-claro); }
+.chip-filtro { border: 1px solid var(--pauta); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.botao { border: 1px solid var(--tinta); background: transparent; color: var(--tinta); padding: 6px 12px; border-radius: 6px; font: 600 13px var(--fonte); cursor: pointer; text-decoration: none; }
+.botao:hover { background: var(--papel-2); }
 
 /* Estrutura */
-.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
-.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
-.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); margin: 10px 4px 6px; }
+.layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 28px; padding: 24px 32px 48px; }
+.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; padding: 4px 0; border-right: 1px solid var(--pauta); padding-right: 16px; }
+.lateral h2 { font: italic 700 14px var(--serifa); color: var(--texto-suave); margin: 14px 8px 4px; }
 .lateral h2:first-child { margin-top: 0; }
-.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 14px; }
-.lateral a:hover, .lateral a.ativo { background: var(--azul-claro); }
-.lateral a .cod { font-weight: 700; min-width: 30px; }
-.lateral a .tit { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-suave); font-size: 13px; }
-.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5ccd3; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 4px; text-decoration: none; color: var(--texto); font-size: 14px; }
+.lateral a:hover, .lateral a.ativo { background: var(--marca-claro); }
+.lateral a .cod { font-weight: 700; min-width: 22px; color: var(--tinta); }
+.lateral a .tit { color: var(--texto-suave); font-size: 13px; overflow-wrap: anywhere; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c9c2b2; }
 .ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.azul { background: var(--azul); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
-main { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+main { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
 
 /* Seções: a primeira aberta (section), as demais recolhidas (details) */
-section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px 24px; box-shadow: var(--sombra); }
-section.bloco > h2, details.bloco > summary h2 { font-size: 19px; color: var(--azul-esc); display: flex; align-items: center; gap: 10px; }
+section.bloco, details.bloco { background: var(--cartao); border: 1px solid var(--pauta); border-radius: var(--raio); box-shadow: var(--sombra); }
+section.bloco { padding: 20px 26px; }
+section.bloco > h2, details.bloco > summary h2 { font-size: 22px; }
 section.bloco > h2 { margin-bottom: 14px; }
-section.bloco > h2::before, details.bloco > summary h2::before { content: ""; width: 5px; height: 20px; background: var(--laranja); border-radius: 3px; flex: none; }
-details.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
 details.bloco > summary, details.item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 details > summary::-webkit-details-marker { display: none; }
-details.bloco > summary { padding: 16px 24px; }
-details.bloco > summary .cont { font-size: 13px; color: var(--texto-suave); font-weight: 600; margin-left: auto; }
-details.bloco > .bloco-corpo { padding: 0 24px 22px; display: grid; gap: 16px; }
-.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--azul-claro); color: var(--azul); font-weight: 800; transition: transform .15s; flex: none; }
+details.bloco > summary { padding: 16px 26px; }
+details.bloco > summary .cont { font: italic 14px var(--serifa); color: var(--texto-suave); margin-left: auto; }
+details.bloco > .bloco-corpo { padding: 0 26px 22px; display: grid; gap: 16px; }
+.seta { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--pauta); color: var(--tinta); font-weight: 700; transition: transform .15s; flex: none; }
 details[open] > summary .seta { transform: rotate(90deg); }
-.subtitulo-bloco { font-size: 15px; color: var(--azul-esc); text-transform: uppercase; letter-spacing: .04em; margin-top: 6px; }
 
-/* Item recolhível dentro de uma seção (o "critério" do Selo) */
-details.item { border: 1px solid var(--borda); border-radius: var(--raio); background: var(--cartao); }
-details.item[open] { border-color: #b9cfe0; }
-details.item > summary { padding: 14px 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
-.cod-grande { font-size: 20px; font-weight: 800; color: var(--azul); min-width: 40px; }
-.sum-tit { font-size: 16px; font-weight: 700; }
+/* Item recolhível dentro de uma seção */
+details.item { border: 1px solid var(--pauta); border-radius: var(--raio); background: #fff; }
+details.item[open] { border-color: var(--azul); }
+details.item > summary { padding: 12px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
+.cod-grande { font: 700 22px var(--serifa); color: var(--azul); min-width: 28px; }
+.sum-tit { font-size: 16px; font-weight: 600; }
 .sum-sub { font-size: 13px; color: var(--texto-suave); }
-.sum-dir { font-size: 13px; color: var(--texto-suave); font-weight: 600; white-space: nowrap; }
-.item-corpo { padding: 14px 18px 18px; border-top: 1px solid var(--borda); display: grid; gap: 10px; }
+.sum-dir { font-size: 13px; color: var(--texto-suave); white-space: nowrap; }
+.item-corpo { padding: 12px 16px 16px; border-top: 1px dashed var(--pauta); display: grid; gap: 10px; }
 
 /* Indicadores */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
-.kpi { border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px 16px; background: #fff; }
-.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); font-weight: 600; }
-.kpi .val { font-size: 30px; font-weight: 800; color: var(--azul-esc); line-height: 1.15; margin-top: 4px; }
-.kpi .val small { font-size: 15px; font-weight: 600; color: var(--texto-suave); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 14px; }
+.kpi { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; background: var(--papel); }
+.kpi .rot { font-size: 13px; color: var(--texto-suave); }
+.kpi .val { font: 700 30px/1.15 var(--serifa); color: var(--tinta); margin-top: 4px; }
+.kpi .val small { font: 400 15px var(--fonte); color: var(--texto-suave); }
 .kpi .det { font-size: 13px; color: var(--texto-suave); margin-top: 2px; }
-.kpi.destaque { border-color: var(--laranja); background: var(--laranja-claro); }
-.kpi.destaque .val { color: var(--laranja-esc); }
+.kpi.destaque { background: var(--marca-claro); border-color: var(--marca); }
 .progresso { margin-top: 18px; }
-.rotulo { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
-.trilho { display: flex; height: 14px; border-radius: 999px; background: #e9eef2; overflow: hidden; }
+.rotulo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 10px; border-radius: 999px; background: var(--papel-2); overflow: hidden; }
 .trilho span { height: 100%; }
-.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13px; color: var(--texto-suave); }
-.legenda-barra i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
-.contexto { margin: 16px 0 0; padding-left: 20px; color: var(--texto-suave); }
-.contexto li { margin: 3px 0; }
+.contexto { margin: 16px 0 0; padding-left: 20px; }
+.contexto li { margin: 4px 0; }
 
 /* Tabelas */
 .tabela-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-suave); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
-td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
-tbody tr:hover td { background: var(--azul-claro); }
+th { text-align: left; font: italic 700 14px var(--serifa); color: var(--tinta); padding: 8px 10px; border-bottom: 2px solid var(--tinta); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--pauta); vertical-align: top; }
+tbody tr:hover td { background: var(--papel); }
 
 /* Etiquetas */
-.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
-.t-azul { background: var(--azul-claro); color: var(--azul-esc); }
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 1px 9px; border-radius: 3px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.t-azul { background: var(--azul-claro); color: var(--azul); }
 .t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
 .t-verde { background: var(--verde-claro); color: var(--verde); }
 .t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
 .t-roxo { background: var(--roxo-claro); color: var(--roxo); }
-.t-cinza { background: #eef1f4; color: var(--texto-suave); }
-.t-forte { background: var(--laranja); color: #fff; }
 
 /* Caixas */
-.definicao { padding: 12px 14px; background: var(--azul-claro); border-radius: 8px; }
-.resumo { padding: 12px 14px; border-left: 4px solid var(--laranja); background: var(--laranja-claro); border-radius: 0 8px 8px 0; }
-.alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
-.fala { padding: 10px 12px; border-left: 3px solid var(--azul); background: #f4f7fa; font-size: 14px; border-radius: 0 6px 6px 0; font-style: italic; }
+.definicao { padding: 12px 14px; background: var(--papel); border: 1px solid var(--pauta); border-radius: var(--raio); }
+.resumo { padding: 12px 14px; background: var(--marca-claro); border-left: 4px solid var(--marca); border-radius: 0 var(--raio) var(--raio) 0; }
+.alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 var(--raio) var(--raio) 0; }
+.fala { padding: 10px 14px; border-left: 3px solid var(--azul); background: var(--papel); font: italic 16px/1.55 var(--serifa); color: var(--tinta); border-radius: 0 var(--raio) var(--raio) 0; }
 .nota { color: var(--texto-suave); font-size: 14px; }
 .lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
 
 /* Grades de cartões */
-.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 14px; }
-.coluna { border-radius: 8px; padding: 12px 14px; border: 1px solid var(--borda); border-top: 5px solid var(--cor, var(--azul)); background: #fff; }
-.coluna > h4 { font-size: 15px; margin-bottom: 8px; color: var(--cor, var(--azul-esc)); }
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
+.coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: #fff; display: grid; gap: 8px; align-content: start; }
+.coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
 .coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
-.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
-.pend { border: 1px solid var(--borda); border-left: 5px solid var(--laranja); border-radius: 8px; padding: 12px 14px; }
-.pend h3 { font-size: 15px; margin-bottom: 6px; }
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; }
+.pend { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; background: var(--papel); }
+.pend h3 { font-size: 16px; margin-bottom: 6px; }
 .cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
-.cenario { border: 1px solid var(--borda); border-radius: 8px; padding: 12px 14px; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.cenario { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; min-width: 0; display: grid; gap: 8px; align-content: start; }
 .cenario.rec { border: 2px solid var(--verde); }
 .cen-topo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
 /* Lista de tarefas */
-.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.checklist label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 10px; border-radius: 6px; background: #f7f9fb; cursor: pointer; }
-.checklist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--verde); flex: none; }
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.checklist label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 4px; border-bottom: 1px solid var(--pauta); cursor: pointer; }
+.checklist input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--tinta); flex: none; }
 .checklist input:checked + span { color: var(--texto-suave); text-decoration: line-through; }
 
 .oculto { display: none !important; }
-footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(--serifa); }
 
 @media (max-width: 900px) {
   .barra-ferramentas { position: static; }
   html { scroll-padding-top: 12px; }
   .layout { grid-template-columns: 1fr; padding: 16px; }
-  .lateral { position: static; max-height: none; }
+  .lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--pauta); padding: 0 0 12px; }
   .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  .topo h1 { font-size: 26px; }
   footer { padding: 0 16px 24px; }
   section.bloco { padding: 16px; }
   details.bloco > summary { padding: 14px 16px; }
@@ -179,13 +178,14 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 <header class="topo">
   <div class="topo-int">
     <div>
-      <div class="sobre">MBA em Parcerias Público-Privadas e Concessões Sustentáveis · Hub de Eletromobilidade · Área técnico-operacional</div>
+      <div class="sobre"><span class="termo" tabindex="0" data-def="Master of Business Administration: pós-graduação executiva. Aqui, o MBA em Parcerias Público-Privadas e Concessões Sustentáveis da FGV com o Banco do Brasil.">MBA</span> em Parcerias Público-Privadas e Concessões Sustentáveis · Hub de Eletromobilidade · área técnico-operacional</div>
       <h1>Roteiro pessoal — o Operacional no Hub</h1>
-      <div class="subtitulo">Onde você entra · O que estudar · O que fazer · O que falar</div>
+      <div class="subtitulo">Onde você entra · o que estudar · o que fazer · o que falar</div>
     </div>
     <div class="selos"><span class="privado">Só para você · não compartilhar</span><span class="atualizado">Atualizado em 21/11/2026</span></div>
   </div>
 </header>
+
 
 <div class="barra-ferramentas">
   <div class="barra-int">
@@ -229,7 +229,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <div class="kpis">
         <div class="kpi destaque"><div class="rot">Tarefas feitas</div><div class="val" id="kpi-feitas">0 <small>/ 15</small></div><div class="det">nas três trilhas · salvo neste navegador</div></div>
         <div class="kpi"><div class="rot">Pitch</div><div class="val">24/11 <small>9h</small></div><div class="det">abertura em Brasília (a confirmar)</div></div>
-        <div class="kpi"><div class="rot">Sua 1ª mentoria</div><div class="val">17/02 <small>/2027</small></div><div class="det">mentoria operacional do FGV Action</div></div>
+        <div class="kpi"><div class="rot">Sua 1ª mentoria</div><div class="val">17/02 <small>/2027</small></div><div class="det">mentoria operacional do <span class="termo" tabindex="0" data-def="Disciplina que liga as demais ao projeto aplicado: 11 oficinas para a equipe aplicar cada disciplina ao Hub e 6 mentorias, duas por área.">FGV Action</span></div></div>
         <div class="kpi"><div class="rot">Disciplinas-chave</div><div class="val">9 · 10 · 13 · 16</div><div class="det">planejamento, riscos, contratos, monitoramento</div></div>
       </div>
       <div class="progresso" id="barras"></div>
@@ -246,9 +246,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         <div class="tabela-wrap"><table>
           <thead><tr><th>Tema</th><th>Hoje (herdado do pitch)</th><th>Possível (a combinar)</th></tr></thead>
           <tbody>
-            <tr><td><b>Cartão do pitch</b></td><td>"Infraestrutura, indústria, <i>stakeholders</i> (partes interessadas) e <abbr title="ambiental, social e governança">ESG</abbr>"</td><td>Operação, indicadores de desempenho e plataforma digital</td></tr>
+            <tr><td><b>Cartão do pitch</b></td><td>"Infraestrutura, indústria, <i>stakeholders</i> (partes interessadas) e <span class="termo" tabindex="0" data-def="ambiental, social e governança">ESG</span>"</td><td>Operação, indicadores de desempenho e plataforma digital</td></tr>
             <tr><td><b>Indústria</b></td><td>com o Operacional</td><td>Giovanna puxa, porque já faz isso no cargo; você organiza a agenda e registra</td></tr>
-            <tr><td><b>Sua força</b></td><td>não aparece</td><td>indicadores e Power BI; gestão de projetos (o acompanhamento das 40 emendas); sistemas, que é a plataforma do Hub</td></tr>
+            <tr><td><b>Sua força</b></td><td>não aparece</td><td>indicadores e <span class="termo" tabindex="0" data-def="Ferramenta da Microsoft para montar painéis de indicadores a partir de dados.">Power BI</span>; gestão de projetos (o acompanhamento das 40 emendas); sistemas, que é a plataforma do Hub</td></tr>
             <tr><td><b>Lacuna</b></td><td>não aparece</td><td>energia e rede elétrica: saber perguntar, não projetar</td></tr>
           </tbody>
         </table></div>
@@ -261,8 +261,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <div class="bloco-corpo">
         <div class="colunas">
           <div class="coluna c-laranja"><h4>Só seu</h4><ul class="lista">
-            <li>O desenho do serviço: quantos pontos, onde, de que tipo e em que fases, com gatilhos de expansão.</li>
-            <li>O caderno de encargos: padrões de serviço, manutenção e atendimento.</li>
+            <li>O desenho do serviço: quantos pontos, onde, de que tipo e em que fases, com <span class="termo" tabindex="0" data-def="Metas, como um nível de uso, que, quando atingidas, obrigam o parceiro a abrir a fase seguinte.">gatilhos de expansão</span>.</li>
+            <li>O <span class="termo" tabindex="0" data-def="Anexo do edital que descreve o que o parceiro entrega e mantém: equipamentos, horários, manutenção, atendimento.">caderno de encargos</span>: padrões de serviço, manutenção e atendimento.</li>
             <li>Os indicadores e o plano de monitoramento; o <a href="./">painel</a> já é o rascunho.</li>
             <li>O inventário de ativos e áreas (meses 1 a 3) e o diagnóstico de demanda e de rede (meses 3 a 6).</li></ul></div>
           <div class="coluna c-verde"><h4>Com o Thiago · Econômico</h4><ul class="lista">
@@ -275,7 +275,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
             <li>O que volta ao Município no fim do contrato.</li></ul></div>
         </div>
         <div class="pend-grid">
-          <div class="pend"><h3>Os três juntos</h3><p>A matriz de riscos: quem assume cada risco (demanda, energia, tecnologia).</p></div>
+          <div class="pend"><h3>Os três juntos</h3><p>A <span class="termo" tabindex="0" data-def="Tabela do contrato que diz quem assume cada risco (o Município, o parceiro ou os dois) e o que acontece se ele ocorrer.">matriz de riscos</span>: quem assume cada risco (demanda, energia, tecnologia).</p></div>
           <div class="resumo">A divisão em peças do edital é <b>prática de mercado</b>, não está escrita pela FGV. Confirmar na mentoria de 17/02/2027 (<a href="guia.html#operacional">detalhe no guia</a>).</div>
         </div>
       </div>
@@ -287,15 +287,15 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         <div class="colunas">
           <div class="coluna c-laranja" data-area="agora"><h4>Antes de terça <span class="tag t-laranja">urgente</span></h4>
             <ul class="lista">
-              <li><a href="guia.html#g-conc">Concessão comum</a>: o usuário paga a tarifa.</li>
-              <li><a href="guia.html#g-ppp">PPP administrativa</a>: o Município paga. Na patrocinada, tarifa mais complemento público.</li>
-              <li><a href="guia.html#g-vfm">Value for Money</a>: a PPP vale mais que a obra pública pelo mesmo dinheiro?</li>
-              <li><a href="guia.html#g-sla">Acordo de nível de serviço</a>: o serviço falha, o parceiro recebe menos.</li>
-              <li><a href="guia.html#g-tm">Teoria da Mudança</a>: problema → atividades → produtos → resultados → impacto.</li></ul>
+              <li><a class="termo" href="guia.html#g-conc" data-def="O parceiro é remunerado pela tarifa do usuário, sem pagamento do Município.">Concessão comum</a>: o usuário paga a tarifa.</li>
+              <li><a class="termo" href="guia.html#g-ppp" data-def="Contrato longo em que um parceiro privado investe e opera um serviço público e é pago, total ou parcialmente, pelo poder público. Administrativa: paga só pelo Município. Patrocinada: tarifa mais complemento público.">PPP administrativa</a>: o Município paga. Na patrocinada, tarifa mais complemento público.</li>
+              <li><a class="termo" href="guia.html#g-vfm" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</a>: a PPP vale mais que a obra pública pelo mesmo dinheiro?</li>
+              <li><a class="termo" href="guia.html#g-sla" data-def="Metas de qualidade do serviço; se o parceiro não cumpre, recebe menos. Em inglês, Service Level Agreement (SLA).">Acordo de nível de serviço</a>: o serviço falha, o parceiro recebe menos.</li>
+              <li><a class="termo" href="guia.html#g-tm" data-def="A cadeia que liga o problema às atividades, aos produtos, aos resultados e ao impacto. É o método que guia o curso.">Teoria da Mudança</a>: problema → atividades → produtos → resultados → impacto.</li></ul>
             <p class="nota">Leitura: pré-projeto, itens 3.1, 3.5, 3.7 e 3.10 (cerca de 15 minutos).</p></div>
           <div class="coluna c-azul" data-area="depois"><h4>Módulo 1 <span class="tag t-azul">até 19/04/2027</span></h4>
             <ul class="lista">
-              <li>Disciplina 1: por que o Estado intervém (falhas de mercado) e a Teoria da Mudança aplicada ao Hub.</li>
+              <li>Disciplina 1: por que o Estado intervém (<span class="termo" tabindex="0" data-def="Situações em que o mercado sozinho não entrega o que a sociedade precisa, por exemplo quando o investimento é alto e o retorno, incerto.">falhas de mercado</span>) e a Teoria da Mudança aplicada ao Hub.</li>
               <li>Disciplina 2: análise com vários critérios e Value for Money. A pergunta é se o Hub deve mesmo ser PPP.</li>
               <li><b>Energia, o básico:</b> potência, em quilowatts, e energia, em <span class="nw">quilowatts-hora</span>; recarga em corrente alternada (lenta) e em corrente contínua (rápida); o que a distribuidora precisa saber para ligar um ponto de alta potência.</li></ul></div>
           <div class="coluna c-azul" data-area="depois"><h4>Ao longo do curso <span class="tag t-azul">até 2028</span></h4>
@@ -364,7 +364,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <summary><h2>Perguntas prováveis</h2><span class="cont">5 perguntas · respostas a combinar com a equipe</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
         <details class="item" data-busca><summary><span class="cod-grande">1</span><span class="sum-tit">Por que a própria Prefeitura não instala os carregadores?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>
-          <div class="item-corpo"><div class="fala">Porque o investimento é alto, e o risco de tecnologia e de demanda também. A tecnologia muda rápido. A PPP passa esses riscos a quem sabe operar, e o Value for Money vai dizer se compensa.</div></div></details>
+          <div class="item-corpo"><div class="fala">Porque o investimento é alto, e o risco de tecnologia e de demanda também. A tecnologia muda rápido. A PPP passa esses riscos a quem sabe operar, e o <span class="termo" tabindex="0" data-def="Comparação que mostra se a PPP entrega mais valor que a contratação pública tradicional pelo mesmo dinheiro.">Value for Money</span> vai dizer se compensa.</div></div></details>
         <details class="item" data-busca><summary><span class="cod-grande">2</span><span class="sum-tit">Quantos pontos, e onde?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>
           <div class="item-corpo"><div class="fala">Ainda não temos esse número, de propósito. Ele sai do diagnóstico de demanda e de rede, nos meses 3 a 6. A implantação é em fases, e cada nova fase abre quando o uso atinge uma meta.</div></div></details>
         <details class="item" data-busca><summary><span class="cod-grande">3</span><span class="sum-tit">A rede elétrica aguenta recarga rápida e ônibus?</span><span></span><span class="seta" aria-hidden="true">›</span></summary>

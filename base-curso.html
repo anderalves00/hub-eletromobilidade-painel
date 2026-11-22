@@ -164,6 +164,9 @@ tbody tr:hover td { background: var(--papel); }
 .origem b { color: var(--tinta); }
 .tab-programa th:nth-child(2) { min-width: 200px; }
 .tab-programa th:nth-child(5) { min-width: 280px; }
+.ambas { background: var(--azul-claro); }
+.ambas::before { content: "vale para as duas PPPs"; display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--azul); margin-bottom: 2px; }
+.quatro { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
 .t-teal-mod { background: var(--azul-claro); color: var(--azul); }
 .t-sintese { background: #ECE8DD; color: #5B5446; }
 details.sub { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 8px 12px; background: var(--papel); }
@@ -179,6 +182,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   .layout { grid-template-columns: 1fr; padding: 16px; }
   .lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--pauta); padding: 0 0 12px; display: flex; flex-wrap: wrap; gap: 2px 10px; }
   .lateral h2 { display: none; }
+  .colunas, .pend-grid, .quatro { grid-template-columns: 1fr; }
   .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
   .topo h1 { font-size: 26px; }
   footer { padding: 0 16px 24px; }
@@ -222,6 +226,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   <nav class="lateral" aria-label="Navegação">
     <h2>Começo</h2>
     <a href="#visao-geral">Como os documentos se encaixam</a>
+    <a href="#basico">PPP e concessão: o básico</a>
     <a href="#linha">Como chegamos até aqui</a>
     <h2>Os documentos</h2>
     <a href="#edital"><span class="cod">1</span><span class="tit">Edital (5ª oferta)</span></a>
@@ -250,6 +255,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="resumo"><b>A ligação que explica quase tudo:</b> o <a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">edital</a> mandou o município apresentar um pré-projeto com dez itens (<span class="termo" tabindex="0" data-def="Os 10 itens do pré-projeto pedidos pelo edital (40 pontos):&#10;• 7.3.1 descrição&#10;• 7.3.2 viabilidade&#10;• 7.3.3 sustentabilidade (ODS)&#10;• 7.3.4 partes interessadas&#10;• 7.3.5 riscos&#10;• 7.3.6 base legal&#10;• 7.3.7 implementação&#10;• 7.3.8 capacidade organizacional&#10;• 7.3.9 impactos&#10;• 7.3.10 monitoramento e avaliação.">7.3.1 a 7.3.10</span>). O <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/projeto-aplicado/pre-projeto-hub-eletromobilidade.pdf" target="_blank" rel="noopener">pré-projeto do Hub</a> tem exatamente esses dez itens, de <span class="termo" tabindex="0" data-def="As seções do pré-projeto do Hub:&#10;• 3.1 descrição&#10;• 3.2 viabilidade&#10;• 3.3 ODS&#10;• 3.4 partes interessadas&#10;• 3.5 riscos&#10;• 3.6 base legal&#10;• 3.7 implementação&#10;• 3.8 capacidade organizacional&#10;• 3.9 impactos&#10;• 3.10 monitoramento e avaliação. Mesma ordem do edital.">3.1 a 3.10</span>. O <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/projeto-aplicado/pitch-hub-eletromobilidade-v1.pdf" target="_blank" rel="noopener">pitch</a> resume o pré-projeto em 3 minutos. E o curso inteiro serve para transformar esse pré-projeto em um edital de verdade, que é o trabalho final.</div>
       <h3 class="subtitulo-bloco">Por onde começar, antes de terça</h3>
       <ol class="lista">
+        <li><a href="#basico">PPP e concessão: o básico</a>: o vocabulário que todos os outros documentos usam.</li>
         <li><a href="#preprojeto">Pré-projeto</a>: itens 3.1, 3.2, 3.5, 3.7, 3.8 e 3.10. É o que a equipe vai defender.</li>
         <li><a href="#pitch">Pitch</a>: os 10 slides, com o que se fala em cada um.</li>
         <li><a href="#programa">Programa</a>: só a estrutura (os quatro módulos e o FGV Action).</li>
@@ -258,6 +264,91 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <p class="origem"><b>Links dos documentos:</b> o edital e o programa abrem no site da <span class="termo" tabindex="0" data-def="Fundação Getulio Vargas, que oferece o curso em parceria com o Banco do Brasil.">FGV</span>; os outros abrem no seu repositório privado do GitHub (é preciso estar logado). O pré-projeto e o pitch estão lá também em PDF, para abrir direto no navegador.</p>
       <p class="origem"><b>Como esta página foi feita:</b> cada documento foi lido inteiro em 21/11. Os PDFs com texto foram extraídos; o cronograma, que é imagem, foi lido pelas páginas. O que é resumo ou opinião do Claude está marcado com <span class="tag t-sintese">síntese</span>.</p>
     </section>
+
+    <details class="bloco" id="basico" data-busca>
+      <summary><h2>PPP e concessão: o básico</h2><span class="cont">o que é · diferenças · limites · obrigações</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <p>Quando o Município quer oferecer um serviço que exige muito investimento, ele tem, de modo geral, três caminhos. A diferença entre eles está em <b>quem investe, quem opera, quem paga e quem corre o risco</b>.</p>
+        <div class="colunas">
+          <div class="coluna"><h4>Fazer por conta própria</h4><p>O Município contrata a obra e os equipamentos e opera ele mesmo, ou contrata a operação por um prazo curto. <b>Paga tudo e assume os riscos.</b> É a contratação tradicional, pela lei de licitações (14.133).</p></div>
+          <div class="coluna"><h4>Concessão comum</h4><p>Um parceiro privado investe, opera e <b>se paga com a tarifa do usuário</b> (e receitas extras, como publicidade), "por sua conta e risco", por prazo determinado. <b>O Município não paga nada ao parceiro.</b></p><p class="nota">Lei 8.987/1995, art. 2º, II</p></div>
+          <div class="coluna"><h4>PPP</h4><p>Também é uma concessão, mas <b>o Município paga ao parceiro</b> uma "<span class="termo" tabindex="0" data-def="O pagamento que o Município faz ao parceiro privado numa PPP. Pode ser em dinheiro, cessão de créditos, direitos sobre bens públicos e outros meios da lei (11.079, art. 6º).">contraprestação</span>". Tem dois tipos: <span class="termo" tabindex="0" data-def="Concessão em que o parceiro recebe a tarifa do usuário e, além dela, um pagamento do Município (11.079, art. 2º, §1º)."><b>patrocinada</b></span> (tarifa do usuário mais pagamento público) e <span class="termo" tabindex="0" data-def="Contrato de prestação de serviço em que a própria Administração é a usuária, direta ou indireta, e paga tudo (11.079, art. 2º, §2º)."><b>administrativa</b></span> (a própria Administração é a usuária e paga tudo).</p><p class="nota">Lei 11.079/2004, art. 2º, §§ 1º a 3º</p></div>
+        </div>
+        <div class="resumo"><b>A frase para guardar:</b> "PPP é concessão com dinheiro público no meio". Se a tarifa e as outras receitas bastam, é concessão comum. Se precisa de complemento do Município, é PPP patrocinada. Se quem usa e paga é a própria Prefeitura, é PPP administrativa. É exatamente a dúvida do pré-projeto (3.2): testar se tarifa, estacionamento e publicidade bastam, e só se não bastarem pensar em contraprestação.</div>
+
+        <h3 class="subtitulo-bloco">Lado a lado</h3>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th></th><th>Concessão comum</th><th>PPP patrocinada</th><th>PPP administrativa</th></tr></thead>
+          <tbody>
+            <tr><td><b>Quem paga o parceiro</b></td><td>o usuário (tarifa) e receitas acessórias</td><td>o usuário e o Município</td><td>o Município (a Administração é a usuária)</td></tr>
+            <tr><td><b>Lei</b></td><td>8.987/1995</td><td colspan="2" class="ambas">11.079/2004, que soma suas regras às cláusulas da 8.987 (art. 5º)</td></tr>
+            <tr><td><b>Valor mínimo do contrato</b></td><td>regra só da PPP</td><td colspan="2" class="ambas"><b>R$ 10 milhões</b> (art. 2º, §4º, I)</td></tr>
+            <tr><td><b>Prazo</b></td><td>determinado (art. 2º, II)</td><td colspan="2" class="ambas"><b>de 5 a 35 anos</b>, contando prorrogações (art. 5º, I)</td></tr>
+            <tr><td><b>Pagamento por desempenho</b></td><td>a qualidade é medida por indicadores no contrato (art. 23, III)</td><td colspan="2" class="ambas">o pagamento <b>pode variar conforme metas de qualidade e disponibilidade</b> (art. 6º, §1º)</td></tr>
+            <tr><td><b>Empresa só para o contrato</b></td><td>regra só da PPP</td><td colspan="2" class="ambas">obrigatória: uma <span class="termo" tabindex="0" data-def="Sociedade de propósito específico: empresa criada só para executar aquele contrato, separada das outras atividades do parceiro. O Município não pode ter a maioria do capital votante.">SPE</span> (art. 9º)</td></tr>
+            <tr><td><b>Limite fiscal</b></td><td>não há pagamento público</td><td colspan="2" class="ambas">despesas com PPPs até <b>5% da <span class="termo" tabindex="0" data-def="A arrecadação do município no ano (impostos, transferências e outras receitas correntes), descontadas algumas deduções previstas na Lei de Responsabilidade Fiscal.">receita corrente líquida</span></b>; acima disso, o município perde garantias e transferências voluntárias da União (art. 28)</td></tr>
+            <tr><td><b>Autorização da Câmara</b></td><td>regra só da PPP</td><td>exigida se mais de 70% da remuneração vier do Município (art. 10, §3º)</td><td>a lei só fala da patrocinada</td></tr>
+            <tr><td><b><span class="termo" tabindex="0" data-def="A disputa pública que escolhe quem vai fazer o contrato, com regras iguais para todos os concorrentes.">Licitação</span></b></td><td colspan="3">concorrência ou <span class="termo" tabindex="0" data-def="Modalidade da lei 14.133 em que a Administração conversa com empresas pré-selecionadas para desenvolver a solução antes de pedir as propostas finais. Útil quando o próprio poder público não sabe a melhor solução técnica.">diálogo competitivo</span> (8.987, art. 2º, II; 11.079, art. 10)</td></tr>
+          </tbody>
+        </table></div>
+
+        <h3 class="subtitulo-bloco">Limites: o que uma PPP não pode ser</h3>
+        <div class="pend-grid quatro">
+          <div class="pend"><h3>Vedações (art. 2º, §4º)</h3><ul class="lista"><li>contrato abaixo de R$ 10 milhões;</li><li>prestação do serviço por menos de 5 anos;</li><li>objeto que seja <b>só</b> obra, <b>só</b> fornecimento de equipamento ou <b>só</b> mão de obra. PPP é serviço, não compra.</li></ul></div>
+          <div class="pend"><h3>Só paga depois de funcionar (art. 7º)</h3><p>A contraprestação "será obrigatoriamente precedida da disponibilização do serviço". O Município só começa a pagar quando o serviço está disponível; pode pagar por parte já em funcionamento. <b>Para você: a disponibilidade é o gatilho do pagamento.</b></p></div>
+          <div class="pend"><h3>Antes de licitar (art. 10)</h3><ul class="lista"><li>estudo técnico mostrando por que a PPP é conveniente;</li><li>impacto no orçamento e nas metas fiscais;</li><li>objeto previsto no <span class="termo" tabindex="0" data-def="Plano Plurianual: o planejamento de quatro anos do governo, aprovado em lei.">PPA</span>;</li><li><b>consulta pública</b> de no mínimo 30 dias;</li><li>licença ambiental prévia, quando exigida.</li></ul><p class="nota">É o caminho que o pré-projeto descreve em 3.7, até a "decisão municipal".</p></div>
+          <div class="pend"><h3>O que o Estado não delega (art. 4º, III)</h3><p>Regulação, poder de polícia e atividades exclusivas do Estado ficam com o Município. O parceiro opera; <b>quem regula e fiscaliza é a Prefeitura</b>.</p></div>
+        </div>
+
+        <h3 class="subtitulo-bloco">"Serviço adequado": a régua de qualquer concessão</h3>
+        <p>A Lei 8.987 (art. 6º, §1º) diz que o serviço precisa satisfazer oito condições. É a base dos indicadores que o Operacional vai propor.</p>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Condição (art. 6º, §1º)</th><th>No Hub, poderia ser medida por <span class="tag t-sintese">síntese</span></th></tr></thead>
+          <tbody>
+            <tr><td><b>Regularidade</b></td><td>pontos funcionando nos horários prometidos</td></tr>
+            <tr><td><b>Continuidade</b></td><td>disponibilidade (<span class="termo" tabindex="0" data-def="Percentual do tempo em que o equipamento funciona e está disponível.">uptime</span>); a lei aceita interrupção por emergência ou com aviso prévio, por razões técnicas ou de segurança (§3º)</td></tr>
+            <tr><td><b>Eficiência</b></td><td>tempo de reparo, falhas por mês, potência entregue</td></tr>
+            <tr><td><b>Segurança</b></td><td>incidentes elétricos, conformidade com as normas de instalação</td></tr>
+            <tr><td><b>Atualidade</b></td><td>troca de equipamentos obsoletos e expansão; a lei inclui "modernidade das técnicas" e "melhoria e expansão" (§2º)</td></tr>
+            <tr><td><b>Generalidade</b></td><td>acesso para todos: distribuição no território e acessibilidade</td></tr>
+            <tr><td><b>Cortesia</b></td><td>atendimento e reclamações resolvidas no prazo</td></tr>
+            <tr><td><b>Modicidade das tarifas</b></td><td>preço da recarga comparado ao mercado</td></tr>
+          </tbody>
+        </table></div>
+
+        <h3 class="subtitulo-bloco">Obrigações de cada lado</h3>
+        <div class="colunas">
+          <div class="coluna c-laranja"><h4>Do parceiro (8.987, art. 31 e 25)</h4><ul class="lista">
+            <li>prestar serviço adequado;</li>
+            <li><b>manter inventário e registro dos bens</b>;</li>
+            <li>prestar contas ao Município e aos usuários;</li>
+            <li><b>dar livre acesso à fiscalização</b> a equipamentos, instalações e registros;</li>
+            <li>zelar pelos bens e segurá-los;</li>
+            <li>responder por todos os prejuízos que causar; a fiscalização não diminui essa responsabilidade (art. 25).</li></ul></div>
+          <div class="coluna"><h4>Do Município (8.987, art. 29)</h4><ul class="lista">
+            <li><b>regulamentar e fiscalizar permanentemente</b>;</li>
+            <li>aplicar penalidades e, nos casos da lei, intervir ou extinguir a concessão;</li>
+            <li>reajustar e revisar tarifas;</li>
+            <li>zelar pela qualidade e apurar reclamações, respondendo ao usuário em até 30 dias;</li>
+            <li>na PPP, pagar em dia; o contrato diz o que acontece se não pagar (11.079, art. 5º, VI).</li></ul></div>
+          <div class="coluna"><h4>O que o contrato precisa ter</h4><p>A 8.987 (art. 23) lista 15 cláusulas essenciais; a 11.079 (art. 5º) acrescenta outras para a PPP. As que são do Operacional:</p><ul class="lista">
+            <li>modo e condições de prestação (23, II);</li>
+            <li><b>indicadores e parâmetros de qualidade</b> (23, III);</li>
+            <li>fiscalização (23, VII);</li>
+            <li><span class="termo" tabindex="0" data-def="Os bens ligados ao serviço (carregadores, instalações, sistemas) que voltam ao Município quando o contrato acaba (8.987, art. 35, §1º)."><b>bens reversíveis</b></span> (23, X) e a vistoria deles (5º, X);</li>
+            <li><b>critérios objetivos de desempenho</b> (5º, VII);</li>
+            <li>preservação da atualidade (5º, V);</li>
+            <li>repartição de riscos (5º, III) e penalidades proporcionais (5º, II).</li></ul></div>
+        </div>
+
+        <h3 class="subtitulo-bloco">Como termina</h3>
+        <p>A concessão acaba pelo fim do prazo, por retomada por interesse público (<span class="termo" tabindex="0" data-def="Retomada do serviço pelo Município antes do fim do prazo, por interesse público, com lei autorizativa específica e indenização prévia (8.987, art. 37).">encampação</span>), por falha grave do parceiro (<span class="termo" tabindex="0" data-def="Extinção do contrato por inadimplemento do parceiro, depois de processo administrativo com direito de defesa (8.987, art. 38).">caducidade</span>), rescisão, anulação ou falência (8.987, art. 35). No fim, <b>os bens reversíveis voltam ao Município</b>, que assume o serviço na hora; o investimento ainda não <span class="termo" tabindex="0" data-def="Ainda não recuperado pelo parceiro com as receitas do contrato. Essa parte o Município paga de volta ao retomar os bens (8.987, art. 36).">amortizado</span> é indenizado (arts. 35, §1º a §3º, e 36). <b>Por isso o inventário de ativos é a primeira entrega do Operacional:</b> sem saber o que existe e o que será investido, não dá para definir o que volta.</p>
+
+        <div class="definicao"><b>Uma pergunta que o curso vai ter que responder:</b> recarga de carro elétrico é um <b>serviço público</b>, que pode ser concedido pela Lei 8.987, ou uma <b>atividade privada feita em área pública</b>, que pediria outro tipo de contrato (por exemplo, a cessão de uso do espaço)? A resposta muda o modelo. O pré-projeto deixa a porta aberta ao falar em "PPP, concessão ou arranjo equivalente" (3.1). É uma conversa para a Giovanna e para a Disciplina 4. <span class="tag t-sintese">síntese</span></div>
+
+        <p class="origem"><b>De onde vem:</b> texto vigente da <a class="ext" href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/lei/l11079.htm" target="_blank" rel="noopener">Lei 11.079/2004 (PPP)</a> e da <a class="ext" href="https://www.planalto.gov.br/ccivil_03/leis/l8987cons.htm" target="_blank" rel="noopener">Lei 8.987/1995 (concessões)</a>, lidas no site do Planalto em 22/11/2026, artigo por artigo. A coluna "No Hub, poderia ser medida por" e a pergunta final são <span class="tag t-sintese">síntese</span>, não estão na lei.</p>
+      </div>
+    </details>
 
     <details class="bloco" id="linha" data-busca>
       <summary><h2>Como chegamos até aqui</h2><span class="cont">de julho a 24/11/2026</span><span class="seta" aria-hidden="true">›</span></summary>

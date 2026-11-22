@@ -144,7 +144,7 @@ tbody tr:hover td { background: var(--papel); }
 .pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; }
 .pend { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; background: var(--papel); }
 .pend h3 { font-size: 16px; margin-bottom: 6px; }
-#casos .bloco-corpo > h3 { font-size: 18px; margin: 26px 0 8px; }
+#casos .bloco-corpo > h3, #casos-fora .bloco-corpo > h3 { font-size: 18px; margin: 26px 0 8px; }
 .cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
 .cenario { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; min-width: 0; display: grid; gap: 8px; align-content: start; }
 .cenario.rec { border: 2px solid var(--verde); }
@@ -277,7 +277,8 @@ html[data-tema=escuro] .ponto { background: #4A5160; }
     <h2>Parte 2 · O básico para começar</h2>
     <a href="#basico">PPP e concessão: o básico</a>
     <a href="#recarga">A recarga é serviço público?</a>
-    <a href="#casos">Casos reais de recarga</a>
+    <a href="#casos">Casos no Brasil</a>
+    <a href="#casos-fora">Casos de outros países</a>
     <a href="#termos">Termos que vão aparecer</a>
   </nav>
 
@@ -613,13 +614,13 @@ html[data-tema=escuro] .ponto { background: #4A5160; }
             <li><b>Operação:</b> funcionamento contínuo, manutenção preventiva e corretiva, SAC, reparo em até 15 dias úteis.</li>
             <li><b>Multas:</b> de 0,1% a 3% do investimento declarado. É gravíssima a inoperância de mais de 30% dos eletropostos por mais de 10 dias úteis.</li>
           </ul>
-          <p class="nota">É a minuta do 1º edital, de fevereiro. Ele foi revogado em abril e republicado em agosto, com regras bem diferentes: a história completa está em <a href="#casos">Casos reais de recarga</a>.</p></div>
+          <p class="nota">É a minuta do 1º edital, de fevereiro. Ele foi revogado em abril e republicado em agosto, com regras bem diferentes: a história completa está em <a href="#casos">Casos no Brasil</a>.</p></div>
 
         <p class="origem"><b>De onde vem:</b> <a class="ext" href="https://www.cemig.com.br/wp-content/uploads/2025/08/ren20211000.pdf" target="_blank" rel="noopener">REN ANEEL 1.000/2021</a>, artigos 550 a 560, lida no texto compilado (cópia publicada pela Cemig, porque o site da ANEEL recusou acesso automático), em 22/11/2026. Termo de Porto Velho lido no PDF da Prefeitura. O que está marcado com <span class="tag t-sintese">síntese</span> é leitura do Claude, não está nas normas.</p>
       </div>
     </details>
     <details class="bloco" id="casos" data-busca>
-      <summary><h2>Casos reais de recarga em cidades</h2><span class="cont">Porto Velho em detalhe · Uberlândia · Porto Alegre · Rio · São José dos Campos · o ônibus de SBC</span><span class="seta" aria-hidden="true">›</span></summary>
+      <summary><h2>Casos reais de recarga no Brasil</h2><span class="cont">Porto Velho em detalhe · Uberlândia · Porto Alegre · Rio · São José dos Campos · o ônibus de SBC</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
         <p>Pesquisa de 22/11/2026, em documentos oficiais e na imprensa. <b>Nenhum caso brasileiro encontrado usa PPP para recarga de carro.</b> Todos cedem o espaço público, e a empresa investe. Ônibus é outro mundo: a recarga anda junto com o contrato do transporte. Porto Velho é o caso mais completo, porque o processo inteiro está publicado, com a ideia, o erro e a correção.</p>
 
@@ -743,9 +744,62 @@ html[data-tema=escuro] .ponto { background: #4A5160; }
             <li><b>Por onde começar:</b> as cidades que mediram antes (Porto Alegre, Rio) começaram por um piloto com dado de uso. O SBC Sandbox, que o pré-projeto (3.6) já prevê, serve para isso.</li>
           </ul></div>
 
-        <p class="nota"><b>Ficaram de fora</b>, por não termos conseguido ler a fonte: <b>Curitiba</b> (1º eletroposto público, pela Urbs) e <b>Chapecó</b> (pregão de uso de espaço em 11 locais, com propostas até 25/11), porque os sites recusaram o acesso automático; o edital de chamamento do <b>Rio</b> (SMTR 01/2025), porque o PDF não tem texto legível; <b>Paris</b> e <b>Amsterdam</b>, porque nada se confirmou além de Paris ter hoje cerca de 2.000 pontos operados por uma empresa de energia. Se quiser algum deles, dá para abrir no navegador e me passar o texto.</p>
+        <p class="nota"><b>Ficaram de fora</b>, por não termos conseguido ler a fonte: <b>Curitiba</b> (1º eletroposto público, pela Urbs) e <b>Chapecó</b> (pregão de uso de espaço em 11 locais, com propostas até 25/11), porque os sites recusaram o acesso automático; o edital de chamamento do <b>Rio</b> (SMTR 01/2025), porque o PDF não tem texto legível; Paris, Amsterdam e outros países estão em <a href="#casos-fora">Casos de outros países</a>. Se quiser Curitiba ou Chapecó, dá para abrir no navegador e me passar o texto.</p>
 
         <p class="origem"><b>De onde vem:</b> Porto Velho, nos documentos oficiais da SEMA, lidos inteiros: <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/CHAMAMENTO%20P%C3%9ABLICO%20N%C2%BA%2001-2026-SEMA%20-%20ANEXO%20III%20ESTUDO%20T%C3%89CNICO%20PRELIMINAR.pdf" target="_blank" rel="noopener">estudo técnico preliminar</a>, <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/2026/02/87807/1771013837edital-de-chamamento-n0-01-2026-sema.pdf" target="_blank" rel="noopener">1º edital</a>, <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/2026/04/87807/1776091026sei-0755984-resposta-14.pdf" target="_blank" rel="noopener">resposta à impugnação</a>, <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/REPUBLICA%C3%87%C3%83O%20DO%20EDITAL%20CHAMAMENTO%20P%C3%9ABLICO%20N%C2%BA%2001-2026-SEMA%20-%20ELETROPOSTOS.pdf" target="_blank" rel="noopener">edital republicado</a> e <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/CHAMAMENTO%20P%C3%9ABLICO%20N%C2%BA%2001-2026-SEMA%20-%20ANEXO%20II%20-%20PROJETO%20B%C3%81SICO.pdf" target="_blank" rel="noopener">projeto básico</a> (os dois últimos são imagem e foram lidos pelas páginas). Cópias em <code>referencias/porto-velho/</code>. Uberlândia: <a class="ext" href="https://diariodocomercio.com.br/economia/uberlandia-eletropostos-espacos-publicos/" target="_blank" rel="noopener">Diário do Comércio, 22/10/2026</a>. Porto Alegre: <a class="ext" href="https://prefeitura.poa.br/gi/noticias/prefeitura-amplia-pontos-de-carregamento-para-veiculos-eletricos-em-vias-publicas" target="_blank" rel="noopener">Prefeitura, 04/08/2026</a>. Rio: <a class="ext" href="https://diariodorio.com/rio-de-janeiro/2026/10/19/prefeitura-do-rio-fecha-parceria-com-a-light-para-aumentar-pontos-de-recarga-de-carros-eletricos.html" target="_blank" rel="noopener">Diário do Rio, 19/10/2026</a>. São José dos Campos: Diário do Transporte, <a class="ext" href="https://diariodotransporte.com.br/2025/12/23/sao-jose-dos-campos-sp-confirma-nansen-como-vencedora-de-licitacao-para-infraestrutura-de-recarga-de-onibus-eletricos/amp/" target="_blank" rel="noopener">23/12/2025</a> e <a class="ext" href="https://diariodotransporte.com.br/2025/03/07/sao-jose-dos-campos-sp-assina-contrato-de-r-271-bilhoes-com-green-energy-para-aluguel-de-400-onibus-eletricos-nesta-sexta-07/" target="_blank" rel="noopener">07/03/2025</a>. SBC: Diário do Transporte, <a class="ext" href="https://diariodotransporte.com.br/2020/02/29/bernatrans-do-grupo-abc-e-oficialmente-declarada-vencedora-na-licitacao-dos-onibus-de-sao-bernardo-do-campo/amp/" target="_blank" rel="noopener">29/02/2020</a> e <a class="ext" href="https://diariodotransporte.com.br/2020/03/31/br7-mobilidade-assume-transporte-coletivo-de-sao-bernardo-do-campo-a-partir-desta-quarta-feira/amp/" target="_blank" rel="noopener">31/03/2020</a>; <a class="ext" href="https://abcdoabc.com.br/sao-bernardo-sai-a-frente-ao-lancar-a-primeira-linha-de-onibus-100-eletrica-do-abc/" target="_blank" rel="noopener">ABCdoABC, 22/06/2023</a>. Fora de Porto Velho, as fontes são matérias de imprensa: nenhum contrato foi lido. O que está marcado com <span class="tag t-sintese">síntese</span> é leitura do Claude.</p>
+      </div>
+    </details>
+
+    <details class="bloco" id="casos-fora" data-busca>
+      <summary><h2>Casos de outros países</h2><span class="cont">Paris em detalhe · Amsterdam · Portugal · Santiago · Londres</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <p>Pesquisa de 22/11/2026. Fora do Brasil aparece o que faltava aqui: <b>a concessão em que a cidade recebe</b> (Paris), a <b>escolha dos pontos pelo pedido do morador</b> (Amsterdam) e a <b>recarga de ônibus financiada por uma empresa de energia</b> (Santiago).</p>
+
+        <h3>1 · Paris: concessão de serviços, e a cidade recebe uma parte do faturamento</h3>
+        <ul class="lista">
+          <li><b>Antes:</b> a cidade tinha a rede Bélib' (270 pontos) e as 1.900 tomadas do antigo Autolib' (carro compartilhado que acabou), todas em rua. A oferta privada era "insuficiente", e a cidade quis continuar atuando.</li>
+          <li><b>Como:</b> uma <span class="termo" tabindex="0" data-def="Contrato francês em que a cidade entrega a exploração de um serviço a uma empresa, que assume o risco e se remunera com a cobrança do usuário. Equivale à nossa concessão comum, sem pagamento público.">concessão de serviços</span> de <b>10 anos</b>, assinada em 2020 com a Total. A cidade <b>não financia nada</b> nem toca a obra. A empresa assume o risco e cobra do usuário, pela tarifa que ela mesma propôs.</li>
+          <li><b>O que a cidade recebe:</b> <b>22,7% do faturamento</b>, com uma <span class="termo" tabindex="0" data-def="Valor anual mínimo que a empresa paga à cidade, qualquer que seja o faturamento. Protege a cidade se o uso for baixo.">redevance mínima garantida</span> de <b>€ 2,882 milhões por ano</b>. Ao fim do contrato, tudo fica com a cidade, sem indenização. Não há exclusividade.</li>
+          <li><b>Rede:</b> 2.329 pontos (56% a mais que antes): 1.830 de 7 kW em rua, 140 para motos e 80 rápidos de 50 kW em 10 estacionamentos subterrâneos. Pelo menos 2% acessíveis a <span class="termo" tabindex="0" data-def="Pessoas com mobilidade reduzida.">PMR</span>. Prazo de 13 meses para implantar tudo.</li>
+          <li><b>Os locais:</b> a cidade entregou 443 estações já existentes. <b>Quanto pôr em cada uma ficou com os concorrentes</b>, que tinham de estimar a demanda.</li>
+          <li><b>Desempenho:</b> <b>95% dos pontos funcionando</b> a todo momento, por contrato. 13 técnicos visitam cada estação uma vez por semana, e há atendimento em 30 minutos se for urgente. A energia é 100% renovável.</li>
+          <li><b>A disputa:</b> 8 candidaturas (empresas e consórcios) e 5 propostas finais. A qualidade do projeto valeu 70% da nota, e a parte financeira, 30%.</li>
+        </ul>
+
+        <h3>2 · Amsterdam: o ponto nasce do pedido do morador</h3>
+        <ul class="lista">
+          <li><b>Como funciona:</b> o motorista de carro elétrico pede um ponto perto de casa pela internet. A operadora contratada confere o pedido: <b>a distância a pé até o ponto mais próximo, a ocupação dos pontos vizinhos</b> e os pedidos recusados antes.</li>
+          <li><b>A decisão:</b> fica com a Prefeitura. A decisão é publicada, cabe contestação por 6 semanas, e o processo leva no máximo 2 meses.</li>
+          <li><b>Quem é dono:</b> o município é dono da rede, por uma licitação de longo prazo vencida por uma empresa de energia com uma construtora.</li>
+          <li><b>Regras ao usuário:</b> preço máximo fixado pela cidade, e qualquer carro carrega em qualquer ponto.</li>
+          <li><b>Crescimento:</b> o primeiro ponto é de 2009. Eram mais de 3.800 em 2018.</li>
+        </ul>
+
+        <h3>3 · Portugal: uma rede nacional, e o município cobra pelo espaço</h3>
+        <ul class="lista">
+          <li><b>Como:</b> os postos de várias empresas formam uma rede única, a <span class="termo" tabindex="0" data-def="Entidade gestora da rede de recarga pública de Portugal: liga os postos de várias empresas numa rede única, com um só cartão e uma só conta.">Mobi.E</span>. O município define as regras de ocupação do espaço público e cobra por ela.</li>
+          <li><b>Porto (2019):</b> <b>€ 1.775 por posto por ano</b>, mais € 1.058 pela licença, válida por 10 anos. O posto precisa de pelo menos 43 kW, carregar dois carros e funcionar das 7h às 23h.</li>
+          <li><b>Outros municípios</b> <span class="tag t-sintese">a confirmar</span>: Coimbra e Caminha preferiram um concurso de concessão do espaço, e Caminha argumenta que a licença avulsa não atrai investimento para cobrir o município inteiro. Isso veio do resumo de uma busca; os regulamentos não foram lidos.</li>
+        </ul>
+
+        <h3>4 · Santiago (Chile): a empresa de energia compra os ônibus e faz a garagem</h3>
+        <ul class="lista">
+          <li><b>Como:</b> a Enel X <b>compra os ônibus</b> e os entrega ao operador por <span class="termo" tabindex="0" data-def="Leasing: a Enel X compra os ônibus e os aluga ao operador, que paga parcelas e opera. Os comunicados chamam de &quot;operating lease&quot; num ano e &quot;financial leasing&quot; no outro.">arrendamento</span>. Ela também <b>constrói o eletroterminal</b>, a garagem com recarga. O operador (SUBUS) dirige os ônibus e opera o terminal.</li>
+          <li><b>Exemplo:</b> o terminal de La Pintana (nov/2022) tem 18 carregadores para 107 ônibus. A Enel X diz ter feito outros 15 terminais na região e fala em cerca de 70% de economia operacional sobre o diesel (dado da própria empresa).</li>
+          <li><b>Não encontrado:</b> o papel do governo e o contrato com o poder público.</li>
+        </ul>
+
+        <h3>5 · Londres <span class="tag t-sintese">a confirmar</span></h3>
+        <p>Os documentos dos distritos recusaram o acesso automático, então só temos o resumo da busca. Com o fundo <span class="termo" tabindex="0" data-def="Local EV Infrastructure: fundo do governo britânico (£ 381 milhões, segundo a busca) para os municípios contratarem recarga em rua.">LEVI</span>, os distritos fazem <b>concessões de recarga em rua</b> sem custo de capital para a prefeitura e <b>ficam com uma parte da receita</b>. Kingston e Sutton contrataram por 15 anos.</p>
+
+        <div class="resumo"><b>O que isso responde para o Hub</b> <span class="tag t-sintese">síntese</span>
+          <ul class="lista">
+            <li><b>"Como vira concessão?"</b> Paris é a resposta mais próxima: uma <b>concessão comum</b> (o usuário paga) em que o Município não põe dinheiro e ainda recebe <b>outorga variável com mínimo garantido</b>, com metas de disponibilidade no contrato. É o formato do curso, sem PPP. O valor mínimo de R$ 10 milhões só vale para PPP.</li>
+            <li><b>"Onde pôr os pontos?"</b> Paris deixou a quantidade por local com os concorrentes, que estimavam a demanda. Amsterdam faz pelo pedido do morador, com critério de distância e de ocupação. As duas fogem do erro de Porto Velho, que escolheu os locais sem estudo de uso.</li>
+            <li><b>Ônibus:</b> Santiago mostra um terceiro, a empresa de energia, financiando a frota e a garagem. Combina com a meta de troca do diesel da BR7.</li>
+          </ul></div>
+
+        <p class="origem"><b>De onde vem:</b> Paris: <a class="ext" href="https://cdn.paris.fr/paris/2020/11/10/02ec369bdf98fb159c7ed02b5149d076.pdf" target="_blank" rel="noopener">deliberação do Conselho de Paris, 2020 DVD 71</a>, lida inteira (cópia em <code>referencias/</code>). Amsterdam: <a class="ext" href="https://interregeurope.eu/good-practices/amsterdams-demand-driven-charging-infrastructure" target="_blank" rel="noopener">Interreg Europe, 22/10/2018</a>, com fonte no próprio município. Porto: <a class="ext" href="https://pplware.sapo.pt/?p=631523" target="_blank" rel="noopener">Pplware, 14/11/2019</a> (os valores podem ter mudado). Santiago: comunicados da Enel X de <a class="ext" href="https://enel.cl/en/meet-enel/media/press-enel-x/d202211-inauguration-of-santa-rosa-corridor-electroterminal.html" target="_blank" rel="noopener">22/11/2022</a> e <a class="ext" href="https://www.enel.cl/en/meet-enel/media/press-enel-x/d202301-107-new-electric-buses.html" target="_blank" rel="noopener">07/01/2023</a>, ou seja, da parte interessada. Londres e os outros municípios de Portugal vêm só do resumo da busca e levam <span class="tag t-sintese">a confirmar</span>.</p>
       </div>
     </details>
 

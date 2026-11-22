@@ -5,300 +5,655 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Quadro de Indicadores do Hub</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Identidade: a do pitch da equipe (feito pela SDETJ), por decisão do Andy em 2026-11-21 — ver DecisoesProj.md. Mecânica do esqueleto DevMode/configuracao/templates/html/painel-base.html. O publicar-quadro.ps1 injeta doctype e head. -->
+<script>try{if(localStorage.getItem("mba-tema")==="escuro")document.documentElement.dataset.tema="escuro"}catch(e){}</script>
 <style>
-/* Layout: coluna única de leitura; cabeçalho, cadeia indicador→pagamento, filtros, grade de fichas, perguntas e calendário */
 :root {
-  --bg: #f3f6f9;
-  --surface: #ffffff;
-  --ink: #132030;
-  --muted: #566577;
-  --line: #d7dee7;
-  --accent: #0a62c2;
-  --accent-soft: #e2edfa;
-  --amber: #9a5b00;
-  --amber-soft: #fbefd9;
-  --neutral-soft: #eceff3;
-  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
-    --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10; --neutral-soft: #1f2a36;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
-  --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10; --neutral-soft: #1f2a36;
-  color-scheme: dark;
+  /* Paleta do pitch (tema do pptx) */
+  --tinta: #0B2E3C; --tinta-2: #13262F; --teal: #0F7C7A; --teal-esc: #0A5C5B; --teal-claro: #EEF6F5;
+  --menta: #3FB8A8; --lima: #B6F03C; --ambar: #F2A93B; --ardosia: #5E7B85;
+  /* Áreas (cores fixas do projeto) e estados */
+  --verde: #2E9E5B; --verde-claro: #E5F4EB;
+  --roxo: #6A4C9C; --roxo-claro: #F0EBF7;
+  --laranja: #E0922A; --laranja-esc: #9A5B0E; --laranja-claro: #FDF1E0;
+  --vermelho: #B3261E; --vermelho-claro: #FBE9E7;
+  --texto: #1F3540; --texto-suave: #5E7B85; --borda: #D6E4E2;
+  --fundo: #F5F9F8; --cartao: #ffffff;
+  --raio: 12px; --sombra: 0 1px 3px rgba(11, 46, 60, .08);
+  --fonte: Calibri, Carlito, "Segoe UI", Arial, sans-serif;
+  --fundo-pagina: var(--fundo);
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
-body {
-  background: var(--bg); color: var(--ink);
-  font-family: var(--font-body); font-size: 15px; line-height: 1.55;
-}
-.wrap {
-  max-width: 1080px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 40px 64px;
-  display: grid; gap: 48px;
-}
-h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; }
-h2 { font-size: 1.35rem; font-weight: 600; }
-h3 { font-size: 1.02rem; font-weight: 600; line-height: 1.3; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 16px/1.55 var(--fonte); }
+a { color: var(--teal); }
+a:hover { color: var(--teal-esc); }
+a.ext::after { content: "\00a0↗"; font-size: .85em; }
+.js-dica .termo:hover::after, .js-dica .termo:focus::after { content: none; }
+#dica { position: fixed; z-index: 50; display: none; max-width: min(360px, 86vw); background: var(--tinta); color: #fff; font: 400 13px/1.45 var(--fonte); padding: 8px 10px; border-radius: 6px; white-space: pre-line; box-shadow: 0 4px 12px rgba(0,0,0,.18); pointer-events: none; }
+@media print { #dica { display: none !important; } }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
-.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; }
-.lede { color: var(--muted); max-width: 64ch; font-size: 1.02rem; }
+.nw { white-space: nowrap; }
 
-header { display: grid; gap: 14px; }
-.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; color: var(--muted); font-size: 0.88rem; }
-.chip-status { background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: 0.78rem; padding: 3px 10px; border-radius: 999px; }
+/* Hover de termo: <span class="termo" tabindex="0" data-def="significado">TERMO</span> */
+.termo { position: relative; text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.termo:hover::after, .termo:focus::after { content: attr(data-def); position: absolute; left: 0; top: calc(100% + 4px); z-index: 30; width: max-content; max-width: min(340px, 80vw); background: var(--tinta); color: #fff; font-size: 14px; font-weight: 400; font-style: normal; line-height: 1.45; padding: 8px 10px; border-radius: 6px; white-space: normal; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
 
-section { display: grid; gap: 18px; }
-.section-head { display: grid; gap: 6px; }
-.section-head p { color: var(--muted); max-width: 66ch; }
+/* Cabeçalho: a capa do pitch */
+.topo { background: var(--tinta); color: #fff; }
+.topo-int { padding: 26px 32px 24px; display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: flex-end; justify-content: space-between; }
+.kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--lima); }
+.topo h1 { font-size: 30px; font-weight: 700; margin-top: 8px; }
+.topo .subtitulo { font-size: 16px; opacity: .85; margin-top: 6px; }
+.topo .selos { display: flex; flex-wrap: wrap; gap: 8px; }
+.sigla-mista { text-transform: none; }
+.pilula { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--lima); color: var(--tinta); padding: 6px 14px; border-radius: 999px; white-space: nowrap; }
+.pilula.suave { background: rgba(255,255,255,.12); color: #fff; }
 
-/* cadeia */
-.chain { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: step; }
-.step { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 16px; display: grid; gap: 6px; align-content: start; }
-.step .n { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
-.step strong { font-family: var(--font-display); font-weight: 600; font-size: 0.98rem; }
-.step span { color: var(--muted); font-size: 0.86rem; }
-.step:not(:last-child)::after {
-  content: "→"; position: absolute; right: -10px; top: 50%; transform: translate(50%, -50%);
-  color: var(--accent); font-size: 1rem; background: var(--bg); line-height: 1; padding: 2px 0;
+/* Barra de ferramentas */
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--cartao); border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
+.grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-filtro { border: 1px solid var(--borda); background: var(--cartao); color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 700 14px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.botao { border: 1px solid var(--teal); background: var(--cartao); color: var(--teal); padding: 6px 12px; border-radius: 8px; font: 700 14px var(--fonte); cursor: pointer; text-decoration: none; }
+.botao:hover { background: var(--teal-claro); }
+
+/* Estrutura */
+.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
+.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
+.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--teal); margin: 12px 4px 6px; }
+.lateral h2:first-child { margin-top: 0; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 15px; }
+.lateral a:hover, .lateral a.ativo { background: var(--teal-claro); }
+.lateral a .cod { font-weight: 700; min-width: 30px; color: var(--tinta); }
+.lateral a .tit { color: var(--texto-suave); font-size: 14px; overflow-wrap: anywhere; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5d3d6; }
+.ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
+main { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+/* Seções: a primeira aberta (section), as demais recolhidas (details) */
+section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 22px 26px; box-shadow: var(--sombra); }
+section.bloco > h2, details.bloco > summary h2 { font-size: 22px; color: var(--tinta); display: flex; align-items: center; gap: 10px; }
+section.bloco > h2 { margin-bottom: 16px; }
+section.bloco > h2::before, details.bloco > summary h2::before { content: ""; width: 5px; height: 22px; background: var(--teal); border-radius: 3px; flex: none; }
+details.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+details.bloco > summary, details.item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+details > summary::-webkit-details-marker { display: none; }
+details.bloco > summary { padding: 16px 26px; }
+details.bloco > summary .cont { font-size: 14px; color: var(--texto-suave); font-weight: 700; margin-left: auto; }
+details.bloco > .bloco-corpo { padding: 0 26px 24px; display: grid; gap: 16px; }
+.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--teal-claro); color: var(--teal); font-weight: 800; transition: transform .15s; flex: none; }
+details[open] > summary .seta { transform: rotate(90deg); }
+.subtitulo-bloco { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .14em; margin-top: 6px; }
+
+/* Item recolhível dentro de uma seção */
+details.item { border: 1px solid var(--borda); border-radius: var(--raio); background: var(--cartao); }
+details.item[open] { border-color: var(--menta); }
+details.item > summary { padding: 14px 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
+.cod-grande { font-size: 20px; font-weight: 700; color: var(--teal); min-width: 40px; letter-spacing: .06em; }
+.sum-tit { font-size: 17px; font-weight: 700; color: var(--tinta); }
+.sum-sub { font-size: 14px; color: var(--texto-suave); }
+.sum-dir { font-size: 14px; color: var(--texto-suave); font-weight: 700; white-space: nowrap; }
+.item-corpo { padding: 14px 18px 18px; border-top: 1px solid var(--borda); display: grid; gap: 10px; }
+
+/* Indicadores */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 14px; }
+.kpi { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); }
+.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); font-weight: 700; }
+.kpi .val { font-size: 32px; font-weight: 700; color: var(--tinta); line-height: 1.15; margin-top: 4px; }
+.kpi .val small { font-size: 16px; font-weight: 700; color: var(--texto-suave); }
+.kpi .det { font-size: 14px; color: var(--texto-suave); margin-top: 2px; }
+.kpi.destaque { background: var(--tinta); }
+.kpi.destaque .rot { color: var(--lima); }
+.kpi.destaque .val { color: #fff; }
+.kpi.destaque .val small, .kpi.destaque .det { color: rgba(255,255,255,.8); }
+.progresso { margin-top: 18px; }
+.rotulo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 14px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 14px; border-radius: 999px; background: #e3ecea; overflow: hidden; }
+.trilho span { height: 100%; }
+.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 14px; color: var(--texto-suave); }
+.legenda-barra i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.contexto { margin: 16px 0 0; padding-left: 20px; }
+.contexto li { margin: 4px 0; }
+
+/* Tabelas */
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+tbody tr:hover td { background: var(--teal-claro); }
+
+/* Etiquetas */
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.t-teal { background: var(--teal-claro); color: var(--teal-esc); }
+.t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
+.t-verde { background: var(--verde-claro); color: var(--verde); }
+.t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
+.t-roxo { background: var(--roxo-claro); color: var(--roxo); }
+
+/* Caixas */
+.definicao { padding: 12px 14px; background: var(--teal-claro); border-radius: 8px; }
+.resumo { padding: 12px 14px; border-left: 4px solid var(--ambar); background: #FEF5E6; border-radius: 0 8px 8px 0; }
+.alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
+.fala { padding: 10px 12px; border-left: 3px solid var(--teal); background: var(--teal-claro); font-size: 15px; border-radius: 0 6px 6px 0; font-style: italic; }
+.nota { color: var(--texto-suave); font-size: 15px; }
+.lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
+
+/* Grades de cartões */
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px; }
+.coluna { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-top: 5px solid var(--cor, var(--teal)); display: grid; gap: 8px; align-content: start; }
+.coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
+.coluna .definicao { background: var(--cartao); }
+.coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-teal { --cor: var(--teal); }
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 14px; }
+.pend { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-left: 5px solid var(--ambar); }
+.pend h3 { font-size: 16px; color: var(--tinta); margin-bottom: 6px; }
+
+.origem { font-size: 14px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 10px; margin-top: 4px; }
+.origem b { color: var(--teal); }
+.t-sintese { background: #E9EEF0; color: var(--ardosia); }
+details.sub { background: var(--cartao); border-radius: 8px; padding: 8px 12px; }
+details.sub > summary { cursor: pointer; font-weight: 700; color: var(--tinta); font-size: 15px; }
+details.sub[open] > summary { margin-bottom: 6px; }
+.oculto { display: none !important; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .barra-ferramentas { position: static; }
+  html { scroll-padding-top: 12px; }
+  .layout { grid-template-columns: 1fr; padding: 16px; }
+  .lateral { position: static; max-height: none; }
+  .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  .topo h1 { font-size: 24px; }
+  footer { padding: 0 16px 24px; }
+  section.bloco { padding: 16px; }
+  details.bloco > summary { padding: 14px 16px; }
+  details.bloco > .bloco-corpo { padding: 0 16px 16px; }
+  details.item > summary { grid-template-columns: minmax(0, 1fr) auto; }
+  details.item > summary .cod-grande, details.item > summary .sum-dir { grid-column: 1 / -1; }
 }
-@media (max-width: 820px) {
-  .chain { grid-template-columns: minmax(0, 1fr); }
-  .step:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -10px; transform: translate(50%, 50%); padding: 0 4px; }
+@media print {
+  .barra-ferramentas, .lateral { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  details { break-inside: avoid-page; }
+  .seta { display: none; }
+  body { background: #fff; }
+  .topo, .kpi.destaque { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
-/* resumo */
-.summary { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 0.92rem; color: var(--muted); }
-.summary b { font-family: var(--font-display); font-size: 1.5rem; color: var(--ink); font-variant-numeric: tabular-nums; margin-right: 6px; font-weight: 600; }
-
-/* legenda e filtros */
-.legend { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 0.86rem; color: var(--muted); }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; }
-.filters button {
-  font: inherit; font-size: 0.86rem; cursor: pointer;
-  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-  padding: 6px 12px; border-radius: 999px;
+/* TEMA-ESCURO: só pelo botão, lembrado no navegador; nunca herdado do sistema */
+html[data-tema=escuro] #dica, html[data-tema=escuro] .termo:hover::after, html[data-tema=escuro] .termo:focus::after { background: #EEF1F4; color: #121820; }
+html[data-tema=escuro] .chip-filtro[aria-pressed=true] { color: var(--fundo-pagina); }
+html[data-tema=escuro] input[type=search] { color: var(--texto); }
+html[data-tema=escuro] .t-sintese { background: #3A3628; color: #E2DAC4; }
+.barra-titulo { display: none; font-weight: 700; color: var(--tinta); white-space: nowrap; margin-right: 4px; }
+body.rolou .barra-titulo { display: inline; }
+html[data-tema=escuro] {
+  --fundo: #0E1A20; --cartao: #13232B; --fundo-pagina: #0E1A20;
+  --tinta: #E3EEF0; --tinta-2: #E3EEF0; --teal: #5CC6C1; --teal-esc: #86D6D2; --teal-claro: #15302F;
+  --texto: #D3E0E3; --texto-suave: #97AEB5; --borda: #26434D; --sombra: none;
+  --verde: #5BC88A; --verde-claro: #183526; --roxo: #B29AE0; --roxo-claro: #2C2440;
+  --laranja: #F0A947; --laranja-esc: #F2B566; --laranja-claro: #3A2A14;
+  --vermelho: #F08A80; --vermelho-claro: #3D1C1A;
+  color-scheme: dark;
 }
-.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
-.filters button:focus-visible, .toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer; }
-.controls { display: grid; gap: 12px; }
+html[data-tema=escuro] body { background: var(--fundo); }
+html[data-tema=escuro] .topo, html[data-tema=escuro] .kpi.destaque { background: #0B2E3C; }
+html[data-tema=escuro] .topo h1, html[data-tema=escuro] .topo .sobre, html[data-tema=escuro] .kpi.destaque .val { color: #fff; }
+html[data-tema=escuro] .pilula:not(.suave) { color: #0B2E3C; }
+html[data-tema=escuro] .resumo { background: #33270F; }
+html[data-tema=escuro] .trilho { background: #24363D; }
+html[data-tema=escuro] .ponto { background: #46606A; }
 
-/* fichas */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-@media (max-width: 420px) { .grid { grid-template-columns: minmax(0, 1fr); } }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.card.pay { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-.card-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
-.dim { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
-.badge { font-size: 0.74rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
-.b-pay { background: var(--accent-soft); color: var(--accent); }
-.b-disc { background: var(--amber-soft); color: var(--amber); }
-.b-acomp { background: var(--neutral-soft); color: var(--muted); }
-.what { color: var(--muted); font-size: 0.9rem; }
-.formula { font-family: var(--font-mono); font-size: 0.82rem; background: var(--neutral-soft); border-radius: 6px; padding: 8px 10px; overflow-x: auto; }
-dl { margin: 0; display: grid; grid-template-columns: 7.2em minmax(0, 1fr); gap: 4px 10px; font-size: 0.86rem; }
-dt { color: var(--muted); }
-dd { margin: 0; }
-.ref { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); }
-.empty { color: var(--muted); padding: 20px 0; }
+section.bloco > .kpis + * { margin-top: 14px; } .legenda-dim { margin-top: 10px; }
+/* Painel: uma cor por dimensão de indicador (nenhuma repete as cores das áreas) */
+:root { --d-disp: #0F7C7A; --d-uso: #2563A8; --d-fin: #A16207; --d-gov: #4A6572; --d-amb: #5F7A1F; --d-soc: #BE185D; --d-eco: #8B5E3C; }
+html[data-tema=escuro] { --d-disp: #5CC6C1; --d-uso: #7FB0EA; --d-fin: #E3B04B; --d-gov: #9DB4BE; --d-amb: #A9C46A; --d-soc: #F07AAE; --d-eco: #D4A47C; }
+.d-disp { --d: var(--d-disp); } .d-uso { --d: var(--d-uso); } .d-fin { --d: var(--d-fin); } .d-gov { --d: var(--d-gov); }
+.d-amb { --d: var(--d-amb); } .d-soc { --d: var(--d-soc); } .d-eco { --d: var(--d-eco); }
+.ponto-dim { width: 14px; height: 14px; border-radius: 4px; background: var(--d); flex: none; }
+.inds { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 14px; }
+.ind { border: 1px solid var(--borda); border-top: 6px solid var(--d); border-radius: var(--raio); background: var(--cartao); padding: 14px 16px; display: grid; gap: 8px; align-content: start;
+  background-image: linear-gradient(color-mix(in srgb, var(--d) 9%, transparent), transparent 70px); }
+.ind-topo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; align-items: center; }
+.ind-dim { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--d); }
+.ind h4 { font-size: 17px; color: var(--tinta); margin: 0; }
+.ind p { margin: 0; font-size: 15px; }
+.formula { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13.5px; padding: 8px 10px; border-radius: 6px; background: color-mix(in srgb, var(--d) 10%, var(--cartao)); color: var(--texto); }
+.ind dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; margin: 0; font-size: 14px; }
+.ind dt { font-weight: 700; color: var(--texto-suave); } .ind dd { margin: 0; }
+.ind-ref { font-size: 13px; color: var(--texto-suave); }
+.st { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.s-pay { background: var(--tinta); color: var(--lima); } .s-disc { background: #FDF1DC; color: #8A5A00; } .s-acomp { background: var(--teal-claro); color: var(--texto-suave); }
+html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s-disc { background: #3A2A10; color: #F2C46D; }
+.ind[data-status=pay] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--lima) 70%, transparent); }
+.so-pay .ind:not([data-status=pay]) { display: none; }
+.legenda-dim { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
+.legenda-dim span { display: inline-flex; align-items: center; gap: 6px; }
+.cadeia { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); gap: 10px; counter-reset: passo; }
+.cadeia div { border-radius: var(--raio); padding: 12px 14px; background: var(--teal-claro); border-left: 4px solid var(--teal); }
+.cadeia b { display: block; color: var(--tinta); font-size: 16px; } .cadeia b::before { counter-increment: passo; content: counter(passo) " · "; color: var(--teal); }
+.cadeia span { font-size: 14px; color: var(--texto-suave); }
+.chk { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14px; cursor: pointer; }
+.chk input { width: 17px; height: 17px; accent-color: var(--teal); }
 
-/* perguntas */
-.questions { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-.qbox { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 10px; align-content: start; }
-.qbox ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: 0.92rem; }
-.who { font-size: 0.78rem; color: var(--muted); }
-
-/* calendário */
-.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
-.timeline li { position: relative; padding: 0 0 18px 20px; display: grid; gap: 2px; }
-.timeline li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
-.timeline time { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); font-variant-numeric: tabular-nums; }
-.timeline span { color: var(--muted); font-size: 0.9rem; }
-
-footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 4px; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
+</head>
+<body>
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="kicker">Hub Municipal de Eletromobilidade · São Bernardo do Campo · <span class="termo" tabindex="0" data-def="Master of Business Administration: pós-graduação executiva. Aqui, o MBA em Parcerias Público-Privadas e Concessões Sustentáveis da FGV com o Banco do Brasil.">MBA</span> em <span class="termo" tabindex="0" data-def="Parcerias Público-Privadas: contratos longos em que um parceiro privado investe e opera um serviço e é pago, total ou parcialmente, pelo poder público.">PPPs</span></div>
+      <h1>Quadro de indicadores de desempenho</h1>
+      <div class="subtitulo">Primeira versão, preparada pela área técnico-operacional para a equipe discutir · Thiago Belão · Giovanna Falcaro · Anderson Alves</div>
+    </div>
+    <div class="selos"><span class="pilula">Rascunho v0 · para discussão</span><span class="pilula suave">Atualizado em 22/11/2026</span></div>
+  </div>
+</header>
 
-<div class="wrap">
-  <header>
-    <p class="eyebrow">Hub Municipal de Eletromobilidade · São Bernardo do Campo</p>
-    <h1>Quadro de Indicadores de Desempenho</h1>
-    <p class="lede">Primeira versão, preparada pelo perfil Operacional para a equipe discutir. Ela organiza o que o pré-projeto já prevê nos itens 3.5, 3.10 e 3.3: o que medir, como medir, de onde vem o dado e quais indicadores podem entrar na remuneração do parceiro.</p>
-    <div class="meta">
-      <span class="chip-status">Rascunho v0 · para discussão</span>
-      <span>Thiago Belão · Giovanna Falcaro · Anderson Alves</span>
-      <span>Novembro de 2026</span>
+<div class="barra-ferramentas">
+  <div class="barra-int">
+    <span class="barra-titulo">Painel de indicadores</span>
+    <input type="search" id="busca" placeholder="Buscar nos indicadores, fórmulas e fontes…" aria-label="Buscar">
+    <div class="grupo-filtro" role="group" aria-label="Filtrar">
+      <button class="chip-filtro" data-filtro="todas" aria-pressed="true">Todas</button>
+      <button class="chip-filtro" data-filtro="disp" aria-pressed="false"><span class="ponto-dim d-disp" style="width:10px;height:10px"></span>Disponibilidade</button>
+      <button class="chip-filtro" data-filtro="uso" aria-pressed="false"><span class="ponto-dim d-uso" style="width:10px;height:10px"></span>Uso</button>
+      <button class="chip-filtro" data-filtro="fin" aria-pressed="false"><span class="ponto-dim d-fin" style="width:10px;height:10px"></span>Financeiro</button>
+      <button class="chip-filtro" data-filtro="gov" aria-pressed="false"><span class="ponto-dim d-gov" style="width:10px;height:10px"></span>Governança</button>
+      <button class="chip-filtro" data-filtro="amb" aria-pressed="false"><span class="ponto-dim d-amb" style="width:10px;height:10px"></span>Ambiental</button>
+      <button class="chip-filtro" data-filtro="soc" aria-pressed="false"><span class="ponto-dim d-soc" style="width:10px;height:10px"></span>Social</button>
+      <button class="chip-filtro" data-filtro="eco" aria-pressed="false"><span class="ponto-dim d-eco" style="width:10px;height:10px"></span>Econômico</button>
     </div>
-  </header>
-
-  <section aria-labelledby="h-chain">
-    <div class="section-head">
-      <h2 id="h-chain">Como um indicador vira contrato</h2>
-      <p>Num contrato de PPP, o indicador só funciona se tiver fonte confiável e consequência definida. A cadeia abaixo mostra por onde ele passa, do carregador até o pagamento.</p>
-    </div>
-    <div class="chain">
-      <div class="step"><span class="n">1</span><strong>Operação</strong><span>Carregadores, hubs e usinas solares funcionando nos pontos.</span></div>
-      <div class="step"><span class="n">2</span><strong>Dado</strong><span>A plataforma digital registra status, sessões e energia. Usa padrão aberto de comunicação dos carregadores, como o OCPP.</span></div>
-      <div class="step"><span class="n">3</span><strong>Indicador</strong><span>Fórmula fixa, com meta e frequência definidas.</span></div>
-      <div class="step"><span class="n">4</span><strong>Nota de desempenho</strong><span>Os indicadores do período se combinam numa nota única.</span></div>
-      <div class="step"><span class="n">5</span><strong>Pagamento</strong><span>A nota ajusta a remuneração ou gera penalidade, conforme o contrato.</span></div>
-    </div>
-  </section>
-
-  <section aria-labelledby="h-ind">
-    <div class="section-head">
-      <h2 id="h-ind">Indicadores propostos</h2>
-      <p>As metas ficam em aberto de propósito. Elas dependem do diagnóstico de demanda e da rede elétrica, que o pré-projeto prevê para os meses 3 a 6. A coluna de status é uma proposta para a equipe decidir junto.</p>
-    </div>
-    <div class="summary" id="summary"></div>
-    <div class="legend">
-      <span><span class="badge b-pay">Proposto para pagamento</span> entra na nota de desempenho</span>
-      <span><span class="badge b-disc">A discutir</span> depende de decisão da equipe</span>
-      <span><span class="badge b-acomp">Acompanhamento</span> só monitora, sem efeito no pagamento</span>
-    </div>
-    <div class="controls">
-      <div class="filters" id="filters" role="group" aria-label="Filtrar por dimensão"></div>
-      <label class="toggle" for="only-pay"><input type="checkbox" id="only-pay"> Mostrar só os propostos para pagamento</label>
-    </div>
-    <div class="grid" id="grid"></div>
-  </section>
-
-  <section aria-labelledby="h-q">
-    <div class="section-head">
-      <h2 id="h-q">Perguntas para decidirmos juntos</h2>
-      <p>É aqui que o quadro conversa com as outras duas frentes do projeto.</p>
-    </div>
-    <div class="questions">
-      <div class="qbox">
-        <h3>Modelo econômico-financeiro</h3>
-        <p class="who">Thiago, com Anderson</p>
-        <ul>
-          <li>Quanto da remuneração deve depender da nota de desempenho?</li>
-          <li>O risco de demanda fica com o parceiro? Se ficar, o uso não deve penalizar, só acionar a expansão.</li>
-          <li>Qual taxa de utilização justifica abrir a fase seguinte de pontos?</li>
-        </ul>
-      </div>
-      <div class="qbox">
-        <h3>Contrato e penalidades</h3>
-        <p class="who">Giovanna, com Anderson</p>
-        <ul>
-          <li>Como a nota de desempenho vira cláusula, com faixas, descontos e reincidência?</li>
-          <li>Logística reversa das baterias deve ser obrigação pura ou indicador com peso?</li>
-          <li>Quem audita os dados críticos, e com que frequência?</li>
-        </ul>
-      </div>
-      <div class="qbox">
-        <h3>Operação e dados</h3>
-        <p class="who">Anderson, com a equipe</p>
-        <ul>
-          <li>O que a distribuidora precisa informar para calcularmos a capacidade de cada ponto?</li>
-          <li>Quem calcula a linha de base de emissões antes da implantação?</li>
-          <li>Quantos pontos e quais locais entram no piloto?</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section aria-labelledby="h-t">
-    <div class="section-head">
-      <h2 id="h-t">Onde isso entra no curso</h2>
-      <p>Datas do cronograma ajustado da Turma 9.</p>
-    </div>
-    <ol class="timeline">
-      <li><time>24–25/11/2026</time><strong>Abertura e Disciplina 1, em Brasília</strong><span>Fundamentos de PPPs e concessões.</span></li>
-      <li><time>17/02/2027</time><strong>Mentoria Operacional · Disciplina 2</strong><span>Priorização de projetos. Primeira revisão deste quadro com o mentor.</span></li>
-      <li><time>07/06/2027</time><strong>Mentoria Operacional · Disciplina 7</strong><span>Engajamento e stakeholders.</span></li>
-      <li><time>09–11/08/2027</time><strong>Disciplina 9, presencial em PE</strong><span>Planejamento estratégico. Início do módulo Construa, quando os indicadores entram no edital.</span></li>
-      <li><time>ago–out/2027</time><strong>Disciplinas 10 a 12</strong><span>Riscos, auditoria e transparência, reequilíbrio econômico-financeiro.</span></li>
-      <li><time>jan–fev/2028</time><strong>Disciplina 16 · Monitoramento e Avaliação de PPPs</strong><span>Versão final do sistema de mensuração de desempenho.</span></li>
-    </ol>
-  </section>
-
-  <footer>
-    <p>Fontes: pré-projeto do Hub (itens 3.3, 3.5, 3.7 e 3.10), programa do MBA em PPPs e Concessões Sustentáveis (FGV/BB) e cronograma da Turma 9.</p>
-    <p>Rascunho de trabalho da equipe. Nenhuma meta ou valor foi fixado ainda.</p>
-  </footer>
+    <label class="chk"><input type="checkbox" id="so-pay"> Só os propostos para pagamento</label>
+    <button class="botao" id="expandir">Expandir tudo</button>
+    <button class="botao" id="recolher">Recolher tudo</button>
+    <button class="botao" id="imprimir">Imprimir</button>
+    <button class="botao" id="tema" aria-pressed="false">Modo escuro</button>
+    <a class="botao" href="guia.html" target="_blank" rel="noopener">Guia da equipe</a>
+  </div>
 </div>
+<div class="layout">
+  <nav class="lateral" aria-label="Navegação">
+    <h2>Painel</h2>
+    <a href="#visao-geral">Visão geral</a>
+    <a href="#cadeia">Como um indicador vira contrato</a>
+    <h2>Indicadores por dimensão</h2>
+    <a href="#dim-disp"><span class="ponto-dim d-disp" style="width:10px;height:10px"></span><span class="tit">Disponibilidade</span></a>
+    <a href="#dim-uso"><span class="ponto-dim d-uso" style="width:10px;height:10px"></span><span class="tit">Uso</span></a>
+    <a href="#dim-fin"><span class="ponto-dim d-fin" style="width:10px;height:10px"></span><span class="tit">Financeiro</span></a>
+    <a href="#dim-gov"><span class="ponto-dim d-gov" style="width:10px;height:10px"></span><span class="tit">Governança</span></a>
+    <a href="#dim-amb"><span class="ponto-dim d-amb" style="width:10px;height:10px"></span><span class="tit">Ambiental</span></a>
+    <a href="#dim-soc"><span class="ponto-dim d-soc" style="width:10px;height:10px"></span><span class="tit">Social</span></a>
+    <a href="#dim-eco"><span class="ponto-dim d-eco" style="width:10px;height:10px"></span><span class="tit">Econômico</span></a>
+    <h2>Para decidir</h2>
+    <a href="#perguntas">Perguntas para a equipe</a>
+    <a href="#curso">Onde isso entra no curso</a>
+    <a href="#fontes">Fontes</a>
+  </nav>
+  <main>
+    <section class="bloco" id="visao-geral">
+      <h2>Visão geral</h2>
+      <div class="kpis">
+        <div class="kpi destaque"><div class="rot">Propostos para pagamento</div><div class="val">4</div><div class="det">entram na nota de desempenho e mexem na remuneração</div></div>
+        <div class="kpi"><div class="rot">Indicadores</div><div class="val">20</div><div class="det">organizam o que o pré-projeto já prevê</div></div>
+        <div class="kpi"><div class="rot">Dimensões</div><div class="val">7</div><div class="det">cada uma com a sua cor</div></div>
+        <div class="kpi"><div class="rot">A discutir</div><div class="val">8</div><div class="det">dependem de decisão da equipe</div></div>
+      </div>
+      <div class="definicao">Este quadro organiza o que o pré-projeto já prevê nos itens <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span> e <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span>: o que medir, como, de onde vem o dado e quais indicadores podem entrar na remuneração do parceiro. <b>As metas ficam em aberto de propósito:</b> dependem do diagnóstico de demanda e da rede elétrica, previsto para os meses 3 a 6 (<span class="termo" tabindex="0" data-def="Pré-projeto, item 3.7 (implementação): inventário de ativos, diagnóstico de demanda, rede e locais (meses 3 a 6) e implantação em fases com gatilhos de expansão.">item 3.7</span>).</div>
+      <div class="legenda-dim"><span><span class="ponto-dim d-disp"></span>Disponibilidade</span><span><span class="ponto-dim d-uso"></span>Uso</span><span><span class="ponto-dim d-fin"></span>Financeiro</span><span><span class="ponto-dim d-gov"></span>Governança</span><span><span class="ponto-dim d-amb"></span>Ambiental</span><span><span class="ponto-dim d-soc"></span>Social</span><span><span class="ponto-dim d-eco"></span>Econômico</span></div>
+      <div class="legenda-dim"><span><span class="st s-pay">Proposto para pagamento</span> entra na nota</span><span><span class="st s-disc">A discutir</span> a equipe decide</span><span><span class="st s-acomp">Acompanhamento</span> só monitora</span></div>
+    </section>
+
+    <section class="bloco" id="cadeia">
+      <h2>Como um indicador vira contrato</h2>
+      <p>Num contrato de PPP, o indicador só funciona se tiver fonte confiável e consequência definida. O caminho, do carregador ao pagamento:</p>
+      <div class="cadeia">
+        <div><b>Operação</b><span>carregadores, hubs e usinas solares funcionando nos pontos</span></div>
+        <div><b>Dado</b><span>a plataforma digital registra status, sessões e energia, por um <span class="termo" tabindex="0" data-def="Protocolo público que todo carregador fala, como o OCPP (Open Charge Point Protocol). Permite ler os dados de qualquer fabricante e trocar de fornecedor sem perder a plataforma.">padrão aberto de comunicação</span></span></div>
+        <div><b>Indicador</b><span>fórmula fixa, com meta e frequência definidas</span></div>
+        <div><b>Nota de desempenho</b><span>os indicadores do período viram uma nota única</span></div>
+        <div><b>Pagamento</b><span>a nota ajusta a remuneração ou gera penalidade</span></div>
+      </div>
+    </section>
+
+    <details class="bloco dimensao" id="dim-disp" data-area="disp" open>
+      <summary><h2><span class="ponto-dim d-disp"></span>Disponibilidade</h2><span class="cont">Os pontos funcionam? · 4 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-disp" data-status="pay" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Disponibilidade · Mensal</span><span class="st s-pay">Proposto para pagamento</span></div>
+            <h4>Disponibilidade dos pontos (<span class="termo" tabindex="0" data-def="Tempo em que o equipamento está funcionando e disponível, em inglês. Aqui: disponibilidade.">uptime</span>)</h4>
+            <p>Quanto tempo cada ponto fica apto a recarregar.</p>
+            <div class="formula">horas operantes ÷ horas programadas × 100</div>
+            <dl><dt>Unidade</dt><dd>%</dd><dt>Fonte</dt><dd>Plataforma digital (status de cada carregador)</dd><dt>Meta</dt><dd>Definida no diagnóstico (meses 3 a 6)</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · uptime</span>
+          </article>
+          <article class="ind d-disp" data-status="pay" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Disponibilidade · Mensal</span><span class="st s-pay">Proposto para pagamento</span></div>
+            <h4>Tempo médio de reparo</h4>
+            <p>Quanto tempo um ponto com falha leva para voltar a funcionar.</p>
+            <div class="formula">Σ (retorno à operação − abertura da falha) ÷ nº de falhas</div>
+            <dl><dt>Unidade</dt><dd>horas</dd><dt>Fonte</dt><dd>Plataforma digital e registro de chamados</dd><dt>Meta</dt><dd>Prazo máximo por tipo de falha</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · tempo de reparo</span>
+          </article>
+          <article class="ind d-disp" data-status="pay" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Disponibilidade · Mensal</span><span class="st s-pay">Proposto para pagamento</span></div>
+            <h4>Recargas concluídas com sucesso</h4>
+            <p>Se a recarga começa e termina sem erro do lado do equipamento.</p>
+            <div class="formula">sessões concluídas ÷ sessões iniciadas × 100</div>
+            <dl><dt>Unidade</dt><dd>%</dd><dt>Fonte</dt><dd>Plataforma digital (sessões)</dd><dt>Meta</dt><dd>Definida no diagnóstico</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · falhas</span>
+          </article>
+          <article class="ind d-disp" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Disponibilidade · Mensal</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Falhas por ponto</h4>
+            <p>Frequência de defeitos na rede.</p>
+            <div class="formula">nº de falhas no mês ÷ nº de pontos</div>
+            <dl><dt>Unidade</dt><dd>falhas por ponto</dd><dt>Fonte</dt><dd>Plataforma digital</dd><dt>Meta</dt><dd>Sem meta própria. Já pesa no uptime e no tempo de reparo, para não punir duas vezes</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · falhas</span>
+          </article>
+        </div>
+      </div>
+    </details>
+    <details class="bloco dimensao" id="dim-uso" data-area="uso" open>
+      <summary><h2><span class="ponto-dim d-uso"></span>Uso</h2><span class="cont">A rede é usada? · 3 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-uso" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Uso · Mensal</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Número de recargas</h4>
+            <p>Volume de uso da rede, por ponto e por região da cidade.</p>
+            <div class="formula">Σ sessões no período</div>
+            <dl><dt>Unidade</dt><dd>sessões por mês</dd><dt>Fonte</dt><dd>Plataforma digital</dd><dt>Meta</dt><dd>Referência para a projeção de receita</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · uso</span>
+          </article>
+          <article class="ind d-uso" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Uso · Mensal</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Energia fornecida</h4>
+            <p>Quanto de energia a rede entregou aos veículos.</p>
+            <div class="formula">Σ kWh medidos nos carregadores</div>
+            <dl><dt>Unidade</dt><dd>kWh por mês</dd><dt>Fonte</dt><dd>Plataforma digital (medição por ponto)</dd><dt>Meta</dt><dd>Base para a receita e para o cálculo de emissões evitadas</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · uso</span>
+          </article>
+          <article class="ind d-uso" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Uso · Mensal</span><span class="st s-disc">A discutir</span></div>
+            <h4>Taxa de utilização</h4>
+            <p>Quanto do tempo disponível o ponto passa de fato recarregando.</p>
+            <div class="formula">horas em recarga ÷ horas disponíveis × 100</div>
+            <dl><dt>Unidade</dt><dd>%</dd><dt>Fonte</dt><dd>Plataforma digital</dd><dt>Meta</dt><dd>Gatilho para abrir a próxima fase de pontos</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span> · implantação por gatilhos</span>
+          </article>
+        </div>
+      </div>
+    </details>
+    <details class="bloco dimensao" id="dim-fin" data-area="fin" open>
+      <summary><h2><span class="ponto-dim d-fin"></span>Financeiro</h2><span class="cont">O dinheiro segue o plano? · 2 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-fin" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Financeiro · Trimestral</span><span class="st s-disc">A discutir</span></div>
+            <h4>Investimento executado sobre o previsto</h4>
+            <p>Se a implantação segue o plano de investimento.</p>
+            <div class="formula"><span class="termo" tabindex="0" data-def="Investimento em bens de capital: equipamentos, obras e instalação. O custo de operar é o OPEX.">CAPEX</span> executado ÷ CAPEX previsto no cronograma × 100</div>
+            <dl><dt>Unidade</dt><dd>%</dd><dt>Fonte</dt><dd>Relatórios do parceiro, com conferência da Prefeitura</dd><dt>Meta</dt><dd>Marcos de implantação do contrato</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · CAPEX</span>
+          </article>
+          <article class="ind d-fin" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Financeiro · Trimestral</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Receita por fonte</h4>
+            <p>De onde vem o dinheiro que sustenta a operação.</p>
+            <div class="formula">R$ por fonte: recarga, estacionamento, publicidade, serviços</div>
+            <dl><dt>Unidade</dt><dd>R$</dd><dt>Fonte</dt><dd>Relatórios do parceiro e da plataforma</dd><dt>Meta</dt><dd>Comparar com o modelo econômico-financeiro</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.2 (viabilidade): custos, receitas previstas (recarga, estacionamento, publicidade, serviços) e fontes de financiamento.">3.2</span> · receitas</span>
+          </article>
+        </div>
+      </div>
+    </details>
+    <details class="bloco dimensao" id="dim-gov" data-area="gov" open>
+      <summary><h2><span class="ponto-dim d-gov"></span>Governança</h2><span class="cont">O contrato é cumprido e cobrado? · 3 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-gov" data-status="pay" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Governança · Trimestral</span><span class="st s-pay">Proposto para pagamento</span></div>
+            <h4>Nota de desempenho do período</h4>
+            <p>O resumo dos indicadores com peso no pagamento.</p>
+            <div class="formula">Σ (peso × atingimento de cada indicador)</div>
+            <dl><dt>Unidade</dt><dd>nota de 0 a 1</dd><dt>Fonte</dt><dd>Cálculo a partir dos indicadores acima</dd><dt>Meta</dt><dd>Faixas que ajustam a remuneração</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span> · remuneração por desempenho</span>
+          </article>
+          <article class="ind d-gov" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Governança · Trimestral</span><span class="st s-disc">A discutir</span></div>
+            <h4>Reclamações e tempo de resposta</h4>
+            <p>Como o operador trata quem usa a rede.</p>
+            <div class="formula">reclamações por 1.000 recargas · tempo médio de resposta</div>
+            <dl><dt>Unidade</dt><dd>nº · horas</dd><dt>Fonte</dt><dd>Canal de atendimento e ouvidoria</dd><dt>Meta</dt><dd>Prazo máximo de resposta</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · reclamações</span>
+          </article>
+          <article class="ind d-gov" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Governança · Trimestral</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Penalidades aplicadas</h4>
+            <p>Histórico de descumprimentos do contrato.</p>
+            <div class="formula">nº e valor (R$) das penalidades no período</div>
+            <dl><dt>Unidade</dt><dd>nº · R$</dd><dt>Fonte</dt><dd>Fiscalização do contrato</dd><dt>Meta</dt><dd>Sem meta. Serve para transparência e reincidência</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · penalidades</span>
+          </article>
+        </div>
+      </div>
+    </details>
+    <details class="bloco dimensao" id="dim-amb" data-area="amb" open>
+      <summary><h2><span class="ponto-dim d-amb"></span>Ambiental</h2><span class="cont">O Hub reduz impacto? · 3 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-amb" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Ambiental · Semestral</span><span class="st s-disc">A discutir</span></div>
+            <h4>Emissões evitadas</h4>
+            <p>Quanto CO₂ deixou de ser emitido com a troca do combustível.</p>
+            <div class="formula">kWh fornecidos × fator de emissão evitada (linha de base)</div>
+            <dl><dt>Unidade</dt><dd><span class="termo" tabindex="0" data-def="Toneladas de CO₂ equivalente: a unidade que soma todos os gases de efeito estufa pelo efeito do CO₂.">tCO₂e</span></dd><dt>Fonte</dt><dd>Energia fornecida e fatores de emissão oficiais</dd><dt>Meta</dt><dd>Linha de base definida antes da implantação</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span> · <span class="termo" tabindex="0" data-def="ODS 13: ação contra a mudança global do clima.">ODS 13</span></span>
+          </article>
+          <article class="ind d-amb" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Ambiental · Semestral</span><span class="st s-disc">A discutir</span></div>
+            <h4>Energia renovável</h4>
+            <p>Parte da energia entregue que vem de fonte renovável.</p>
+            <div class="formula">kWh renováveis (solar própria e contratada) ÷ kWh total × 100</div>
+            <dl><dt>Unidade</dt><dd>%</dd><dt>Fonte</dt><dd>Medição da geração solar e contratos de energia</dd><dt>Meta</dt><dd>Percentual mínimo crescente</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span> · <span class="termo" tabindex="0" data-def="ODS 7: energia limpa e acessível.">ODS 7</span></span>
+          </article>
+          <article class="ind d-amb" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Ambiental · Anual</span><span class="st s-disc">A discutir</span></div>
+            <h4>Destinação rastreada de baterias e equipamentos</h4>
+            <p>Se o que sai de uso tem destino comprovado.</p>
+            <div class="formula">itens com destinação comprovada ÷ itens descartados × 100</div>
+            <dl><dt>Unidade</dt><dd>%</dd><dt>Fonte</dt><dd>Comprovantes de logística reversa</dd><dt>Meta</dt><dd>100% como obrigação, a confirmar</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span> · <span class="termo" tabindex="0" data-def="ODS 12: consumo e produção responsáveis.">ODS 12</span></span>
+          </article>
+        </div>
+      </div>
+    </details>
+    <details class="bloco dimensao" id="dim-soc" data-area="soc" open>
+      <summary><h2><span class="ponto-dim d-soc"></span>Social</h2><span class="cont">A rede serve a todos? · 3 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-soc" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Social · Anual</span><span class="st s-disc">A discutir</span></div>
+            <h4>Acessibilidade e cobertura do território</h4>
+            <p>Se a rede chega a todas as regiões e serve a todos.</p>
+            <div class="formula">pontos acessíveis ÷ total · pontos por região</div>
+            <dl><dt>Unidade</dt><dd>% · nº</dd><dt>Fonte</dt><dd>Cadastro georreferenciado dos pontos</dd><dt>Meta</dt><dd>Distribuição mínima por região</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span> · <span class="termo" tabindex="0" data-def="ODS 10: redução das desigualdades.">ODS 10</span></span>
+          </article>
+          <article class="ind d-soc" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Social · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Pessoas qualificadas</h4>
+            <p>Formação para a transição do setor automotivo, com o <span class="termo" tabindex="0" data-def="Entidades de formação profissional mantidas por contribuições das empresas: SENAI, SENAC, SESI, SEBRAE e outras.">Sistema S</span>.</p>
+            <div class="formula">nº de concluintes, com recorte de jovens, mulheres e <span class="termo" tabindex="0" data-def="Pessoas com deficiência.">PcD</span></div>
+            <dl><dt>Unidade</dt><dd>pessoas</dd><dt>Fonte</dt><dd>Relatórios das parcerias de qualificação</dd><dt>Meta</dt><dd>Metas por público prioritário</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span> · <span class="termo" tabindex="0" data-def="ODS 8: trabalho decente e crescimento econômico. ODS 10: redução das desigualdades.">ODS 8 e 10</span></span>
+          </article>
+          <article class="ind d-soc" data-status="disc" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Social · Anual</span><span class="st s-disc">A discutir</span></div>
+            <h4>Satisfação do usuário</h4>
+            <p>Como quem usa a rede avalia o serviço.</p>
+            <div class="formula">nota média da pesquisa periódica (0 a 10)</div>
+            <dl><dt>Unidade</dt><dd>nota</dd><dt>Fonte</dt><dd>Pesquisa com usuários e frotas</dd><dt>Meta</dt><dd>Nota mínima, a definir</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · satisfação</span>
+          </article>
+        </div>
+      </div>
+    </details>
+    <details class="bloco dimensao" id="dim-eco" data-area="eco" open>
+      <summary><h2><span class="ponto-dim d-eco"></span>Econômico</h2><span class="cont">O Hub movimenta a cidade? · 2 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="inds">
+          <article class="ind d-eco" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Econômico · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Investimento privado mobilizado</h4>
+            <p>Quanto do investimento veio do parceiro, e não do orçamento municipal.</p>
+            <div class="formula">Σ R$ investidos pelo parceiro e financiadores</div>
+            <dl><dt>Unidade</dt><dd>R$</dd><dt>Fonte</dt><dd>Relatórios do parceiro, com auditoria</dd><dt>Meta</dt><dd>Comparar com o modelo econômico-financeiro</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.9 (impactos): efeitos econômicos, sociais e ambientais esperados, entre eles o investimento privado mobilizado.">3.9</span> · impactos</span>
+          </article>
+          <article class="ind d-eco" data-status="acomp" data-busca>
+            <div class="ind-topo"><span class="ind-dim">Econômico · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
+            <h4>Empregos e compras locais</h4>
+            <p>Efeito do Hub na economia de São Bernardo.</p>
+            <div class="formula">nº de empregos gerados · compras locais ÷ compras totais × 100</div>
+            <dl><dt>Unidade</dt><dd>nº · %</dd><dt>Fonte</dt><dd>Relatórios do parceiro</dd><dt>Meta</dt><dd>Sem meta contratual. Serve para medir impacto</dd></dl>
+            <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> · econômicos</span>
+          </article>
+        </div>
+      </div>
+    </details>
+
+    <details class="bloco" id="perguntas" data-busca>
+      <summary><h2>Perguntas para decidirmos juntos</h2><span class="cont">onde o quadro conversa com as outras duas áreas</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="colunas">
+          <div class="coluna c-verde"><h4>Econômico-financeiro</h4><span class="nota">Thiago, com Anderson</span><ul class="lista">
+            <li>Quanto da remuneração deve depender da nota de desempenho?</li>
+            <li>O risco de demanda fica com o parceiro? Se ficar, o uso não deve penalizar, só acionar a expansão.</li>
+            <li>Qual taxa de utilização justifica abrir a fase seguinte de pontos?</li></ul></div>
+          <div class="coluna c-roxo"><h4>Jurídico-institucional</h4><span class="nota">Giovanna, com Anderson</span><ul class="lista">
+            <li>Como a nota de desempenho vira cláusula, com faixas, descontos e reincidência?</li>
+            <li>A logística reversa das baterias deve ser obrigação pura ou indicador com peso?</li>
+            <li>Quem audita os dados críticos, e com que frequência?</li></ul></div>
+          <div class="coluna c-laranja"><h4>Técnico-operacional</h4><span class="nota">Anderson, com a equipe</span><ul class="lista">
+            <li>O que a distribuidora precisa informar para calcularmos a capacidade de cada ponto?</li>
+            <li>Quem calcula a linha de base de emissões antes da implantação?</li>
+            <li>Quantos pontos e quais locais entram no piloto?</li></ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="bloco" id="curso" data-busca>
+      <summary><h2>Onde isso entra no curso</h2><span class="cont">datas do cronograma da Turma 9</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Quando</th><th>O quê</th><th>O que acontece com o quadro</th></tr></thead>
+          <tbody>
+            <tr><td class="nw">24 e 25/11/2026</td><td>Abertura e Disciplina 1, em Brasília</td><td>Fundamentos de PPPs e concessões.</td></tr>
+            <tr><td class="nw">17/02/2027</td><td>Mentoria operacional · Disciplina 2</td><td>Priorização de projetos. Primeira revisão deste quadro com o mentor.</td></tr>
+            <tr><td class="nw">07/06/2027</td><td>Mentoria operacional · Disciplina 7</td><td>Engajamento e partes interessadas.</td></tr>
+            <tr><td class="nw">09 a 11/08/2027</td><td>Disciplina 9, presencial em Pernambuco</td><td>Planejamento estratégico. Início do módulo Construa, quando os indicadores entram no edital.</td></tr>
+            <tr><td class="nw">ago a out/2027</td><td>Disciplinas 10 a 12</td><td>Riscos, auditoria e transparência, reequilíbrio econômico-financeiro.</td></tr>
+            <tr><td class="nw">jan e fev/2028</td><td>Disciplina 16 · Monitoramento e Avaliação de PPPs</td><td>Versão final do sistema de mensuração de desempenho.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </details>
+
+    <section class="bloco" id="fontes">
+      <h2>Fontes</h2>
+      <p class="origem"><b>De onde vem:</b> pré-projeto do Hub (itens <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.2 (viabilidade): custos, receitas previstas (recarga, estacionamento, publicidade, serviços) e fontes de financiamento.">3.2</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.7 (implementação): inventário de ativos, diagnóstico de demanda, rede e locais (meses 3 a 6) e implantação em fases com gatilhos de expansão.">3.7</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.9 (impactos): efeitos econômicos, sociais e ambientais esperados, entre eles o investimento privado mobilizado.">3.9</span> e <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span>), programa do MBA em PPPs e Concessões Sustentáveis (FGV com o Banco do Brasil) e cronograma da Turma 9. Status e fórmulas são proposta da área técnico-operacional; nenhuma meta ou valor foi fixado ainda.</p>
+    </section>
+  </main>
+</div>
+<footer>Rascunho de trabalho da equipe do Hub. Nenhuma meta ou valor foi fixado ainda.</footer>
 
 <script>
-const IND = [
-  { dim: "Disponibilidade", name: "Disponibilidade dos pontos (uptime)", what: "Quanto tempo cada ponto fica apto a recarregar.", formula: "horas operantes ÷ horas programadas × 100", unit: "%", freq: "Mensal", src: "Plataforma digital (status de cada carregador)", meta: "Definida no diagnóstico (meses 3–6)", status: "pay", ref: "3.10 · uptime" },
-  { dim: "Disponibilidade", name: "Tempo médio de reparo", what: "Quanto tempo um ponto com falha leva para voltar a funcionar.", formula: "Σ (retorno à operação − abertura da falha) ÷ nº de falhas", unit: "horas", freq: "Mensal", src: "Plataforma digital e registro de chamados", meta: "Prazo máximo por tipo de falha", status: "pay", ref: "3.10 · tempo de reparo" },
-  { dim: "Disponibilidade", name: "Recargas concluídas com sucesso", what: "Se a recarga começa e termina sem erro do lado do equipamento.", formula: "sessões concluídas ÷ sessões iniciadas × 100", unit: "%", freq: "Mensal", src: "Plataforma digital (sessões)", meta: "Definida no diagnóstico", status: "pay", ref: "3.10 · falhas" },
-  { dim: "Disponibilidade", name: "Falhas por ponto", what: "Frequência de defeitos na rede.", formula: "nº de falhas no mês ÷ nº de pontos", unit: "falhas/ponto", freq: "Mensal", src: "Plataforma digital", meta: "Sem meta própria. Já pesa no uptime e no tempo de reparo, para não punir duas vezes", status: "acomp", ref: "3.10 · falhas" },
-  { dim: "Uso", name: "Número de recargas", what: "Volume de uso da rede, por ponto e por região da cidade.", formula: "Σ sessões no período", unit: "sessões/mês", freq: "Mensal", src: "Plataforma digital", meta: "Referência para a projeção de receita", status: "acomp", ref: "3.10 · uso" },
-  { dim: "Uso", name: "Energia fornecida", what: "Quanto de energia a rede entregou aos veículos.", formula: "Σ kWh medidos nos carregadores", unit: "kWh/mês", freq: "Mensal", src: "Plataforma digital (medição por ponto)", meta: "Base para receita e para o cálculo de emissões evitadas", status: "acomp", ref: "3.10 · uso" },
-  { dim: "Uso", name: "Taxa de utilização", what: "Quanto do tempo disponível o ponto passa de fato recarregando.", formula: "horas em recarga ÷ horas disponíveis × 100", unit: "%", freq: "Mensal", src: "Plataforma digital", meta: "Gatilho para abrir a próxima fase de pontos", status: "disc", ref: "3.5 · implantação por gatilhos" },
-  { dim: "Financeiro", name: "Investimento executado sobre o previsto", what: "Se a implantação segue o plano de investimento.", formula: "CAPEX executado ÷ CAPEX previsto no cronograma × 100", unit: "%", freq: "Trimestral", src: "Relatórios do parceiro, com conferência da Prefeitura", meta: "Marcos de implantação do contrato", status: "disc", ref: "3.10 · CAPEX" },
-  { dim: "Financeiro", name: "Receita por fonte", what: "De onde vem o dinheiro que sustenta a operação.", formula: "R$ por fonte: recarga, estacionamento, publicidade, serviços", unit: "R$", freq: "Trimestral", src: "Relatórios do parceiro e da plataforma", meta: "Comparar com o modelo econômico-financeiro", status: "acomp", ref: "3.2 · receitas" },
-  { dim: "Governança", name: "Nota de desempenho do período", what: "O resumo dos indicadores com peso no pagamento.", formula: "Σ (peso × atingimento de cada indicador)", unit: "nota 0–1", freq: "Trimestral", src: "Cálculo a partir dos indicadores acima", meta: "Faixas que ajustam a remuneração", status: "pay", ref: "3.5 · remuneração por desempenho" },
-  { dim: "Governança", name: "Reclamações e tempo de resposta", what: "Como o operador trata quem usa a rede.", formula: "reclamações por 1.000 recargas · tempo médio de resposta", unit: "nº · horas", freq: "Trimestral", src: "Canal de atendimento e ouvidoria", meta: "Prazo máximo de resposta", status: "disc", ref: "3.10 · reclamações" },
-  { dim: "Governança", name: "Penalidades aplicadas", what: "Histórico de descumprimentos do contrato.", formula: "nº e valor (R$) de penalidades no período", unit: "nº · R$", freq: "Trimestral", src: "Fiscalização do contrato", meta: "Sem meta. Serve para transparência e reincidência", status: "acomp", ref: "3.10 · penalidades" },
-  { dim: "Ambiental", name: "Emissões evitadas", what: "Quanto CO₂ deixou de ser emitido com a troca do combustível.", formula: "kWh fornecidos × fator de emissão evitada (linha de base)", unit: "tCO₂e", freq: "Semestral", src: "Energia fornecida e fatores de emissão oficiais", meta: "Linha de base definida antes da implantação", status: "disc", ref: "3.3 · ODS 13" },
-  { dim: "Ambiental", name: "Energia renovável", what: "Parte da energia entregue que vem de fonte renovável.", formula: "kWh renováveis (solar própria e contratada) ÷ kWh total × 100", unit: "%", freq: "Semestral", src: "Medição da geração solar e contratos de energia", meta: "Percentual mínimo crescente", status: "disc", ref: "3.3 · ODS 7" },
-  { dim: "Ambiental", name: "Destinação rastreada de baterias e equipamentos", what: "Se o que sai de uso tem destino comprovado.", formula: "itens com destinação comprovada ÷ itens descartados × 100", unit: "%", freq: "Anual", src: "Comprovantes de logística reversa", meta: "100% como obrigação, a confirmar", status: "disc", ref: "3.3 · ODS 12" },
-  { dim: "Social", name: "Acessibilidade e cobertura do território", what: "Se a rede chega a todas as regiões e serve a todos.", formula: "pontos acessíveis ÷ total · pontos por região", unit: "% · nº", freq: "Anual", src: "Cadastro georreferenciado dos pontos", meta: "Distribuição mínima por região", status: "disc", ref: "3.3 · ODS 10" },
-  { dim: "Social", name: "Pessoas qualificadas", what: "Formação para a transição do setor automotivo, com o Sistema S.", formula: "nº de concluintes, com recorte de jovens, mulheres e PcD", unit: "pessoas", freq: "Anual", src: "Relatórios das parcerias de qualificação", meta: "Metas por público prioritário", status: "acomp", ref: "3.3 · ODS 8 e 10" },
-  { dim: "Social", name: "Satisfação do usuário", what: "Como quem usa a rede avalia o serviço.", formula: "nota média da pesquisa periódica (0–10)", unit: "nota", freq: "Anual", src: "Pesquisa com usuários e frotas", meta: "Nota mínima, a definir", status: "disc", ref: "3.10 · satisfação" },
-  { dim: "Econômico", name: "Investimento privado mobilizado", what: "Quanto do investimento veio do parceiro, e não do orçamento municipal.", formula: "Σ R$ investidos pelo parceiro e financiadores", unit: "R$", freq: "Anual", src: "Relatórios do parceiro, com auditoria", meta: "Comparar com o modelo econômico-financeiro", status: "acomp", ref: "3.9 · impactos" },
-  { dim: "Econômico", name: "Empregos e compras locais", what: "Efeito do Hub na economia de São Bernardo.", formula: "nº de empregos gerados · compras locais ÷ compras totais × 100", unit: "nº · %", freq: "Anual", src: "Relatórios do parceiro", meta: "Sem meta contratual. Serve para medir impacto", status: "acomp", ref: "3.10 · econômicos" }
-];
-const STATUS = { pay: ["Proposto para pagamento", "b-pay"], disc: ["A discutir", "b-disc"], acomp: ["Acompanhamento", "b-acomp"] };
-const DIMS = ["Todas", ...new Set(IND.map(i => i.dim))];
-let dimSel = "Todas";
-let onlyPay = false;
+(function () {
+  const norm = s => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const todos = () => document.querySelectorAll("main details");
+  document.getElementById("expandir").onclick = () => todos().forEach(d => d.open = true);
+  document.getElementById("recolher").onclick = () => todos().forEach(d => d.open = false);
+  document.getElementById("imprimir").onclick = () => { todos().forEach(d => d.open = true); window.print(); };
 
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Link interno abre o details de destino e os que o contêm
+  function abrir(id) {
+    const alvo = id && document.getElementById(id);
+    if (!alvo) return;
+    for (let d = alvo; d; d = d.parentElement) if (d.tagName === "DETAILS") d.open = true;
+    alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); abrir(a.getAttribute("href").slice(1));
+  });
+  if (location.hash) abrir(location.hash.slice(1));
 
-function renderSummary() {
-  const n = IND.length;
-  const pay = IND.filter(i => i.status === "pay").length;
-  const disc = IND.filter(i => i.status === "disc").length;
-  const dims = DIMS.length - 1;
-  document.getElementById("summary").innerHTML =
-    `<span><b>${n}</b>indicadores</span><span><b>${dims}</b>dimensões</span><span><b>${pay}</b>propostos para pagamento</span><span><b>${disc}</b>a discutir</span>`;
-}
-function renderFilters() {
-  const el = document.getElementById("filters");
-  el.innerHTML = DIMS.map(d => `<button type="button" data-dim="${esc(d)}" aria-pressed="${d === dimSel}">${esc(d)}</button>`).join("");
-  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { dimSel = b.dataset.dim; renderFilters(); renderGrid(); }));
-}
-function renderGrid() {
-  const list = IND.filter(i => (dimSel === "Todas" || i.dim === dimSel) && (!onlyPay || i.status === "pay"));
-  const grid = document.getElementById("grid");
-  if (!list.length) { grid.innerHTML = `<p class="empty">Nenhum indicador nesse filtro. Escolha outra dimensão ou desmarque "só os propostos para pagamento".</p>`; return; }
-  grid.innerHTML = list.map(i => {
-    const [label, cls] = STATUS[i.status];
-    return `<article class="card${i.status === "pay" ? " pay" : ""}">
-      <div class="card-top"><span class="dim">${esc(i.dim)} · ${esc(i.freq)}</span><span class="badge ${cls}">${label}</span></div>
-      <h3>${esc(i.name)}</h3>
-      <p class="what">${esc(i.what)}</p>
-      <div class="formula">${esc(i.formula)}</div>
-      <dl>
-        <dt>Unidade</dt><dd>${esc(i.unit)}</dd>
-        <dt>Fonte</dt><dd>${esc(i.src)}</dd>
-        <dt>Meta</dt><dd>${esc(i.meta)}</dd>
-      </dl>
-      <span class="ref">pré-projeto ${esc(i.ref)}</span>
-    </article>`;
-  }).join("");
-}
-document.getElementById("only-pay").addEventListener("change", e => { onlyPay = e.target.checked; renderGrid(); });
-renderSummary(); renderFilters(); renderGrid();
+  // Busca e filtro por categoria (data-area); itens sem data-area não são filtrados
+  let filtro = "todas";
+  function aplicar() {
+    const q = norm(document.getElementById("busca").value.trim());
+    document.querySelectorAll("[data-area], [data-busca]").forEach(el => {
+      const a = el.dataset.area;
+      const areaOk = !a || filtro === "todas" || a === filtro || a === "todas";
+      const bate = !el.hasAttribute("data-busca") || !q || norm(el.textContent).includes(q);
+      el.classList.toggle("oculto", !areaOk || !bate);
+      if (q && bate && areaOk && el.tagName === "DETAILS") el.open = true;
+    });
+  }
+  document.getElementById("busca").addEventListener("input", aplicar);
+  document.querySelectorAll(".chip-filtro[data-filtro]").forEach(b => b.onclick = () => {
+    filtro = b.dataset.filtro;
+    document.querySelectorAll(".chip-filtro[data-filtro]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    aplicar();
+  });
+})();
+</script>
+<script>
+// Balão dos termos: flutua por cima da página (não cria barra de rolagem em tabela) e não sai da tela
+(function () {
+  document.documentElement.classList.add("js-dica");
+  const d = document.createElement("div"); d.id = "dica"; d.setAttribute("role", "tooltip"); document.body.appendChild(d);
+  function mostra(el) {
+    d.textContent = el.dataset.def; d.style.display = "block";
+    const r = el.getBoundingClientRect(), w = d.offsetWidth, h = d.offsetHeight;
+    let x = Math.max(12, Math.min(r.left, innerWidth - w - 12));
+    let y = r.bottom + 6; if (y + h > innerHeight - 8) y = Math.max(8, r.top - h - 6);
+    d.style.left = x + "px"; d.style.top = y + "px";
+  }
+  const esconde = () => { d.style.display = "none"; };
+  const alvo = e => e.target.closest && e.target.closest(".termo[data-def]");
+  document.addEventListener("mouseover", e => { const el = alvo(e); el ? mostra(el) : esconde(); });
+  document.addEventListener("focusin", e => { const el = alvo(e); if (el) mostra(el); });
+  document.addEventListener("focusout", esconde);
+  addEventListener("scroll", esconde, true);
+})();
+</script>
+<script>
+// TEMA-ESCURO e título fixo na barra
+(function () {
+  const raiz = document.documentElement, b = document.getElementById("tema");
+  const pinta = () => { const e = raiz.dataset.tema === "escuro"; b.textContent = e ? "Modo claro" : "Modo escuro"; b.setAttribute("aria-pressed", e); };
+  b.onclick = () => {
+    if (raiz.dataset.tema === "escuro") delete raiz.dataset.tema; else raiz.dataset.tema = "escuro";
+    try { localStorage.setItem("mba-tema", raiz.dataset.tema || "claro"); } catch (e) {}
+    pinta();
+  };
+  pinta();
+  const topo = document.querySelector("header.topo");
+  if (topo && "IntersectionObserver" in window)
+    new IntersectionObserver(([e]) => document.body.classList.toggle("rolou", !e.isIntersecting)).observe(topo);
+})();
+</script>
+<script>
+document.getElementById("so-pay").addEventListener("change", e => document.querySelector("main").classList.toggle("so-pay", e.target.checked));
 </script>

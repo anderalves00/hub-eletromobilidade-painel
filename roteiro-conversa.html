@@ -5,229 +5,410 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro da Conversa do Hub</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Identidade: a do pitch da equipe (feito pela SDETJ), por decisão do Andy em 2026-11-21 — ver DecisoesProj.md. Mecânica do esqueleto DevMode/configuracao/templates/html/painel-base.html. O publicar-quadro.ps1 injeta doctype e head. -->
+<script>try{if(localStorage.getItem("mba-tema")==="escuro")document.documentElement.dataset.tema="escuro"}catch(e){}</script>
 <style>
-/* Layout: leitura no celular, uma coluna estreita; passos em sequência, falas destacadas, objeções e checklist */
 :root {
-  --bg: #f3f6f9;
-  --surface: #ffffff;
-  --ink: #132030;
-  --muted: #566577;
-  --line: #d7dee7;
-  --accent: #0a62c2;
-  --accent-soft: #e2edfa;
-  --amber: #9a5b00;
-  --amber-soft: #fbefd9;
-  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
-    --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0d141c; --surface: #151f2a; --ink: #e5ecf3; --muted: #9babbc; --line: #2a3747;
-  --accent: #62a9f2; --accent-soft: #15304c; --amber: #f2b85c; --amber-soft: #3a2a10;
-  color-scheme: dark;
+  /* Paleta do pitch (tema do pptx) */
+  --tinta: #0B2E3C; --tinta-2: #13262F; --teal: #0F7C7A; --teal-esc: #0A5C5B; --teal-claro: #EEF6F5;
+  --menta: #3FB8A8; --lima: #B6F03C; --ambar: #F2A93B; --ardosia: #5E7B85;
+  /* Áreas (cores fixas do projeto) e estados */
+  --verde: #2E9E5B; --verde-claro: #E5F4EB;
+  --roxo: #6A4C9C; --roxo-claro: #F0EBF7;
+  --laranja: #E0922A; --laranja-esc: #9A5B0E; --laranja-claro: #FDF1E0;
+  --vermelho: #B3261E; --vermelho-claro: #FBE9E7;
+  --texto: #1F3540; --texto-suave: #5E7B85; --borda: #D6E4E2;
+  --fundo: #F5F9F8; --cartao: #ffffff;
+  --raio: 12px; --sombra: 0 1px 3px rgba(11, 46, 60, .08);
+  --fonte: Calibri, Carlito, "Segoe UI", Arial, sans-serif;
+  --fundo-pagina: var(--fundo);
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
-.wrap {
-  max-width: 720px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 36px 64px;
-  display: grid; gap: 40px;
-}
-h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.15; font-weight: 700; }
-h2 { font-size: 1.25rem; font-weight: 600; }
-h3 { font-size: 1.02rem; font-weight: 600; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 16px/1.55 var(--fonte); }
+a { color: var(--teal); }
+a:hover { color: var(--teal-esc); }
+a.ext::after { content: "\00a0↗"; font-size: .85em; }
+.js-dica .termo:hover::after, .js-dica .termo:focus::after { content: none; }
+#dica { position: fixed; z-index: 50; display: none; max-width: min(360px, 86vw); background: var(--tinta); color: #fff; font: 400 13px/1.45 var(--fonte); padding: 8px 10px; border-radius: 6px; white-space: pre-line; box-shadow: 0 4px 12px rgba(0,0,0,.18); pointer-events: none; }
+@media print { #dica { display: none !important; } }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
-.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; }
-.private { display: inline-block; background: var(--amber-soft); color: var(--amber); font-weight: 600; font-size: 0.8rem; padding: 3px 10px; border-radius: 999px; }
-header, section { display: grid; gap: 14px; }
-.goal { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; }
-.goal strong { font-family: var(--font-display); font-weight: 600; }
-.muted { color: var(--muted); }
+.nw { white-space: nowrap; }
 
-.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.steps > li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 10px; }
-.step-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.num { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
-.time { margin-left: auto; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
-.say { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; display: grid; gap: 8px; }
-.say p::before { content: "“"; }
-.say p::after { content: "”"; }
-.why { font-size: 0.9rem; color: var(--muted); }
-ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+/* Hover de termo: <span class="termo" tabindex="0" data-def="significado">TERMO</span> */
+.termo { position: relative; text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.termo:hover::after, .termo:focus::after { content: attr(data-def); position: absolute; left: 0; top: calc(100% + 4px); z-index: 30; width: max-content; max-width: min(340px, 80vw); background: var(--tinta); color: #fff; font-size: 14px; font-weight: 400; font-style: normal; line-height: 1.45; padding: 8px 10px; border-radius: 6px; white-space: normal; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
 
-.objections { display: grid; gap: 12px; }
-details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
-summary { cursor: pointer; font-weight: 600; }
-summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-details > div { margin-top: 10px; display: grid; gap: 8px; }
+/* Cabeçalho: a capa do pitch */
+.topo { background: var(--tinta); color: #fff; }
+.topo-int { padding: 26px 32px 24px; display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: flex-end; justify-content: space-between; }
+.kicker { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--lima); }
+.topo h1 { font-size: 30px; font-weight: 700; margin-top: 8px; }
+.topo .subtitulo { font-size: 16px; opacity: .85; margin-top: 6px; }
+.topo .selos { display: flex; flex-wrap: wrap; gap: 8px; }
+.sigla-mista { text-transform: none; }
+.pilula { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--lima); color: var(--tinta); padding: 6px 14px; border-radius: 999px; white-space: nowrap; }
+.pilula.suave { background: rgba(255,255,255,.12); color: #fff; }
 
-.avoid { display: grid; gap: 8px; }
-.avoid li { color: var(--ink); }
+/* Barra de ferramentas */
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--cartao); border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
+.grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-filtro { border: 1px solid var(--borda); background: var(--cartao); color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 700 14px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.botao { border: 1px solid var(--teal); background: var(--cartao); color: var(--teal); padding: 6px 12px; border-radius: 8px; font: 700 14px var(--fonte); cursor: pointer; text-decoration: none; }
+.botao:hover { background: var(--teal-claro); }
 
-.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.check label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
-.check input { margin-top: 5px; accent-color: var(--accent); }
-.check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.check input:checked + span { color: var(--muted); text-decoration: line-through; }
-.link-box { font-family: var(--font-mono); font-size: 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
-footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 14px; }
+/* Estrutura */
+.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
+.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
+.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--teal); margin: 12px 4px 6px; }
+.lateral h2:first-child { margin-top: 0; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 15px; }
+.lateral a:hover, .lateral a.ativo { background: var(--teal-claro); }
+.lateral a .cod { font-weight: 700; min-width: 30px; color: var(--tinta); }
+.lateral a .tit { color: var(--texto-suave); font-size: 14px; overflow-wrap: anywhere; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5d3d6; }
+.ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
+main { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+/* Seções: a primeira aberta (section), as demais recolhidas (details) */
+section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 22px 26px; box-shadow: var(--sombra); }
+section.bloco > h2, details.bloco > summary h2 { font-size: 22px; color: var(--tinta); display: flex; align-items: center; gap: 10px; }
+section.bloco > h2 { margin-bottom: 16px; }
+section.bloco > h2::before, details.bloco > summary h2::before { content: ""; width: 5px; height: 22px; background: var(--teal); border-radius: 3px; flex: none; }
+details.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+details.bloco > summary, details.item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+details > summary::-webkit-details-marker { display: none; }
+details.bloco > summary { padding: 16px 26px; }
+details.bloco > summary .cont { font-size: 14px; color: var(--texto-suave); font-weight: 700; margin-left: auto; }
+details.bloco > .bloco-corpo { padding: 0 26px 24px; display: grid; gap: 16px; }
+.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--teal-claro); color: var(--teal); font-weight: 800; transition: transform .15s; flex: none; }
+details[open] > summary .seta { transform: rotate(90deg); }
+.subtitulo-bloco { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .14em; margin-top: 6px; }
+
+/* Item recolhível dentro de uma seção */
+details.item { border: 1px solid var(--borda); border-radius: var(--raio); background: var(--cartao); }
+details.item[open] { border-color: var(--menta); }
+details.item > summary { padding: 14px 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
+.cod-grande { font-size: 20px; font-weight: 700; color: var(--teal); min-width: 40px; letter-spacing: .06em; }
+.sum-tit { font-size: 17px; font-weight: 700; color: var(--tinta); }
+.sum-sub { font-size: 14px; color: var(--texto-suave); }
+.sum-dir { font-size: 14px; color: var(--texto-suave); font-weight: 700; white-space: nowrap; }
+.item-corpo { padding: 14px 18px 18px; border-top: 1px solid var(--borda); display: grid; gap: 10px; }
+
+/* Indicadores */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 14px; }
+.kpi { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); }
+.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--teal); font-weight: 700; }
+.kpi .val { font-size: 32px; font-weight: 700; color: var(--tinta); line-height: 1.15; margin-top: 4px; }
+.kpi .val small { font-size: 16px; font-weight: 700; color: var(--texto-suave); }
+.kpi .det { font-size: 14px; color: var(--texto-suave); margin-top: 2px; }
+.kpi.destaque { background: var(--tinta); }
+.kpi.destaque .rot { color: var(--lima); }
+.kpi.destaque .val { color: #fff; }
+.kpi.destaque .val small, .kpi.destaque .det { color: rgba(255,255,255,.8); }
+.progresso { margin-top: 18px; }
+.rotulo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 14px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 14px; border-radius: 999px; background: #e3ecea; overflow: hidden; }
+.trilho span { height: 100%; }
+.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 14px; color: var(--texto-suave); }
+.legenda-barra i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.contexto { margin: 16px 0 0; padding-left: 20px; }
+.contexto li { margin: 4px 0; }
+
+/* Tabelas */
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+tbody tr:hover td { background: var(--teal-claro); }
+
+/* Etiquetas */
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.t-teal { background: var(--teal-claro); color: var(--teal-esc); }
+.t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
+.t-verde { background: var(--verde-claro); color: var(--verde); }
+.t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
+.t-roxo { background: var(--roxo-claro); color: var(--roxo); }
+
+/* Caixas */
+.definicao { padding: 12px 14px; background: var(--teal-claro); border-radius: 8px; }
+.resumo { padding: 12px 14px; border-left: 4px solid var(--ambar); background: #FEF5E6; border-radius: 0 8px 8px 0; }
+.alerta { padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
+.fala { padding: 10px 12px; border-left: 3px solid var(--teal); background: var(--teal-claro); font-size: 15px; border-radius: 0 6px 6px 0; font-style: italic; }
+.nota { color: var(--texto-suave); font-size: 15px; }
+.lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
+
+/* Grades de cartões */
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px; }
+.coluna { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-top: 5px solid var(--cor, var(--teal)); display: grid; gap: 8px; align-content: start; }
+.coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
+.coluna .definicao { background: var(--cartao); }
+.coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-teal { --cor: var(--teal); }
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 14px; }
+.pend { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-left: 5px solid var(--ambar); }
+.pend h3 { font-size: 16px; color: var(--tinta); margin-bottom: 6px; }
+
+.origem { font-size: 14px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 10px; margin-top: 4px; }
+.origem b { color: var(--teal); }
+.t-sintese { background: #E9EEF0; color: var(--ardosia); }
+details.sub { background: var(--cartao); border-radius: 8px; padding: 8px 12px; }
+details.sub > summary { cursor: pointer; font-weight: 700; color: var(--tinta); font-size: 15px; }
+details.sub[open] > summary { margin-bottom: 6px; }
+.oculto { display: none !important; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .barra-ferramentas { position: static; }
+  html { scroll-padding-top: 12px; }
+  .layout { grid-template-columns: 1fr; padding: 16px; }
+  .lateral { position: static; max-height: none; }
+  .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  .topo h1 { font-size: 24px; }
+  footer { padding: 0 16px 24px; }
+  section.bloco { padding: 16px; }
+  details.bloco > summary { padding: 14px 16px; }
+  details.bloco > .bloco-corpo { padding: 0 16px 16px; }
+  details.item > summary { grid-template-columns: minmax(0, 1fr) auto; }
+  details.item > summary .cod-grande, details.item > summary .sum-dir { grid-column: 1 / -1; }
+}
+@media print {
+  .barra-ferramentas, .lateral { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  details { break-inside: avoid-page; }
+  .seta { display: none; }
+  body { background: #fff; }
+  .topo, .kpi.destaque { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* TEMA-ESCURO: só pelo botão, lembrado no navegador; nunca herdado do sistema */
+html[data-tema=escuro] #dica, html[data-tema=escuro] .termo:hover::after, html[data-tema=escuro] .termo:focus::after { background: #EEF1F4; color: #121820; }
+html[data-tema=escuro] .chip-filtro[aria-pressed=true] { color: var(--fundo-pagina); }
+html[data-tema=escuro] input[type=search] { color: var(--texto); }
+html[data-tema=escuro] .t-sintese { background: #3A3628; color: #E2DAC4; }
+.barra-titulo { display: none; font-weight: 700; color: var(--tinta); white-space: nowrap; margin-right: 4px; }
+body.rolou .barra-titulo { display: inline; }
+html[data-tema=escuro] {
+  --fundo: #0E1A20; --cartao: #13232B; --fundo-pagina: #0E1A20;
+  --tinta: #E3EEF0; --tinta-2: #E3EEF0; --teal: #5CC6C1; --teal-esc: #86D6D2; --teal-claro: #15302F;
+  --texto: #D3E0E3; --texto-suave: #97AEB5; --borda: #26434D; --sombra: none;
+  --verde: #5BC88A; --verde-claro: #183526; --roxo: #B29AE0; --roxo-claro: #2C2440;
+  --laranja: #F0A947; --laranja-esc: #F2B566; --laranja-claro: #3A2A14;
+  --vermelho: #F08A80; --vermelho-claro: #3D1C1A;
+  color-scheme: dark;
+}
+html[data-tema=escuro] body { background: var(--fundo); }
+html[data-tema=escuro] .topo, html[data-tema=escuro] .kpi.destaque { background: #0B2E3C; }
+html[data-tema=escuro] .topo h1, html[data-tema=escuro] .topo .sobre, html[data-tema=escuro] .kpi.destaque .val { color: #fff; }
+html[data-tema=escuro] .pilula:not(.suave) { color: #0B2E3C; }
+html[data-tema=escuro] .resumo { background: #33270F; }
+html[data-tema=escuro] .trilho { background: #24363D; }
+html[data-tema=escuro] .ponto { background: #46606A; }
+
+section.bloco > .kpis + * { margin-top: 14px; }
+.passo-tempo { font-size: 14px; font-weight: 700; color: var(--texto-suave); white-space: nowrap; }
+.porque { font-size: 14px; color: var(--texto-suave); } .porque b { color: var(--teal); }
+
 </style>
-
-<div class="wrap">
-  <header>
-    <p class="eyebrow">MBA PPPs FGV/BB · Brasília, 24–25/11/2026</p>
-    <h1>Roteiro da conversa sobre a divisão da equipe</h1>
-    <span class="private">Só para você · não mostrar</span>
-    <div class="goal">
-      <strong>Objetivo</strong>
-      <p>Sair de Brasília com a equipe de acordo: você fica com o modelo de operação, os indicadores e a plataforma. A articulação com a indústria passa a ser dividida, com a Giovanna puxando.</p>
-      <p class="muted">Quadro de apoio: <em>Quadro de Indicadores do Hub</em>, aberto no celular.</p>
+</head>
+<body>
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="kicker">MBA em PPPs e Concessões Sustentáveis · Brasília, 24 e 25/11/2026</div>
+      <h1>Roteiro da conversa sobre a divisão da equipe</h1>
+      <div class="subtitulo">O que propor, em que ordem, e o que fazer se vier objeção</div>
     </div>
-  </header>
+    <div class="selos"><span class="pilula">Só para você · não mostrar</span><span class="pilula suave">Atualizado em 22/11/2026</span></div>
+  </div>
+</header>
 
-  <section aria-labelledby="h-when">
-    <h2 id="h-when">Quando puxar o assunto</h2>
-    <ul class="plain">
-      <li><b>Melhor momento:</b> no fim do dia 24, depois da abertura e da Oficina Action, num jantar ou num café. A essa altura, a FGV já terá explicado o que espera de cada perfil, e você usa isso como gancho.</li>
-      <li><b>Plano B:</b> no intervalo do almoço do dia 25.</li>
-      <li><b>Evite:</b> na frente da equipe da FGV ou de outras turmas. É conversa interna de vocês três.</li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="h-steps">
-    <h2 id="h-steps">A conversa em cinco passos</h2>
-    <ol class="steps">
-      <li>
-        <div class="step-head"><span class="num">1</span><h3>Ouvir primeiro</h3><span class="time">~10 min</span></div>
-        <p>Você chegou agora, e o Thiago escreveu o pré-projeto. Comece reconhecendo o trabalho deles e perguntando.</p>
-        <div class="say">
-          <p>Eu cheguei com o trem andando, então antes queria entender. O que a Aieska já estava tocando? Tem algo combinado com alguém que eu precise assumir?</p>
-          <p>Depois de hoje, como vocês enxergam a divisão entre nós três?</p>
-        </div>
-        <p class="why">Por quê: se já houver algo combinado, você descobre antes de propor. E quem é ouvido primeiro escuta melhor depois.</p>
-      </li>
-      <li>
-        <div class="step-head"><span class="num">2</span><h3>Ligar com o que a FGV falou</h3><span class="time">~2 min</span></div>
-        <div class="say">
-          <p>Pelo que entendi hoje, o trabalho final é o edital com os anexos. Cada um responde por uma parte: o jurídico diz se pode, o econômico diz se a conta fecha, e o operacional diz como funciona e como a gente mede.</p>
-        </div>
-        <p class="why">Por quê: a proposta deixa de parecer preferência sua e passa a ser leitura do curso.</p>
-      </li>
-      <li>
-        <div class="step-head"><span class="num">3</span><h3>Mostrar o quadro</h3><span class="time">~3 min</span></div>
-        <p>Abra o quadro e mostre só três coisas: a cadeia de cinco etapas, o filtro "só os propostos para pagamento" e as perguntas para cada um.</p>
-        <div class="say">
-          <p>Fiz um rascunho a partir do que já está no pré-projeto, nos itens 3.5 e 3.10. São 20 indicadores, e quatro deles eu proponho que entrem no pagamento: disponibilidade, tempo de reparo, recargas com sucesso e a nota de desempenho que junta tudo.</p>
-          <p>As metas estão em aberto de propósito. Dependem do diagnóstico de demanda e da rede.</p>
-          <p>Thiago, tem umas perguntas que são suas: quanto da remuneração depende da nota, e qual uso justifica abrir mais pontos. Giovanna, a sua parte é como a nota vira cláusula.</p>
-        </div>
-        <p class="why">Por quê: você chega oferecendo trabalho pronto, e cada um vê onde entra.</p>
-      </li>
-      <li>
-        <div class="step-head"><span class="num">4</span><h3>Propor a divisão</h3><span class="time">~3 min</span></div>
-        <div class="say">
-          <p>Onde eu acho que mais ajudo: modelo de operação, indicadores, painel e plataforma. É o que eu faço hoje com dados e acompanhamento de emendas.</p>
-          <p>Giovanna, a relação com a indústria já faz parte do seu dia a dia no Fortalecimento Industrial. Faz sentido você puxar essa frente comigo junto, em vez de eu começar do zero?</p>
-          <p>A parte de energia e rede eu assumo e vou estudar. Já anotei as perguntas para a distribuidora.</p>
-        </div>
-        <p class="why">Por quê: você pede para dividir, não para entregar. E deixa claro que a parte difícil de energia continua com você.</p>
-      </li>
-      <li>
-        <div class="step-head"><span class="num">5</span><h3>Fechar com um próximo passo</h3><span class="time">~2 min</span></div>
-        <div class="say">
-          <p>Que tal eu revisar o quadro com o que vocês falaram e mandar até a aula de 30/11? Aí a gente leva uma versão para a primeira mentoria operacional, em fevereiro.</p>
-        </div>
-        <p class="why">Por quê: conversa sem data some. Com uma entrega marcada, a divisão vira prática.</p>
-      </li>
-    </ol>
-  </section>
-
-  <section aria-labelledby="h-obj">
-    <h2 id="h-obj">Se vier alguma objeção</h2>
-    <div class="objections">
-      <details>
-        <summary>"Mas você não é da área de energia."</summary>
-        <div>
-          <p>Concorde e mostre o plano.</p>
-          <div class="say"><p>É verdade, e por isso já separei o que preciso aprender e o que perguntar à distribuidora. O papel operacional não é projetar a rede, é definir o serviço e garantir que dê para medir.</p></div>
-        </div>
-      </details>
-      <details>
-        <summary>"A Aieska ia cuidar dos stakeholders, isso já estava combinado."</summary>
-        <div>
-          <p>Aceite e ajuste o pedido.</p>
-          <div class="say"><p>Tranquilo, eu assumo. Só queria contar com você, Giovanna, nos contatos com a indústria, porque você já conhece esse pessoal. Eu organizo a agenda e registro os resultados.</p></div>
-        </div>
-      </details>
-      <details>
-        <summary>"Ainda é cedo para falar de indicadores."</summary>
-        <div>
-          <p>Mostre que é rascunho e que serve para orientar o diagnóstico.</p>
-          <div class="say"><p>Concordo que as metas são para depois. A lista serve para a gente saber, desde já, que dados o diagnóstico precisa levantar. Senão a gente descobre isso no módulo Construa, com pouco tempo.</p></div>
-        </div>
-      </details>
-      <details>
-        <summary>"Vou ficar sobrecarregada." (Giovanna)</summary>
-        <div>
-          <p>Recue na hora. O objetivo é dividir, não transferir.</p>
-          <div class="say"><p>Faz sentido. Então eu toco os contatos e só te chamo quando precisar da sua relação com a empresa ou do olhar jurídico.</p></div>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <section aria-labelledby="h-avoid">
-    <h2 id="h-avoid">O que evitar</h2>
-    <ul class="plain avoid">
-      <li>Abrir com o que você <b>não</b> quer fazer. Abra com o que você entrega.</li>
-      <li>Comparar com a Aieska ou com o que ela teria feito.</li>
-      <li>Apresentar o quadro como pronto. É v0, e as perguntas são deles.</li>
-      <li>Falar em multa, frequência ou nas suas condições de trabalho. Não é o assunto dessa conversa.</li>
-      <li>Fechar sem data para a próxima versão.</li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="h-check">
-    <h2 id="h-check">Antes de embarcar</h2>
-    <ul class="check">
-      <li><label for="c1"><input type="checkbox" id="c1"><span>Abrir o quadro no celular uma vez com internet, para conferir que carrega.</span></label></li>
-      <li><label for="c2"><input type="checkbox" id="c2"><span>Mandar ao Thiago e à Giovanna só o link do painel (anderalves00.github.io/hub-eletromobilidade-painel). Nunca o deste roteiro.</span></label></li>
-      <li><label for="c3"><input type="checkbox" id="c3"><span>Reler os itens 3.5, 3.8 e 3.10 do pré-projeto, que são a base do quadro.</span></label></li>
-      <li><label for="c4"><input type="checkbox" id="c4"><span>Ter na ponta da língua as três perguntas para a distribuidora: capacidade disponível por local, prazo de conexão e custo de reforço da rede.</span></label></li>
-      <li><label for="c5"><input type="checkbox" id="c5"><span>Pitch: confirmar com o Thiago a troca do nome no slide 2.</span></label></li>
-    </ul>
-  </section>
-
-  <footer>
-    <p>Preparado a partir do pré-projeto do Hub, do edital do 5º MBA em PPPs e Concessões Sustentáveis (item 7.2.2), do programa do curso e do cronograma da Turma 9. As falas são sugestões. Adapte ao seu jeito.</p>
-  </footer>
+<div class="barra-ferramentas">
+  <div class="barra-int">
+    <span class="barra-titulo">Roteiro da conversa</span>
+    <input type="search" id="busca" placeholder="Buscar nas falas e nas objeções…" aria-label="Buscar">
+    <button class="botao" id="expandir">Expandir tudo</button>
+    <button class="botao" id="recolher">Recolher tudo</button>
+    <button class="botao" id="imprimir">Imprimir</button>
+    <button class="botao" id="tema" aria-pressed="false">Modo escuro</button>
+    <a class="botao" href="roteiro-pessoal.html" target="_blank" rel="noopener">Roteiro pessoal</a>
+    <a class="botao" href="base-curso.html" target="_blank" rel="noopener">Base do curso</a>
+  </div>
 </div>
+<div class="layout">
+  <nav class="lateral" aria-label="Navegação">
+    <h2>Roteiro</h2>
+    <a href="#visao-geral">Visão geral</a>
+    <h2>A conversa em cinco passos</h2>
+    <a href="#p1"><span class="cod">1</span><span class="tit">Ouvir primeiro</span></a>
+    <a href="#p2"><span class="cod">2</span><span class="tit">Ligar com o que a FGV falou</span></a>
+    <a href="#p3"><span class="cod">3</span><span class="tit">Mostrar o quadro</span></a>
+    <a href="#p4"><span class="cod">4</span><span class="tit">Propor a divisão</span></a>
+    <a href="#p5"><span class="cod">5</span><span class="tit">Fechar com um próximo passo</span></a>
+    <h2>Depois</h2>
+    <a href="#novos">Pontos novos para levar</a>
+    <a href="#objecoes">Se vier objeção</a>
+    <a href="#evitar">O que evitar</a>
+    <a href="#embarcar">Antes de embarcar</a>
+  </nav>
+  <main>
+    <section class="bloco" id="visao-geral">
+      <h2>Visão geral</h2>
+      <div class="kpis">
+        <div class="kpi destaque"><div class="rot">Objetivo</div><div class="val">Divisão <small>combinada</small></div><div class="det">você com operação, indicadores e plataforma; a indústria dividida, com a Giovanna puxando</div></div>
+        <div class="kpi"><div class="rot">Quando</div><div class="val">24/11 <small>fim do dia</small></div><div class="det">depois da abertura e da <span class="termo" tabindex="0" data-def="Oficina do FGV Action: a equipe aplica ao Hub o conteúdo da disciplina. A de 24/11, à tarde, é a primeira.">Oficina Action</span>, num jantar ou café. Plano B: almoço do dia 25</div></div>
+        <div class="kpi"><div class="rot">Duração</div><div class="val">~20 <small>min</small></div><div class="det">cinco passos, começando por ouvir</div></div>
+        <div class="kpi"><div class="rot">Saída</div><div class="val">30/11</div><div class="det">quadro revisado com o que eles disserem</div></div>
+      </div>
+      <div class="definicao"><b>Apoio:</b> o <a href="index.html" target="_blank" rel="noopener">painel de indicadores</a>, aberto no celular. <b>Evite</b> puxar o assunto na frente da equipe da <span class="termo" tabindex="0" data-def="Fundação Getulio Vargas, que oferece o curso com o Banco do Brasil.">FGV</span> ou de outras turmas: é conversa interna de vocês três.</div>
+    </section>
+
+    <details class="bloco" id="passos" data-busca open>
+      <summary><h2>A conversa em cinco passos</h2><span class="cont">ouvir · ligar · mostrar · propor · fechar</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <details class="item" id="p1" data-busca><summary><span class="cod-grande">1</span><span class="sum-tit">Ouvir primeiro</span><span class="sum-dir">~10 min</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><p>Você chegou agora, e o Thiago escreveu o pré-projeto. Comece reconhecendo o trabalho deles e perguntando.</p><div class="fala">Eu cheguei com o trem andando, então antes queria entender. O que a Aieska já estava tocando? Tem algo combinado com alguém que eu precise assumir?</div><div class="fala">Depois de hoje, como vocês enxergam a divisão entre nós três?</div><p class="porque"><b>Por quê:</b> se já houver algo combinado, você descobre antes de propor. E quem é ouvido primeiro escuta melhor depois.</p></div></details>
+        <details class="item" id="p2" data-busca><summary><span class="cod-grande">2</span><span class="sum-tit">Ligar com o que a FGV falou</span><span class="sum-dir">~2 min</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Pelo que entendi hoje, o trabalho final é o edital com os anexos. Cada um responde por uma parte: o jurídico diz se pode, o econômico diz se a conta fecha, e o operacional diz como funciona e como a gente mede.</div><p class="porque"><b>Por quê:</b> a proposta deixa de parecer preferência sua e passa a ser leitura do curso.</p></div></details>
+        <details class="item" id="p3" data-busca><summary><span class="cod-grande">3</span><span class="sum-tit">Mostrar o quadro</span><span class="sum-dir">~3 min</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><p>Abra o painel e mostre só três coisas: a cadeia de cinco etapas, a opção "só os propostos para pagamento" e as perguntas para cada um.</p><div class="fala">Fiz um rascunho a partir do que já está no pré-projeto, nos itens <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span> e <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span>. São 20 indicadores, e quatro deles eu proponho que entrem no pagamento: disponibilidade, tempo de reparo, recargas com sucesso e a nota de desempenho que junta tudo.</div><div class="fala">As metas estão em aberto de propósito. Dependem do diagnóstico de demanda e da rede.</div><div class="fala">Thiago, tem umas perguntas que são suas: quanto da remuneração depende da nota, e qual uso justifica abrir mais pontos. Giovanna, a sua parte é como a nota vira cláusula.</div><p class="porque"><b>Por quê:</b> você chega oferecendo trabalho pronto, e cada um vê onde entra.</p></div></details>
+        <details class="item" id="p4" data-busca><summary><span class="cod-grande">4</span><span class="sum-tit">Propor a divisão</span><span class="sum-dir">~3 min</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Onde eu acho que mais ajudo: modelo de operação, indicadores, painel e plataforma. É o que eu faço hoje com dados e acompanhamento de emendas.</div><div class="fala">Giovanna, a relação com a indústria já faz parte do seu dia a dia no <span class="termo" tabindex="0" data-def="Área da SDETJ (Secretaria de Desenvolvimento Econômico, Trabalho e Juventude) em que a Giovanna atua.">Fortalecimento Industrial</span>. Faz sentido você puxar essa frente comigo junto, em vez de eu começar do zero?</div><div class="fala">A parte de energia e rede eu assumo e vou estudar. Já anotei as perguntas para a distribuidora.</div><p class="porque"><b>Por quê:</b> você pede para dividir, não para entregar. E deixa claro que a parte difícil de energia continua com você.</p></div></details>
+        <details class="item" id="p5" data-busca><summary><span class="cod-grande">5</span><span class="sum-tit">Fechar com um próximo passo</span><span class="sum-dir">~2 min</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Que tal eu revisar o quadro com o que vocês falaram e mandar até a aula de 30/11? Aí a gente leva uma versão para a primeira <span class="termo" tabindex="0" data-def="Encontro com um especialista da FGV sobre o que a equipe já produziu na área técnico-operacional. A primeira é em 17/02/2027.">mentoria operacional</span>, em fevereiro.</div><p class="porque"><b>Por quê:</b> conversa sem data some. Com uma entrega marcada, a divisão vira prática.</p></div></details>
+      </div>
+    </details>
+
+    <section class="bloco" id="novos">
+      <h2>Pontos novos para levar (pesquisa de 22/11)</h2>
+      <p>Ninguém da equipe discutiu estes pontos ainda. Não precisam entrar na primeira conversa: se a divisão tomar o tempo todo, deixe para a seguinte. Você vai validar com a equipe antes de dar como certo.</p>
+      <div class="colunas">
+        <div class="coluna c-roxo"><h4>1 · À Giovanna: a regra da recarga</h4><p>Pela <span class="termo" tabindex="0" data-def="Resolução da ANEEL que reúne as regras de fornecimento de energia. O art. 554 permite a qualquer um vender recarga de veículo elétrico, a preço livre.">REN ANEEL 1.000, art. 554</span>, qualquer um pode vender recarga a preço livre. Então o Hub é serviço público concedido, ou o certo é ceder o uso do espaço, como fizeram Porto Velho e Uberlândia?</p><p class="nota"><a href="base-curso.html#casos" target="_blank" rel="noopener">A regra e os casos, na base do curso</a></p></div>
+        <div class="coluna c-laranja"><h4>2 · A recarga dos ônibus já tem dono</h4><p>A <span class="termo" tabindex="0" data-def="BR7 Mobilidade (Bernatrans): concessionária que opera os ônibus municipais de SBC desde 01/04/2020, por 25 anos. O edital prevê trocar o diesel em 30% da frota em 10 anos, 60% em 15 e 100% em 20.">BR7</span> opera os ônibus por concessão. Os 8 elétricos da linha 20 foram pagos por ela. Falta confirmar no contrato onde eles carregam e por conta de quem. O Hub coordena com a BR7 e a Enel, não paga de novo.</p></div>
+        <div class="coluna c-teal"><h4>3 · Para quem é o Hub?</h4><p>A Prefeitura não tem frota própria elétrica nem plano conhecido de ter (sua leitura). Os ônibus são da BR7. Sobram os munícipes onde o mercado não chega e, a confirmar, táxi, aplicativo e logística. Se for isso, como vira o projeto de PPP ou concessão que o curso pede? <span class="tag t-sintese">síntese</span></p></div>
+      </div>
+    </section>
+
+    <details class="bloco" id="objecoes" data-busca>
+      <summary><h2>Se vier objeção</h2><span class="cont">4 respostas prontas</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <details class="item" data-busca><summary><span class="cod-grande">1</span><span class="sum-tit">"Mas você não é da área de energia."</span><span class="sum-dir">concorde e mostre o plano</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">É verdade, e por isso já separei o que preciso aprender e o que perguntar à distribuidora. O papel operacional não é projetar a rede, é definir o serviço e garantir que dê para medir.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">2</span><span class="sum-tit">"A Aieska ia cuidar dos stakeholders, isso já estava combinado."</span><span class="sum-dir">aceite e ajuste o pedido</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Tranquilo, eu assumo. Só queria contar com você, Giovanna, nos contatos com a indústria, porque você já conhece esse pessoal. Eu organizo a agenda e registro os resultados.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">3</span><span class="sum-tit">"Ainda é cedo para falar de indicadores."</span><span class="sum-dir">mostre que é rascunho</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Concordo que as metas são para depois. A lista serve para a gente saber, desde já, que dados o diagnóstico precisa levantar. Senão a gente descobre isso no <span class="termo" tabindex="0" data-def="Módulo 3 do curso (Disciplinas 9 a 12): a equipe escreve as peças do edital, entre elas os indicadores de desempenho.">módulo Construa</span>, com pouco tempo.</div></div></details>
+        <details class="item" data-busca><summary><span class="cod-grande">4</span><span class="sum-tit">"Vou ficar sobrecarregada." (Giovanna)</span><span class="sum-dir">recue na hora</span><span class="seta" aria-hidden="true">›</span></summary>
+          <div class="item-corpo"><div class="fala">Faz sentido. Então eu toco os contatos e só te chamo quando precisar da sua relação com a empresa ou do olhar jurídico.</div></div></details>
+      </div>
+    </details>
+
+    <details class="bloco" id="evitar" data-busca>
+      <summary><h2>O que evitar</h2><span class="cont">5 armadilhas</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><ul class="lista">
+        <li>Abrir com o que você não quer fazer. Abra com o que você entrega.</li>
+        <li>Comparar com a Aieska ou com o que ela teria feito.</li>
+        <li>Apresentar o quadro como pronto. É a versão 0, e as perguntas são deles.</li>
+        <li>Falar em multa, frequência ou nas suas condições de trabalho. Não é o assunto dessa conversa.</li>
+        <li>Fechar sem data para a próxima versão.</li>
+      </ul></div>
+    </details>
+
+    <details class="bloco" id="embarcar" data-busca>
+      <summary><h2>Antes de embarcar</h2><span class="cont">voo de segunda, 23/11, 20h20</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><ul class="lista">
+        <li>Abrir o painel no celular uma vez, com internet, para conferir que carrega.</li>
+        <li>Mandar ao Thiago e à Giovanna só o link do painel e do guia. Nunca o deste roteiro.</li>
+        <li>Reler os itens <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.8 (capacidade organizacional): quem faz o quê na equipe; dá ao técnico-operacional energia, mobilidade, operação e ESG.">3.8</span> e <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span> do pré-projeto, que são a base do quadro.</li>
+        <li>Ter na ponta da língua as três perguntas para a distribuidora: capacidade disponível por local, prazo de conexão e custo de reforço da rede.</li>
+        <li>Pitch: trocar o slide 2 (nome, cartão e nota) e avisar a equipe.</li>
+      </ul></div>
+    </details>
+
+    <p class="origem"><b>De onde vem:</b> pré-projeto do Hub, edital do 5º MBA em PPPs e Concessões Sustentáveis (item 7.2.2), programa do curso, cronograma da Turma 9 e a pesquisa de 22/11 (base do curso, casos reais). As falas são sugestões: adapte ao seu jeito.</p>
+  </main>
+</div>
+<footer>Página só do Andy. Escondida, não privada: nenhuma página pública tem link para ela, mas quem abrir o repositório no GitHub vê o arquivo.</footer>
 
 <script>
 (function () {
-  const KEY = "roteiro-hub-check";
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
-  document.querySelectorAll(".check input").forEach(function (cb) {
-    if (saved[cb.id]) cb.checked = true;
-    cb.addEventListener("change", function () {
-      saved[cb.id] = cb.checked;
-      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
-    });
+  const norm = s => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const todos = () => document.querySelectorAll("main details");
+  document.getElementById("expandir").onclick = () => todos().forEach(d => d.open = true);
+  document.getElementById("recolher").onclick = () => todos().forEach(d => d.open = false);
+  document.getElementById("imprimir").onclick = () => { todos().forEach(d => d.open = true); window.print(); };
+
+  // Link interno abre o details de destino e os que o contêm
+  function abrir(id) {
+    const alvo = id && document.getElementById(id);
+    if (!alvo) return;
+    for (let d = alvo; d; d = d.parentElement) if (d.tagName === "DETAILS") d.open = true;
+    alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); abrir(a.getAttribute("href").slice(1));
   });
+  if (location.hash) abrir(location.hash.slice(1));
+
+  // Busca e filtro por categoria (data-area); itens sem data-area não são filtrados
+  let filtro = "todas";
+  function aplicar() {
+    const q = norm(document.getElementById("busca").value.trim());
+    document.querySelectorAll("[data-area], [data-busca]").forEach(el => {
+      const a = el.dataset.area;
+      const areaOk = !a || filtro === "todas" || a === filtro || a === "todas";
+      const bate = !el.hasAttribute("data-busca") || !q || norm(el.textContent).includes(q);
+      el.classList.toggle("oculto", !areaOk || !bate);
+      if (q && bate && areaOk && el.tagName === "DETAILS") el.open = true;
+    });
+  }
+  document.getElementById("busca").addEventListener("input", aplicar);
+  document.querySelectorAll(".chip-filtro[data-filtro]").forEach(b => b.onclick = () => {
+    filtro = b.dataset.filtro;
+    document.querySelectorAll(".chip-filtro[data-filtro]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    aplicar();
+  });
+})();
+</script>
+<script>
+// Balão dos termos: flutua por cima da página (não cria barra de rolagem em tabela) e não sai da tela
+(function () {
+  document.documentElement.classList.add("js-dica");
+  const d = document.createElement("div"); d.id = "dica"; d.setAttribute("role", "tooltip"); document.body.appendChild(d);
+  function mostra(el) {
+    d.textContent = el.dataset.def; d.style.display = "block";
+    const r = el.getBoundingClientRect(), w = d.offsetWidth, h = d.offsetHeight;
+    let x = Math.max(12, Math.min(r.left, innerWidth - w - 12));
+    let y = r.bottom + 6; if (y + h > innerHeight - 8) y = Math.max(8, r.top - h - 6);
+    d.style.left = x + "px"; d.style.top = y + "px";
+  }
+  const esconde = () => { d.style.display = "none"; };
+  const alvo = e => e.target.closest && e.target.closest(".termo[data-def]");
+  document.addEventListener("mouseover", e => { const el = alvo(e); el ? mostra(el) : esconde(); });
+  document.addEventListener("focusin", e => { const el = alvo(e); if (el) mostra(el); });
+  document.addEventListener("focusout", esconde);
+  addEventListener("scroll", esconde, true);
+})();
+</script>
+<script>
+// TEMA-ESCURO e título fixo na barra
+(function () {
+  const raiz = document.documentElement, b = document.getElementById("tema");
+  const pinta = () => { const e = raiz.dataset.tema === "escuro"; b.textContent = e ? "Modo claro" : "Modo escuro"; b.setAttribute("aria-pressed", e); };
+  b.onclick = () => {
+    if (raiz.dataset.tema === "escuro") delete raiz.dataset.tema; else raiz.dataset.tema = "escuro";
+    try { localStorage.setItem("mba-tema", raiz.dataset.tema || "claro"); } catch (e) {}
+    pinta();
+  };
+  pinta();
+  const topo = document.querySelector("header.topo");
+  if (topo && "IntersectionObserver" in window)
+    new IntersectionObserver(([e]) => document.body.classList.toggle("rolou", !e.isIntersecting)).observe(topo);
 })();
 </script>

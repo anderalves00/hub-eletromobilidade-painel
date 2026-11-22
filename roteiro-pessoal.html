@@ -28,7 +28,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 body { margin: 0; background: var(--papel); color: var(--texto); font: 15px/1.6 var(--fonte); }
 a { color: var(--azul); text-underline-offset: 2px; }
 a:hover { color: var(--tinta); }
-a.ext::after { content: " ↗"; font-size: .85em; }
+a.ext::after { content: "\00a0↗"; font-size: .85em; }
+.termo.dir::after { left: auto; right: 0; }
 h1, h2, h3, h4 { margin: 0; line-height: 1.25; font-family: var(--serifa); font-weight: 700; color: var(--tinta); }
 p { margin: 0; }
 .nw { white-space: nowrap; }
@@ -478,5 +479,18 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
     cb.addEventListener("change", () => { s[cb.id] = cb.checked; try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} atualizar(); });
   });
   atualizar();
+})();
+</script>
+<script>
+// Balão do termo não passa da borda direita: perto dela, abre para a esquerda
+(function () {
+  function ajusta(e) {
+    const el = e.target.closest && e.target.closest(".termo");
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.classList.toggle("dir", r.left + Math.min(340, innerWidth * 0.8) > innerWidth - 16);
+  }
+  document.addEventListener("mouseover", ajusta);
+  document.addEventListener("focusin", ajusta);
 })();
 </script>

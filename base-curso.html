@@ -28,7 +28,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 body { margin: 0; background: var(--papel); color: var(--texto); font: 15px/1.6 var(--fonte); }
 a { color: var(--azul); text-underline-offset: 2px; }
 a:hover { color: var(--tinta); }
-a.ext::after { content: " ↗"; font-size: .85em; }
+a.ext::after { content: "\00a0↗"; font-size: .85em; }
+.termo.dir::after { left: auto; right: 0; }
 h1, h2, h3, h4 { margin: 0; line-height: 1.25; font-family: var(--serifa); font-weight: 700; color: var(--tinta); }
 p { margin: 0; }
 .nw { white-space: nowrap; }
@@ -65,7 +66,7 @@ p { margin: 0; }
 .lateral a { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 4px; text-decoration: none; color: var(--texto); font-size: 14px; }
 .lateral a:hover, .lateral a.ativo { background: var(--marca-claro); }
 .lateral a .cod { font-weight: 700; min-width: 22px; color: var(--tinta); }
-.lateral a .tit { color: var(--texto-suave); font-size: 13px; overflow-wrap: anywhere; }
+.lateral a .tit { color: var(--texto); font-size: 14px; overflow-wrap: anywhere; }
 .ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c9c2b2; }
 .ponto.laranja { background: var(--laranja); } .ponto.verde { background: var(--verde); } .ponto.azul { background: var(--azul); } .ponto.roxo { background: var(--roxo); } .ponto.vermelho { background: var(--vermelho); }
 main { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
@@ -132,7 +133,7 @@ tbody tr:hover td { background: var(--papel); }
 .lista { margin: 0; padding-left: 20px; } .lista li { margin: 4px 0; }
 
 /* Grades de cartões */
-.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
+.colunas { align-items: start; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
 .coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: #fff; display: grid; gap: 8px; align-content: start; }
 .coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
 .coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
@@ -159,6 +160,9 @@ tbody tr:hover td { background: var(--papel); }
 .passo .num { font: 700 22px var(--serifa); color: var(--azul); }
 .origem { font-size: 14px; color: var(--texto-suave); border-top: 1px dashed var(--pauta); padding-top: 10px; margin-top: 4px; }
 .origem b { color: var(--tinta); }
+.tab-programa th:nth-child(2) { min-width: 200px; }
+.tab-programa th:nth-child(5) { min-width: 280px; }
+.t-teal-mod { background: var(--azul-claro); color: var(--azul); }
 .t-sintese { background: #ECE8DD; color: #5B5446; }
 details.sub { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 8px 12px; background: var(--papel); }
 details.sub > summary { cursor: pointer; font: italic 700 15px var(--serifa); color: var(--tinta); }
@@ -171,7 +175,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   .barra-ferramentas { position: static; }
   html { scroll-padding-top: 12px; }
   .layout { grid-template-columns: 1fr; padding: 16px; }
-  .lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--pauta); padding: 0 0 12px; }
+  .lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--pauta); padding: 0 0 12px; display: flex; flex-wrap: wrap; gap: 2px 10px; }
+  .lateral h2 { display: none; }
   .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
   .topo h1 { font-size: 26px; }
   footer { padding: 0 16px 24px; }
@@ -196,7 +201,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <h1>Base do curso — o que cada documento diz</h1>
       <div class="subtitulo">Para chegar à mesma página da equipe: de onde vem cada informação e o que ela significa</div>
     </div>
-    <div class="selos"><span class="privado">Só para você · não compartilhar</span><span class="atualizado">Atualizado em 21/11/2026</span></div>
+    <div class="selos"><span class="privado">Só para você · não compartilhar</span><span class="atualizado">Atualizado em 22/11/2026</span></div>
   </div>
 </header>
 
@@ -240,7 +245,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         <a class="passo" href="#preprojeto"><span class="num">5</span><b>Pré-projeto</b><span>O que a equipe propôs ao se inscrever?</span></a>
         <a class="passo" href="#pitch"><span class="num">6</span><b>Pitch</b><span>Como a equipe apresenta o projeto em 24/11?</span></a>
       </div>
-      <div class="resumo"><b>A ligação que explica quase tudo:</b> o edital mandou o município apresentar um pré-projeto com dez itens (7.3.1 a 7.3.10). O pré-projeto do Hub tem exatamente esses dez itens, de 3.1 a 3.10. O pitch resume o pré-projeto em 3 minutos. E o curso inteiro serve para transformar esse pré-projeto em um edital de verdade, que é o trabalho final.</div>
+      <div class="resumo"><b>A ligação que explica quase tudo:</b> o <a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">edital</a> mandou o município apresentar um pré-projeto com dez itens (<span class="termo" tabindex="0" data-def="Os 10 itens do pré-projeto pedidos pelo edital (40 pontos): 7.3.1 descrição · 7.3.2 viabilidade · 7.3.3 sustentabilidade (ODS) · 7.3.4 partes interessadas · 7.3.5 riscos · 7.3.6 base legal · 7.3.7 implementação · 7.3.8 capacidade organizacional · 7.3.9 impactos · 7.3.10 monitoramento e avaliação.">7.3.1 a 7.3.10</span>). O <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/projeto-aplicado/pre-projeto-hub-eletromobilidade.pdf" target="_blank" rel="noopener">pré-projeto do Hub</a> tem exatamente esses dez itens, de <span class="termo" tabindex="0" data-def="As seções do pré-projeto do Hub: 3.1 descrição · 3.2 viabilidade · 3.3 ODS · 3.4 partes interessadas · 3.5 riscos · 3.6 base legal · 3.7 implementação · 3.8 capacidade organizacional · 3.9 impactos · 3.10 monitoramento e avaliação. Mesma ordem do edital.">3.1 a 3.10</span>. O <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/projeto-aplicado/pitch-hub-eletromobilidade-v1.pdf" target="_blank" rel="noopener">pitch</a> resume o pré-projeto em 3 minutos. E o curso inteiro serve para transformar esse pré-projeto em um edital de verdade, que é o trabalho final.</div>
       <h3 class="subtitulo-bloco">Por onde começar, antes de terça</h3>
       <ol class="lista">
         <li><a href="#preprojeto">Pré-projeto</a>: itens 3.1, 3.2, 3.5, 3.7, 3.8 e 3.10. É o que a equipe vai defender.</li>
@@ -248,6 +253,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         <li><a href="#programa">Programa</a>: só a estrutura (os quatro módulos e o FGV Action).</li>
         <li><a href="#substituto">O que muda por você ser substituto</a>: as regras que valem para você.</li>
       </ol>
+      <p class="origem"><b>Links dos documentos:</b> o edital e o programa abrem no site da FGV; os outros abrem no seu repositório privado do GitHub (é preciso estar logado). O pré-projeto e o pitch estão lá também em PDF, para abrir direto no navegador.</p>
       <p class="origem"><b>Como esta página foi feita:</b> cada documento foi lido inteiro em 21/11. Os PDFs com texto foram extraídos; o cronograma, que é imagem, foi lido pelas páginas. O que é resumo ou opinião do Claude está marcado com <span class="tag t-sintese">síntese</span>.</p>
     </section>
 
@@ -257,14 +263,14 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         <div class="tabela-wrap"><table>
           <thead><tr><th>Quando</th><th>O que aconteceu</th><th>Fonte</th></tr></thead>
           <tbody>
-            <tr><td class="nw">14/07/2026</td><td>A FGV publica o 5º edital.</td><td>Edital, item 17</td></tr>
-            <tr><td class="nw">até 27/09</td><td>Inscrições. A Prefeitura inscreve a equipe (Thiago, Giovanna e a integrante anterior do Operacional) e o pré-projeto do Hub. O prazo era 13/09 e foi prorrogado.</td><td>Edital e 1ª retificação</td></tr>
-            <tr><td class="nw">26/10</td><td>Resultado. São Bernardo aparece na lista de aprovados.</td><td>Comunicado, Anexo I</td></tr>
-            <tr><td class="nw">05 a 11/11</td><td>Matrícula da equipe aprovada, com assinatura do contrato individual de cada aluno com a FGV.</td><td>Comunicado; edital, item 17</td></tr>
-            <tr><td class="nw">13 a 18/11</td><td>No calendário do edital, convocação e inscrição de "alunos substitutos".</td><td>Edital, item 17</td></tr>
-            <tr><td class="nw">18/11</td><td>Você é indicado no lugar da integrante anterior; a carta de substituição é enviada.</td><td>Registro do projeto</td></tr>
-            <tr><td class="nw">19/11</td><td>Comunicado de confirmação aos alunos inscritos, pelo calendário do edital.</td><td>Edital, item 17</td></tr>
-            <tr><td class="nw">24/11, 9h</td><td>Início do curso, na FGV em Brasília. É quando acontece o pitch.</td><td>Comunicado; cronograma</td></tr>
+            <tr><td class="nw">14/07/2026</td><td>A FGV publica o <a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">5º edital</a>.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 17 do edital, o calendário da seleção: publicação 14/07 · inscrições até 27/09 · resultado 26/10 · recurso 26 a 28/10 · matrícula 05 a 11/11 · substitutos 13 a 18/11 · confirmação 19/11 · início 24/11/2026.">item 17</span></td></tr>
+            <tr><td class="nw">até 27/09</td><td>Inscrições. A Prefeitura inscreve a equipe (Thiago, Giovanna e a integrante anterior do Operacional) e o pré-projeto do Hub. O prazo era 13/09 e foi prorrogado.</td><td><a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">Edital</a> e <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/edital-5a-oferta-retificacao-1.pdf" target="_blank" rel="noopener">1ª retificação</a></td></tr>
+            <tr><td class="nw">26/10</td><td>Resultado. São Bernardo aparece na lista de aprovados.</td><td><a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/comunicado-classificacao-5a-oferta.pdf" target="_blank" rel="noopener">Comunicado</a>, <span class="termo" tabindex="0" data-def="Anexo I do comunicado: a lista de aprovados, por município e especialidade. São Bernardo está lá, com Thiago, Giovanna e a integrante anterior do Operacional.">Anexo I</span></td></tr>
+            <tr><td class="nw">05 a 11/11</td><td>Matrícula da equipe aprovada, com assinatura do contrato individual de cada aluno com a FGV.</td><td><a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/comunicado-classificacao-5a-oferta.pdf" target="_blank" rel="noopener">Comunicado</a>; edital, <span class="termo" tabindex="0" data-def="Item 17 do edital, o calendário da seleção: publicação 14/07 · inscrições até 27/09 · resultado 26/10 · recurso 26 a 28/10 · matrícula 05 a 11/11 · substitutos 13 a 18/11 · confirmação 19/11 · início 24/11/2026.">item 17</span></td></tr>
+            <tr><td class="nw">13 a 18/11</td><td>No calendário do edital, convocação e inscrição de "alunos substitutos".</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 17 do edital, o calendário da seleção: publicação 14/07 · inscrições até 27/09 · resultado 26/10 · recurso 26 a 28/10 · matrícula 05 a 11/11 · substitutos 13 a 18/11 · confirmação 19/11 · início 24/11/2026.">item 17</span></td></tr>
+            <tr><td class="nw">18/11</td><td>Você é indicado no lugar da integrante anterior; a carta de substituição é enviada.</td><td><span class="termo" tabindex="0" data-def="StatusProj e Diário deste projeto: carta de substituição enviada em 18/11/2026.">Registro do projeto</span></td></tr>
+            <tr><td class="nw">19/11</td><td>Comunicado de confirmação aos alunos inscritos, pelo calendário do edital.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 17 do edital, o calendário da seleção: publicação 14/07 · inscrições até 27/09 · resultado 26/10 · recurso 26 a 28/10 · matrícula 05 a 11/11 · substitutos 13 a 18/11 · confirmação 19/11 · início 24/11/2026.">item 17</span></td></tr>
+            <tr><td class="nw">24/11, 9h</td><td>Início do curso, na FGV em Brasília. É quando acontece o pitch.</td><td><a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/comunicado-classificacao-5a-oferta.pdf" target="_blank" rel="noopener">Comunicado</a>; <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/curso/cronograma-turma9-ajustado-2026-11.pdf" target="_blank" rel="noopener">cronograma</a></td></tr>
           </tbody>
         </table></div>
         <div class="alerta"><b>Ainda em aberto:</b> o aceite da FGV para a sua substituição não tinha chegado em 21/11. O edital não diz se os "alunos substitutos" de 13 a 18/11 são pessoas que trocam de lugar numa equipe ou equipes da lista de espera; não dá para tirar daí que a sua troca está aprovada.</div>
@@ -276,7 +282,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="bloco-corpo">
         <div class="colunas">
           <div class="coluna"><h4>O que é</h4><p>O "Quinto Edital para Credenciamento" da FGV com o Banco do Brasil: as regras pelas quais os municípios se candidataram ao curso. Ele <b>seleciona municípios</b>, não pessoas. Cada município entra com uma equipe de três e um pré-projeto.</p></div>
-          <div class="coluna"><h4>De onde veio</h4><p>Site da FGV, versão 5 (<a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">PDF</a>). A <b>1ª retificação</b> só mudou o fim das inscrições, de 13/09 para 27/09/2026. Cópias em <code>edital/</code>.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Site da FGV, versão 5 (<a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">PDF</a>). A <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/edital-5a-oferta-retificacao-1.pdf" target="_blank" rel="noopener">1ª retificação</a> só mudou o fim das inscrições, de 13/09 para 27/09/2026. </p></div>
           <div class="coluna"><h4>Quem paga</h4><p>O Banco do Brasil paga o curso inteiro. A Prefeitura paga deslocamento e hospedagem nas aulas presenciais. O aluno não paga nada, <b>desde que conclua</b>: veja o ressarcimento abaixo.</p></div>
         </div>
         <h3 class="subtitulo-bloco">O que cada parte diz</h3>
@@ -288,7 +294,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
             <tr><td class="nw"><b>3</b></td><td>Objetivo</td><td>Selecionar municípios comprometidos com projetos de PPP e concessão sustentáveis.</td></tr>
             <tr><td class="nw"><b>4</b></td><td>Requisitos da inscrição</td><td>Carta de compromisso do município; um pré-projeto <b>factível em até dois anos</b>; três agentes públicos com nível superior, um por especialidade, pelo menos um efetivo.</td></tr>
             <tr><td class="nw"><b>5</b></td><td>Etapas da inscrição</td><td>Quatro formulários: A (pré-cadastro), B (dados do município e pré-projeto), C (indicação da equipe), D (inscrição individual de cada um).</td></tr>
-            <tr><td class="nw"><b>6</b></td><td>Os três especialistas</td><td>O perfil de cada área: econômico-financeiro (6.1), operacional (6.2), jurídico (6.3). Está completo no <a href="guia.html#areas" target="_blank" rel="noopener">guia da equipe</a>.</td></tr>
+            <tr><td class="nw"><b>6</b></td><td>Os três especialistas</td><td>O perfil de cada área: econômico-financeiro (6.1), operacional (6.2), jurídico (6.3). Está completo no <a class="ext" href="guia.html#areas" target="_blank" rel="noopener">guia da equipe</a>.</td></tr>
             <tr><td class="nw"><b>7</b></td><td>Critérios e nota</td><td>A nota de cada município na seleção, até 100 pontos: <b>7.1</b> o município (30), <b>7.2</b> a equipe (30), <b>7.3</b> o pré-projeto (40). Nota zero em qualquer um desclassificava.</td></tr>
             <tr><td class="nw"><b>9 e 10</b></td><td>Balanceamento e desempate</td><td>Vagas por região, proporcionais à população; prioridade a municípios estreantes. No empate, vale o pré-projeto e depois a diversidade da equipe.</td></tr>
             <tr><td class="nw"><b>12</b></td><td>Vagas</td><td>48 alunos por turma: 9 indicados pelo Banco do Brasil e 39 de municípios, ou seja, <b>13 equipes municipais por turma</b>.</td></tr>
@@ -298,7 +304,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         </table></div>
         <details class="sub"><summary>Os 30 pontos do município (7.1)</summary><p>Seis critérios de até 5 pontos: experiência prévia em PPP ou concessão; capacidade administrativa e técnica; compromisso com a sustentabilidade; potencial de impacto; disposição para compartilhar o conhecimento; transparência e governança.</p></details>
         <details class="sub"><summary>Os 40 pontos do pré-projeto (7.3)</summary><p>Dez itens: descrição; viabilidade; sustentabilidade (os <span class="termo" tabindex="0" data-def="Objetivos de Desenvolvimento Sustentável: as 17 metas da ONU para 2030, como energia limpa (ODS 7) e cidades sustentáveis (ODS 11).">ODS</span>); partes interessadas; riscos; base legal; plano de implementação; capacidade organizacional; impactos; monitoramento e avaliação. Nove valem até 4 pontos; o 7.3.7 (implementação) aparece no edital sem pontuação escrita. <b>É a mesma lista do pré-projeto, de 3.1 a 3.10.</b></p></details>
-        <p class="origem"><b>De onde vem:</b> o edital, lido inteiro (itens 1 a 17), e a 1ª retificação.</p>
+        <p class="origem"><b>De onde vem:</b> o <a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-09/5o.%20Edital%20MBA%20PPPs%20e%20Concess%C3%B5es%20Sustent%C3%A1veis_v5.pdf" target="_blank" rel="noopener">edital</a>, lido inteiro (itens 1 a 17), e a <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/edital-5a-oferta-retificacao-1.pdf" target="_blank" rel="noopener">1ª retificação</a>.</p>
       </div>
     </details>
 
@@ -306,7 +312,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <summary><h2>2 · Comunicado de convocação</h2><span class="cont">o resultado da seleção</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
         <div class="colunas">
-          <div class="coluna"><h4>O que é</h4><p>O "Comunicado de Convocação Preliminar" da 5ª edição: o resultado da seleção. O <b>Anexo I</b> lista os aprovados, município por município e especialista por especialista; o <b>Anexo II</b>, a lista de espera.</p></div>
+          <div class="coluna"><h4>O que é</h4><p>O "<a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/comunicado-classificacao-5a-oferta.pdf" target="_blank" rel="noopener">Comunicado de Convocação Preliminar</a>" da 5ª edição: o resultado da seleção. O <span class="termo" tabindex="0" data-def="Anexo I do comunicado: a lista de aprovados, por município e especialidade. São Bernardo está lá, com Thiago, Giovanna e a integrante anterior do Operacional."><b>Anexo I</b></span> lista os aprovados, município por município e especialista por especialista; o <b>Anexo II</b>, a lista de espera.</p></div>
           <div class="coluna"><h4>São Bernardo</h4><p>Aprovada no Anexo I, com a equipe original: Thiago (Econômico), Giovanna (Jurídico) e a integrante anterior (Operacional).</p></div>
           <div class="coluna"><h4>O que ele acrescenta</h4><ul class="lista">
             <li>Matrícula por formulário digital, de 05 a 11/11, com diploma e documentos.</li>
@@ -314,7 +320,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
             <li>Aprovação: <b>nota 7,0 em cada disciplina, 75% de frequência e nota 7,0 no projeto aplicado (FGV Action)</b>. O edital não mencionava a nota do projeto aplicado.</li>
             <li>Início em 24/11/2026, às 9h, na FGV em Brasília.</li></ul></div>
         </div>
-        <p class="origem"><b>De onde vem:</b> o comunicado (<code>edital/comunicado-classificacao-5a-oferta.pdf</code>), lido inteiro. As listas trazem nomes de outros municípios, que ficam fora daqui.</p>
+        <p class="origem"><b>De onde vem:</b> o <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/comunicado-classificacao-5a-oferta.pdf" target="_blank" rel="noopener">comunicado</a>, lido inteiro. As listas trazem nomes de outros municípios, que ficam fora daqui.</p>
       </div>
     </details>
 
@@ -323,36 +329,39 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="bloco-corpo">
         <div class="colunas">
           <div class="coluna"><h4>O que é</h4><p>O documento acadêmico do curso: estrutura, competências, a lista de disciplinas com a carga e a ementa de cada uma, o FGV Action e a coordenação.</p></div>
-          <div class="coluna"><h4>De onde veio</h4><p>Site da FGV, versão de julho/2026 (<a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-07/Programa_MBA%20em%20Parcerias%20P%C3%BAblico-Privada%20Sustent%C3%A1veis.pdf" target="_blank" rel="noopener">PDF</a>). Cópia em <code>curso/</code>.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Site da FGV, versão de julho/2026 (<a class="ext" href="https://educacao-executiva-in-company.fgv.br/sites/default/files/arquivos/2026-07/Programa_MBA%20em%20Parcerias%20P%C3%BAblico-Privada%20Sustent%C3%A1veis.pdf" target="_blank" rel="noopener">PDF</a>). </p></div>
           <div class="coluna"><h4>Em números</h4><p><b>432 horas-aula</b>: 2 disciplinas presenciais, 12 ao vivo pela internet, 2 online sem aula ao vivo, mais o FGV Action. Coordenação geral: João Lins; acadêmica: Patrícia Mello.</p></div>
         </div>
         <h3 class="subtitulo-bloco">A lógica do curso</h3>
         <p>Os quatro módulos seguem a metodologia <span class="termo" tabindex="0" data-def="Descubra, Inove, Construa, Avalie: método do FGV In Company para cursos que resolvem um desafio real de uma instituição.">DICA</span>, e cada um é uma fase da preparação de uma PPP. O fio condutor é a <b>Teoria da Mudança</b>: do problema público até o impacto. O trabalho final é o edital do projeto, construído aos poucos. Cada disciplina alimenta uma parte dele, com a ajuda das oficinas e mentorias do FGV Action.</p>
         <div class="tabela-wrap"><table>
-          <thead><tr><th>Módulo</th><th>Disciplina</th><th>Para que serve, segundo o programa</th></tr></thead>
+          <thead class="tab-programa"><tr><th>Módulo</th><th>Disciplina</th><th>Quando (aulas)</th><th>Depois dela, no FGV Action</th><th>Para que serve, segundo o programa</th></tr></thead>
           <tbody>
-            <tr><td rowspan="4"><b>1 · Descubra</b><br><span class="nota">o problema</span></td><td>1. Fundamentos das PPPs e Concessões</td><td>Bases de PPP e concessão como instrumento de política pública; por que o Estado intervém (<span class="termo" tabindex="0" data-def="Situações em que o mercado sozinho não entrega o que a sociedade precisa: externalidades, bens públicos, monopólios naturais.">falhas de mercado</span>); Teoria da Mudança. <span class="tag t-laranja">presencial em Brasília</span></td></tr>
-            <tr><td>2. Priorização de Projetos</td><td>Decidir qual problema enfrentar por PPP, com matriz multicritério e as primeiras noções de Value for Money.</td></tr>
-            <tr><td>3. Preparação para Projetos de PPP</td><td>As primeiras decisões para tornar o projeto institucionalmente viável.</td></tr>
-            <tr><td>4. Aspectos Legais, Contratuais e Governança ESG</td><td>Elementos jurídicos, contratuais e de governança, com as exigências <span class="termo" tabindex="0" data-def="Environmental, Social and Governance: critérios ambientais, sociais e de governança.">ESG</span>.</td></tr>
-            <tr><td rowspan="4"><b>2 · Inove</b><br><span class="nota">a estratégia</span></td><td>5. Inovação em Modelos de PPPs</td><td>Experiências nacionais e internacionais que fugiram do formato tradicional.</td></tr>
-            <tr><td>6. Financiamento e Modelagem Econômica</td><td>Como planejar e avaliar financeiramente o projeto: riscos, incentivos, fontes de financiamento.</td></tr>
-            <tr><td>7. Engajamento e Stakeholders</td><td>Mapear e envolver as partes interessadas, incluindo órgãos de controle, mercado e sociedade.</td></tr>
-            <tr><td>8. Governança Institucional e Finanças Públicas</td><td>Impacto fiscal, exigências legais e governança. <span class="tag t-azul">online, sem aula ao vivo</span></td></tr>
-            <tr><td rowspan="4"><b>3 · Construa</b><br><span class="nota">as peças do edital</span></td><td>9. Planejamento Estratégico de PPPs</td><td>Coerência entre problema, solução e resultados: Teoria do Programa, Teoria da Mudança, monitoramento. <span class="tag t-laranja">presencial em Pernambuco</span></td></tr>
-            <tr><td>10. Avaliação e Gestão de Riscos</td><td>Identificar, analisar e gerir os riscos; a base da matriz de riscos.</td></tr>
-            <tr><td>11. Auditoria, Transparência e Compliance ESG</td><td>Auditoria, transparência e integridade aplicadas à PPP.</td></tr>
-            <tr><td>12. (Re)equilíbrio Econômico-Financeiro</td><td>Quando e como reequilibrar o contrato ao longo da execução.</td></tr>
-            <tr><td rowspan="4"><b>4 · Avalie</b><br><span class="nota">revisão e gestão</span></td><td>13. Governança na Gestão Contratual</td><td>Anexos contratuais, monitoramento de desempenho e riscos na execução. <span class="tag t-azul">online, sem aula ao vivo</span></td></tr>
-            <tr><td>14-A ou 14-B (eletiva)</td><td>Modelos de negócio em saneamento e resíduos (A) ou em conservação ambiental (B).</td></tr>
-            <tr><td>15-A ou 15-B (eletiva)</td><td>Inovação em mobilidade urbana e infraestrutura sustentável (A) ou em energia renovável (B). <b>As duas tocam o Hub.</b></td></tr>
-            <tr><td>16. Monitoramento e Avaliação de PPPs</td><td>Acompanhar o contrato e medir resultados. 48 horas-aula, o dobro das outras.</td></tr>
+            <tr><td rowspan="4"><b>1 · Descubra</b><br><span class="nota">o problema</span><br><span class="nota nw">24/11/2026 a 31/03/2027</span><br><span class="tag t-teal-mod">entrega 19/04/2027</span></td><td>1. Fundamentos das PPPs e Concessões</td><td class="nw">24/11 a 02/12/2026</td><td>oficina 07/12</td><td>Bases de PPP e concessão como instrumento de política pública; por que o Estado intervém (<span class="termo" tabindex="0" data-def="Situações em que o mercado sozinho não entrega o que a sociedade precisa: externalidades, bens públicos, monopólios naturais.">falhas de mercado</span>); Teoria da Mudança. <span class="tag t-laranja">presencial em Brasília</span></td></tr>
+            <tr><td>2. Priorização de Projetos</td><td class="nw">25/01 a 15/02/2027</td><td><span class="tag t-laranja">mentoria Operacional</span> 17/02</td><td>Decidir qual problema enfrentar por PPP, com matriz multicritério e as primeiras noções de Value for Money.</td></tr>
+            <tr><td>3. Preparação para Projetos de PPP</td><td class="nw">22/02 a 08/03/2027</td><td>oficina 10/03</td><td>As primeiras decisões para tornar o projeto institucionalmente viável.</td></tr>
+            <tr><td>4. Aspectos Legais, Contratuais e Governança ESG</td><td class="nw">15/03 a 29/03/2027</td><td><span class="tag t-roxo">mentoria Jurídico</span> 31/03</td><td>Elementos jurídicos, contratuais e de governança, com as exigências <span class="termo" tabindex="0" data-def="Environmental, Social and Governance: critérios ambientais, sociais e de governança.">ESG</span>.</td></tr>
+            <tr><td rowspan="4"><b>2 · Inove</b><br><span class="nota">a estratégia</span><br><span class="nota nw">05/04 a 02/08/2027</span><br><span class="tag t-teal-mod">entrega 06/08/2027</span></td><td>5. Inovação em Modelos de PPPs</td><td class="nw">05/04 a 19/04/2027</td><td>oficina 26/04</td><td>Experiências nacionais e internacionais que fugiram do formato tradicional.</td></tr>
+            <tr><td>6. Financiamento e Modelagem Econômica</td><td class="nw">28/04 a 12/05/2027</td><td><span class="tag t-verde">mentoria Econômico</span> 17/05</td><td>Como planejar e avaliar financeiramente o projeto: riscos, incentivos, fontes de financiamento.</td></tr>
+            <tr><td>7. Engajamento e Stakeholders</td><td class="nw">19/05 a 02/06/2027</td><td><span class="tag t-laranja">mentoria Operacional</span> 07/06</td><td>Mapear e envolver as partes interessadas, incluindo órgãos de controle, mercado e sociedade.</td></tr>
+            <tr><td>8. Governança Institucional e Finanças Públicas</td><td class="nw">08/06 a 18/07/2027</td><td>oficina 02/08</td><td>Impacto fiscal, exigências legais e governança. <span class="tag t-azul">online, sem aula ao vivo</span></td></tr>
+            <tr><td rowspan="4"><b>3 · Construa</b><br><span class="nota">as peças do edital</span><br><span class="nota nw">04/08 a 20/10/2027</span><br><span class="tag t-teal-mod">entrega 08/11/2027</span></td><td>9. Planejamento Estratégico de PPPs</td><td class="nw">04/08 a 10/08/2027</td><td>oficina 11/08</td><td>Coerência entre problema, solução e resultados: Teoria do Programa, Teoria da Mudança, monitoramento. <span class="tag t-laranja">presencial em Pernambuco</span></td></tr>
+            <tr><td>10. Avaliação e Gestão de Riscos</td><td class="nw">16/08 a 30/08/2027</td><td>oficina 01/09</td><td>Identificar, analisar e gerir os riscos; a base da matriz de riscos.</td></tr>
+            <tr><td>11. Auditoria, Transparência e Compliance ESG</td><td class="nw">08/09 a 22/09/2027</td><td>oficina 27/09</td><td>Auditoria, transparência e integridade aplicadas à PPP.</td></tr>
+            <tr><td>12. (Re)equilíbrio Econômico-Financeiro</td><td class="nw">29/09 a 18/10/2027</td><td><span class="tag t-verde">mentoria Econômico</span> 20/10</td><td>Quando e como reequilibrar o contrato ao longo da execução.</td></tr>
+            <tr><td rowspan="4"><b>4 · Avalie</b><br><span class="nota">revisão e gestão</span><br><span class="nota nw">25/10/2027 a 19/04/2028</span><br><span class="tag t-teal-mod">entrega 28/03/2028</span></td><td>13. Governança na Gestão Contratual</td><td class="nw">25/10 a 05/12/2027</td><td><span class="tag t-roxo">mentoria Jurídico</span> 06/12</td><td>Anexos contratuais, monitoramento de desempenho e riscos na execução. <span class="tag t-azul">online, sem aula ao vivo</span></td></tr>
+            <tr><td>16. Monitoramento e Avaliação de PPPs</td><td class="nw">24/01 a 14/02/2028</td><td>oficina 09/02</td><td>Acompanhar o contrato e medir resultados. 48 horas-aula, o dobro das outras. <b>Vem antes da 14 e da 15 no cronograma.</b></td></tr>
+            <tr><td>14-A ou 14-B (eletiva)</td><td class="nw">16/02 a 06/03/2028</td><td>oficina 08/03</td><td>Modelos de negócio em saneamento e resíduos (A) ou em conservação ambiental (B).</td></tr>
+            <tr><td>15-A ou 15-B (eletiva)</td><td class="nw">13/03 a 27/03/2028</td><td>oficina 29/03</td><td>Inovação em mobilidade urbana e infraestrutura sustentável (A) ou em energia renovável (B). <b>As duas tocam o Hub.</b></td></tr>
+            <tr><td colspan="2"><b>Fechamento</b></td><td class="nw">18 e 19/04/2028</td><td>Action final, presencial em São Paulo</td><td>Apresentação final e encerramento.</td></tr>
           </tbody>
         </table></div>
-        <div class="resumo"><b>Ainda não sabemos:</b> como e quando se escolhem as eletivas 14 e 15. O programa só lista as opções, e o cronograma chama as duas apenas de "Disciplina 14" e "Disciplina 15".</div>
+        <div class="resumo"><b>Três coisas que o cronograma mostra:</b> (1) a disciplina seguinte começa antes da entrega do módulo: a 5 começa em 05/04 e a entrega do módulo 1 é em 19/04; (2) a 16 vem antes das eletivas 14 e 15; (3) a entrega do módulo 4 (28/03/2028) cai um dia antes da última oficina (29/03). <span class="tag t-sintese">síntese</span></div>
+        <div class="definicao"><b>Disciplinas por área? Não, segundo os documentos.</b> As 16 disciplinas são para os três especialistas juntos. O que é separado por área são as <b>mentorias do FGV Action</b>, duas por área (marcadas na tabela). As eletivas 14 e 15 se dividem por <b>tema</b> (A ou B), não por área. Se a equipe falou em "disciplinas por área", vale perguntar se era sobre as mentorias ou sobre a escolha das eletivas.</div>
+        <div class="resumo"><b>Ainda não sabemos:</b> como e quando se escolhem as eletivas 14 e 15. O programa só lista as opções, e o cronograma chama as duas apenas de "Disciplina 14" e "Disciplina 15", com uma oficina marcada "Tema projeto".</div>
         <h3 class="subtitulo-bloco">FGV Action (disciplina 17)</h3>
         <p>É a disciplina integradora, com 11 oficinas e 6 mentorias. Usa aprendizagem por projeto (<span class="termo" tabindex="0" data-def="Project Based Learning: aprender fazendo um projeto real, em vez de só assistir aula.">PBL</span>) e ferramentas como MURAL, OneDrive e Mentimeter. Ao longo do curso, a equipe produz: problema e objeto da contratação; estratégia e lógica da solução; governança e matriz de stakeholders; modelagem jurídica, econômico-financeira e operacional; matriz de riscos; remuneração e garantias; <b>indicadores de desempenho</b>; diretrizes contratuais; <b>plano de monitoramento e avaliação</b>.</p>
-        <p class="origem"><b>De onde vem:</b> o programa (Estrutura Pedagógica, Carga Horária, Quadro de Disciplinas, o "Propósito" de cada disciplina e a seção 17). A modalidade das disciplinas 8 e 13 vem do cronograma.</p>
+        <p class="origem"><b>De onde vem:</b> o programa (Estrutura Pedagógica, Carga Horária, Quadro de Disciplinas, o "Propósito" de cada disciplina e a seção 17). As datas, a modalidade das disciplinas 8 e 13 e as mentorias vêm do <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/curso/cronograma-turma9-ajustado-2026-11.pdf" target="_blank" rel="noopener">cronograma</a>.</p>
       </div>
     </details>
 
@@ -361,7 +370,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="bloco-corpo">
         <div class="colunas">
           <div class="coluna"><h4>O que é</h4><p>A tabela com data, dia, horário, modalidade, disciplina e carga de cada encontro, de 24/11/2026 a 19/04/2028.</p></div>
-          <div class="coluna"><h4>De onde veio</h4><p>A versão <b>ajustada</b> chegou por e-mail em novembro/2026; a do site é a preliminar. As duas estão em <code>curso/</code>. O PDF é imagem: não dá para buscar texto nele.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>A versão <b>ajustada</b> chegou por e-mail em novembro/2026; a do site é a preliminar. A ajustada: <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/curso/cronograma-turma9-ajustado-2026-11.pdf" target="_blank" rel="noopener">abrir o PDF</a>. O PDF é imagem: não dá para buscar texto nele.</p></div>
         </div>
         <h3 class="subtitulo-bloco">Como ler</h3>
         <ul class="lista">
@@ -391,7 +400,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="bloco-corpo">
         <div class="colunas">
           <div class="coluna"><h4>O que é</h4><p>As respostas da Prefeitura ao formulário B da inscrição: o projeto que a equipe se comprometeu a estruturar no curso. Foi avaliado pelos 40 pontos do item 7.3 do edital.</p></div>
-          <div class="coluna"><h4>De onde veio</h4><p>Da equipe, na versão do Thiago (<code>projeto-aplicado/</code>, em Word).</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Da equipe, na versão do Thiago: <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/projeto-aplicado/pre-projeto-hub-eletromobilidade.pdf" target="_blank" rel="noopener">abrir o PDF</a> (o original é Word).</p></div>
         </div>
         <div class="tabela-wrap"><table>
           <thead><tr><th>Item</th><th>O que diz</th><th>Para o Operacional</th></tr></thead>
@@ -418,10 +427,10 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <div class="bloco-corpo">
         <div class="colunas">
           <div class="coluna"><h4>O que é</h4><p>A apresentação de 3 minutos para 24/11, com notas de fala e o tempo de cada slide. Resume o pré-projeto: quem somos, o problema, a solução, a PPP, os beneficiados, os diferenciais, os desafios, as etapas e o fecho.</p></div>
-          <div class="coluna"><h4>De onde veio</h4><p>Da equipe, na versão 1 (<code>projeto-aplicado/</code>), feita pela SDETJ antes da sua chegada. A regra dos 3 minutos foi informada pela equipe; o site da FGV não fala do pitch.</p></div>
-          <div class="coluna"><h4>Onde estudar</h4><p>O slide a slide, com a checagem dos números de 21/11, está no <a href="guia.html#pitch" target="_blank" rel="noopener">guia da equipe</a>. A conversa sobre os argumentos do Operacional é a próxima etapa.</p></div>
+          <div class="coluna"><h4>De onde veio</h4><p>Da equipe, na versão 1, feita pela SDETJ antes da sua chegada: <a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/projeto-aplicado/pitch-hub-eletromobilidade-v1.pdf" target="_blank" rel="noopener">abrir o PDF</a>. A regra dos 3 minutos foi informada pela equipe; o site da FGV não fala do pitch.</p></div>
+          <div class="coluna"><h4>Onde estudar</h4><p>O slide a slide, com a checagem dos números de 21/11, está no <a class="ext" href="guia.html#pitch" target="_blank" rel="noopener">guia da equipe</a>. A conversa sobre os argumentos do Operacional é a próxima etapa.</p></div>
         </div>
-        <div class="resumo"><b>Pitch e pré-projeto descrevem o Operacional de jeitos diferentes:</b> o cartão do slide 2 diz "infraestrutura, indústria, stakeholders e ESG"; o pré-projeto (3.8) diz "energia, mobilidade, operação e ESG". Os dois foram escritos antes de você chegar. <span class="tag t-sintese">síntese</span></div>
+        <div class="resumo"><b>Pitch e pré-projeto descrevem o Operacional de jeitos diferentes:</b> o cartão do <span class="termo" tabindex="0" data-def="Slide 2 do pitch, cartão do Operacional: “Infraestrutura, indústria, stakeholders e ESG”.">slide 2</span> diz "infraestrutura, indústria, stakeholders e ESG"; o pré-projeto (<span class="termo" tabindex="0" data-def="Pré-projeto 3.8: “o técnico-operacional, de energia, mobilidade, operação e ESG”.">3.8</span>) diz "energia, mobilidade, operação e ESG". Os dois foram escritos antes de você chegar. <span class="tag t-sintese">síntese</span></div>
         <p class="origem"><b>De onde vem:</b> o texto dos slides e das notas, extraído do pptx.</p>
       </div>
     </details>
@@ -432,11 +441,11 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         <div class="tabela-wrap"><table>
           <thead><tr><th>Regra</th><th>O que diz</th><th>Onde</th></tr></thead>
           <tbody>
-            <tr><td><b>Quando pode haver troca</b></td><td>Depois da matrícula e até o fim da 3ª disciplina, por desistência comprovada de caso fortuito ou força maior, ou porque a pessoa deixou de ser agente público.</td><td>Edital, 2 e 16</td></tr>
-            <tr><td><b>Quem pode substituir</b></td><td>Quem cumpre o mesmo perfil e os mesmos requisitos da vaga: formação mínima, experiência e especialidade. Se a pessoa que sai era a única efetiva da equipe, o substituto também precisa ser efetivo.</td><td>Edital, 2</td></tr>
-            <tr><td><b>Quem aprova</b></td><td>O Comitê de Seleção, com os documentos do município e a anuência formal do representante legal da Prefeitura.</td><td>Edital, 2 e 14</td></tr>
-            <tr><td><b>O que o substituto assume</b></td><td>Todas as obrigações acadêmicas da pessoa original, inclusive as disciplinas que já tiverem passado, "com respectivo ônus financeiro". Como o curso ainda não começou, hoje não há disciplina passada.</td><td>Edital, 2</td></tr>
-            <tr><td><b>O contrato</b></td><td>Cada aluno assina um contrato individual com a FGV. É lá que está o ressarcimento de R$ 30.952,38.</td><td>Comunicado; edital, 2</td></tr>
+            <tr><td><b>Quando pode haver troca</b></td><td>Depois da matrícula e até o fim da 3ª disciplina, por desistência comprovada de caso fortuito ou força maior, ou porque a pessoa deixou de ser agente público.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 2 do edital, condições financeiras: o Banco do Brasil paga o curso; ressarcimento de R$ 30.952,38 em desistência após a 3ª disciplina, nota abaixo do mínimo ou reprovação em mais de 5 disciplinas; regras de substituição.">2</span> e <span class="termo" tabindex="0" data-def="Item 16 do edital: matrícula. Só equipes completas, com contrato assinado; nenhuma troca antes da matrícula; depois, valem as regras do item 2.">16</span></td></tr>
+            <tr><td><b>Quem pode substituir</b></td><td>Quem cumpre o mesmo perfil e os mesmos requisitos da vaga: formação mínima, experiência e especialidade. Se a pessoa que sai era a única efetiva da equipe, o substituto também precisa ser efetivo.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 2 do edital, condições financeiras: o Banco do Brasil paga o curso; ressarcimento de R$ 30.952,38 em desistência após a 3ª disciplina, nota abaixo do mínimo ou reprovação em mais de 5 disciplinas; regras de substituição.">2</span></td></tr>
+            <tr><td><b>Quem aprova</b></td><td>O Comitê de Seleção, com os documentos do município e a anuência formal do representante legal da Prefeitura.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 2 do edital, condições financeiras: o Banco do Brasil paga o curso; ressarcimento de R$ 30.952,38 em desistência após a 3ª disciplina, nota abaixo do mínimo ou reprovação em mais de 5 disciplinas; regras de substituição.">2</span> e <span class="termo" tabindex="0" data-def="Item 14 do edital: o Comitê de Seleção (diretor do FGV Cidades e coordenadoras do programa e do processo seletivo), que revisa inscrições e aprova substituições.">14</span></td></tr>
+            <tr><td><b>O que o substituto assume</b></td><td>Todas as obrigações acadêmicas da pessoa original, inclusive as disciplinas que já tiverem passado, "com respectivo ônus financeiro". Como o curso ainda não começou, hoje não há disciplina passada.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 2 do edital, condições financeiras: o Banco do Brasil paga o curso; ressarcimento de R$ 30.952,38 em desistência após a 3ª disciplina, nota abaixo do mínimo ou reprovação em mais de 5 disciplinas; regras de substituição.">2</span></td></tr>
+            <tr><td><b>O contrato</b></td><td>Cada aluno assina um contrato individual com a FGV. É lá que está o ressarcimento de R$ 30.952,38.</td><td><a class="ext" href="https://github.com/anderalves00/Estudos/blob/main/PosGraduacao/MBA_PPP_Concessoes_FGV/edital/comunicado-classificacao-5a-oferta.pdf" target="_blank" rel="noopener">Comunicado</a>; edital, <span class="termo" tabindex="0" data-def="Item 2 do edital, condições financeiras: o Banco do Brasil paga o curso; ressarcimento de R$ 30.952,38 em desistência após a 3ª disciplina, nota abaixo do mínimo ou reprovação em mais de 5 disciplinas; regras de substituição.">2</span></td></tr>
           </tbody>
         </table></div>
         <div class="resumo"><b>Na prática:</b> o aceite da FGV que você aguarda é a aprovação do Comitê de Seleção. O contrato que vai chegar para você é o mesmo que a equipe assinou na matrícula; vale ler com calma antes de assinar, porque é nele que mora a multa. <span class="tag t-sintese">síntese</span></div>
@@ -447,21 +456,21 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
     <details class="bloco" id="termos" data-busca>
       <summary><h2>Termos que vão aparecer</h2><span class="cont">além do glossário do guia</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
-        <p class="nota">Os termos básicos (PPP, concessão, contraprestação, Value for Money, CAPEX e OPEX, SLA, Teoria da Mudança) estão no <a href="guia.html#glossario" target="_blank" rel="noopener">glossário do guia</a>. Aqui ficam os que aparecem nos documentos acima.</p>
+        <p class="nota">Os termos básicos (PPP, concessão, contraprestação, Value for Money, CAPEX e OPEX, SLA, Teoria da Mudança) estão no <a class="ext" href="guia.html#glossario" target="_blank" rel="noopener">glossário do guia</a>. Aqui ficam os que aparecem nos documentos acima.</p>
         <div class="tabela-wrap"><table>
           <thead><tr><th>Termo</th><th>Significado</th><th>Onde aparece</th></tr></thead>
           <tbody>
             <tr><td><b>Lato sensu</b></td><td>Pós-graduação de especialização, como o MBA. Mestrado e doutorado são stricto sensu.</td><td>Edital</td></tr>
-            <tr><td><b>Agente público efetivo</b></td><td>Servidor ou empregado público concursado, e não comissionado. Cada equipe precisava de pelo menos um.</td><td>Edital, 4.4</td></tr>
-            <tr><td><b>Caso fortuito ou força maior</b></td><td>Fato imprevisível ou inevitável, fora do controle da pessoa. Livra do ressarcimento.</td><td>Edital, 2</td></tr>
-            <tr><td><b>ODS</b></td><td>Os 17 Objetivos de Desenvolvimento Sustentável da ONU, para 2030.</td><td>Edital 7.3.3; pré-projeto 3.3</td></tr>
+            <tr><td><b>Agente público efetivo</b></td><td>Servidor ou empregado público concursado, e não comissionado. Cada equipe precisava de pelo menos um.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 4.4 do edital: três agentes públicos com nível superior, um por especialidade, e pelo menos um efetivo.">4.4</span></td></tr>
+            <tr><td><b>Caso fortuito ou força maior</b></td><td>Fato imprevisível ou inevitável, fora do controle da pessoa. Livra do ressarcimento.</td><td>Edital, <span class="termo" tabindex="0" data-def="Item 2 do edital, condições financeiras: o Banco do Brasil paga o curso; ressarcimento de R$ 30.952,38 em desistência após a 3ª disciplina, nota abaixo do mínimo ou reprovação em mais de 5 disciplinas; regras de substituição.">2</span></td></tr>
+            <tr><td><b>ODS</b></td><td>Os 17 Objetivos de Desenvolvimento Sustentável da ONU, para 2030.</td><td>Edital <span class="termo" tabindex="0" data-def="Item 7.3.3 do edital: o pré-projeto deve mostrar como se alinha aos ODS (até 4 pontos).">7.3.3</span>; pré-projeto 3.3</td></tr>
             <tr><td><b>ESG</b></td><td>Environmental, Social and Governance: critérios ambientais, sociais e de governança.</td><td>Edital; programa; pitch</td></tr>
             <tr><td><b>Stakeholders</b></td><td>Partes interessadas: quem afeta o projeto ou é afetado por ele.</td><td>Programa, Disciplina 7</td></tr>
             <tr><td><b>Matriz multicritério</b></td><td>Tabela que compara alternativas por vários critérios com pesos, em vez de um só.</td><td>Programa, Disciplina 2</td></tr>
             <tr><td><b>VPL, TIR e payback</b></td><td>Medidas de retorno: valor criado hoje, taxa de retorno e tempo para recuperar o investimento.</td><td>Pré-projeto, 3.2</td></tr>
             <tr><td><b>Project finance</b></td><td>Financiamento pago pelo caixa que o próprio projeto vai gerar.</td><td>Pré-projeto, 3.2</td></tr>
             <tr><td><b>LRF</b></td><td>Lei de Responsabilidade Fiscal: limites de gasto e de dívida. Limita a contraprestação que o Município pode assumir.</td><td>Pré-projeto, 3.5 e 3.6</td></tr>
-            <tr><td><b>SBC Sandbox</b></td><td>Programa municipal (Lei 7.577/2026) que permite testar soluções com regras municipais temporariamente adaptadas.</td><td>Pré-projeto, 3.6</td></tr>
+            <tr id="t-sandbox"><td><b>SBC Sandbox</b></td><td>Programa municipal (Lei 7.577/2026) que permite testar uma solução nova por um tempo, com normas municipais infralegais adaptadas temporariamente. <b>Relação com o Hub:</b> o pré-projeto prevê usá-lo na <b>fase piloto</b>, testando o Hub em ciclos de 6 a 12 meses antes da expansão. Junto vem a Lei 7.578/2026 (Política Municipal de Inovação), com a Contratação Pública para Solução Inovadora e a encomenda tecnológica, também citadas para o piloto.</td><td>Pré-projeto, <span class="termo" tabindex="0" data-def="Pré-projeto 3.6, base legal: leis federais de PPP, concessões e licitações, LRF, mobilidade urbana, LGPD, ANEEL; no município, a Lei 7.578/2026 (inovação) e a Lei 7.577/2026 (SBC Sandbox).">3.6</span></td></tr>
             <tr><td><b>Logística reversa</b></td><td>Recolher e dar destino ao produto no fim da vida útil, aqui as baterias.</td><td>Pré-projeto, 3.3 e 3.5</td></tr>
             <tr><td><b>Linha de base</b></td><td>A medida de antes do projeto, contra a qual se compara o resultado.</td><td>Pré-projeto, 3.10</td></tr>
             <tr><td><b>Uptime</b></td><td>Percentual do tempo em que o equipamento funciona e está disponível.</td><td>Pré-projeto, 3.10</td></tr>
@@ -514,5 +523,18 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
     document.querySelectorAll(".chip-filtro[data-filtro]").forEach(x => x.setAttribute("aria-pressed", x === b));
     aplicar();
   });
+})();
+</script>
+<script>
+// Balão do termo não passa da borda direita: perto dela, abre para a esquerda
+(function () {
+  function ajusta(e) {
+    const el = e.target.closest && e.target.closest(".termo");
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.classList.toggle("dir", r.left + Math.min(340, innerWidth * 0.8) > innerWidth - 16);
+  }
+  document.addEventListener("mouseover", ajusta);
+  document.addEventListener("focusin", ajusta);
 })();
 </script>

@@ -142,6 +142,7 @@ tbody tr:hover td { background: var(--papel); }
 .pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; }
 .pend { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; background: var(--papel); }
 .pend h3 { font-size: 16px; margin-bottom: 6px; }
+#casos .bloco-corpo > h3 { font-size: 18px; margin: 26px 0 8px; }
 .cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
 .cenario { border: 1px solid var(--pauta); border-radius: var(--raio); padding: 12px 16px; min-width: 0; display: grid; gap: 8px; align-content: start; }
 .cenario.rec { border: 2px solid var(--verde); }
@@ -250,6 +251,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
     <h2>Parte 2 · O básico para começar</h2>
     <a href="#basico">PPP e concessão: o básico</a>
     <a href="#recarga">A recarga é serviço público?</a>
+    <a href="#casos">Casos reais de recarga</a>
     <a href="#termos">Termos que vão aparecer</a>
   </nav>
 
@@ -559,7 +561,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       </div>
     </details>
     <details class="bloco" id="recarga" data-busca>
-      <summary><h2>A recarga de carro elétrico é serviço público?</h2><span class="cont">o que a ANEEL diz · o caso de Porto Velho</span><span class="seta" aria-hidden="true">›</span></summary>
+      <summary><h2>A recarga de carro elétrico é serviço público?</h2><span class="cont">o que a ANEEL diz · Porto Velho em resumo</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
         <p>A regra da recarga não está nas leis de concessão; está na resolução da ANEEL que organiza a distribuição de energia, a <a class="ext" href="https://www.cemig.com.br/wp-content/uploads/2025/08/ren20211000.pdf" target="_blank" rel="noopener">REN 1.000/2021</a>, nos <span class="termo ref" tabindex="0" data-def="O capítulo da REN 1.000/2021 sobre instalações de recarga de veículos elétricos: instalação (550 e 551), equipamentos (552 e 553), funcionamento (554 a 556) e recarga feita pela distribuidora (557 a 560).">artigos 550 a 560</span>. O que ela diz:</p>
         <div class="tabela-wrap"><table>
@@ -581,11 +583,142 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
             <li><b>Operação:</b> funcionamento contínuo, manutenção preventiva e corretiva, SAC, reparo em até 15 dias úteis.</li>
             <li><b>Multas:</b> de 0,1% a 3% do investimento declarado. É gravíssima a inoperância de mais de 30% dos eletropostos por mais de 10 dias úteis.</li>
           </ul>
-          <p class="nota">É minuta de edital: não confirmamos se foi assinada. O texto não fala de preço ao usuário nem do destino dos equipamentos no fim. Entra também na pesquisa de cidades.</p></div>
+          <p class="nota">É a minuta do 1º edital, de fevereiro. Ele foi revogado em abril e republicado em agosto, com regras bem diferentes: a história completa está em <a href="#casos">Casos reais de recarga</a>.</p></div>
 
         <p class="origem"><b>De onde vem:</b> <a class="ext" href="https://www.cemig.com.br/wp-content/uploads/2025/08/ren20211000.pdf" target="_blank" rel="noopener">REN ANEEL 1.000/2021</a>, artigos 550 a 560, lida no texto compilado (cópia publicada pela Cemig, porque o site da ANEEL recusou acesso automático), em 22/11/2026. Termo de Porto Velho lido no PDF da Prefeitura. O que está marcado com <span class="tag t-sintese">síntese</span> é leitura do Claude, não está nas normas.</p>
       </div>
     </details>
+    <details class="bloco" id="casos" data-busca>
+      <summary><h2>Casos reais de recarga em cidades</h2><span class="cont">Porto Velho em detalhe · Uberlândia · Porto Alegre · Rio · São José dos Campos · o ônibus de SBC</span><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo">
+        <p>Pesquisa de 22/11/2026, em documentos oficiais e na imprensa. <b>Nenhum caso brasileiro encontrado usa PPP para recarga de carro.</b> Todos cedem o espaço público, e a empresa investe. Ônibus é outro mundo: a recarga anda junto com o contrato do transporte. Porto Velho é o caso mais completo, porque o processo inteiro está publicado, com a ideia, o erro e a correção.</p>
+
+        <h3>1 · Porto Velho (RO): o caso completo, em quatro tempos</h3>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Quando</th><th>O que aconteceu</th></tr></thead>
+          <tbody>
+            <tr><td class="nw"><b>jan/2026</b><br>a ideia</td><td>A Secretaria de Meio Ambiente (SEMA) quer estimular a mobilidade elétrica, e a cidade não tem recarga rápida pública. O <span class="termo" tabindex="0" data-def="ETP: documento que a Lei 14.133/2021 exige antes de uma contratação. Descreve a necessidade, compara alternativas e justifica a escolhida.">estudo técnico preliminar</span> compara três caminhos:
+              <ul class="lista">
+                <li><b>Fazer direto:</b> descartado. Investimento e manutenção caros, sem orçamento, risco tecnológico.</li>
+                <li><b>Concessão de serviço público:</b> descartada. A recarga "não configura serviço público essencial", a regulação seria complexa e criaria expectativa de reequilíbrio.</li>
+                <li><b><span class="termo" tabindex="0" data-def="Ato unilateral e precário em que o Município deixa uma empresa usar um espaço público, com obrigações e contrapartidas. Não é concessão de serviço público.">Permissão de uso qualificada</span>:</b> escolhida. Não custa nada ao Município, traz investimento privado, exige contrapartidas e pode ser revogada.</li>
+              </ul>
+              <b>Os locais</b> são praças e parques que uma nota técnica urbanístico-ambiental já tinha como estratégicos para drenagem e clima. <b>As contrapartidas</b> (parquinhos e academias nos distritos) vieram de um pedido de outra secretaria.</td></tr>
+            <tr><td class="nw"><b>13/02/2026</b><br>1º edital</td><td><b>12 eletropostos</b> rápidos em <span class="termo" tabindex="0" data-def="Recarga rápida: o carregador converte a energia e a entrega direto à bateria. Em corrente alternada (AC) a recarga é lenta e a conversão é feita pelo carro.">corrente contínua (DC)</span>, de 30 ou 40 kW, conector <span class="termo" tabindex="0" data-def="Conector padrão europeu de recarga rápida, o mais usado no Brasil.">CCS2</span>, cobrança por <span class="termo" tabindex="0" data-def="A câmera identifica o carro e cobra a recarga sem cartão nem aplicativo.">leitura de placa (LPR)</span>, por 10 anos. A empresa paga tudo, inclusive a energia, com medidor próprio. Sem exclusividade e sem garantia de retorno.
+              <ul class="lista">
+                <li><b>Implantação em 6 marcos:</b> o 1º em 45 dias, o último (distritos) em 310.</li>
+                <li><b>Contrapartidas:</b> 1 carro elétrico em <span class="termo" tabindex="0" data-def="Empréstimo gratuito de um bem: a empresa continua dona, e o Município usa por tempo determinado.">comodato</span> para cada 2 eletropostos, 1.000 mudas por eletroposto por ano, mesas, lixeiras, parquinhos e academias.</li>
+                <li><b>Operação:</b> reparo em até 15 dias úteis, SAC e "monitoramento via KPIs", sem dizer quais.</li>
+                <li><b>Nota:</b> 50 pontos para capacidade técnica, 20 para o projeto e 30 para as contrapartidas.</li>
+              </ul></td></tr>
+            <tr><td class="nw"><b>07/04/2026</b><br>a <span class="termo" tabindex="0" data-def="Contestação formal do edital, feita antes da entrega das propostas, por quem vê erro ou ilegalidade nele.">impugnação</span></td><td>Uma empresa de energia de Rondônia contestou o edital em 8 pontos. A Prefeitura <b>deu razão a ela e revogou o edital</b>. Os pontos:
+              <ul class="lista">
+                <li><b>nenhum estudo de viabilidade elétrica</b> (capacidade da rede, carga disponível, conexão);</li>
+                <li>nada sobre as normas da distribuidora;</li>
+                <li>infraestrutura elétrica sem definição (subestação, transformador);</li>
+                <li><b>45 dias é impossível</b> com os prazos da distribuidora;</li>
+                <li>áreas sem metragem;</li>
+                <li>cobrança por placa fora do padrão do mercado;</li>
+                <li>nenhuma regra de preço ao usuário;</li>
+                <li>contrapartidas sem especificação.</li>
+              </ul></td></tr>
+            <tr><td class="nw"><b>11/08/2026</b><br>2º edital</td><td>Republicado com um <b>projeto básico elétrico</b>, feito pela engenheira eletricista da empresa municipal de urbanismo:
+              <ul class="lista">
+                <li><b>Ligação:</b> cada ponto ligado na <span class="termo" tabindex="0" data-def="A rede da rua que alimenta os bairros. Ligar nela exige transformador próprio, que baixa a tensão para 380/220 V, e torna o ponto consumidor do Grupo A.">média tensão (13,8 kV)</span>, com <span class="termo" tabindex="0" data-def="Equipamento que baixa a tensão da rede de média tensão para a usada pelo carregador. 45 kVA é a capacidade dele.">transformador próprio de 45 kVA</span> e no padrão da distribuidora (<span class="termo" tabindex="0" data-def="Norma técnica da Energisa, a distribuidora de Rondônia, para ligar recarga de veículos à rede. Cada distribuidora tem as próprias regras; em SBC, a Enel.">NDU-042</span>).</li>
+                <li><b>Potência:</b> 5 carregadores de 40 kW e 7 de 30 kW, <b>410 kW instalados</b>. Com <span class="termo" tabindex="0" data-def="Fração dos carregadores que se supõe em uso ao mesmo tempo. Com 0,7, conta-se 70% da potência instalada para dimensionar a demanda.">fator de simultaneidade</span> de 0,7, a demanda prevista é de 287 kW.</li>
+                <li><b>Cobrança:</b> por aproximação, PIX ou QR Code, no lugar da placa.</li>
+                <li><b>Exclusividade:</b> cada ponto passa a ser exclusivo do vencedor.</li>
+              </ul>
+              A operação virou contrato de desempenho, com indicadores e multas em reais (teto de R$ 150 mil por mês):
+              <ul class="lista">
+                <li><b>Disponibilidade mínima de 95% no mês</b>, com multa de R$ 500 por ponto percentual abaixo.</li>
+                <li><b><span class="termo" tabindex="0" data-def="Acordo de nível de serviço: prazos e metas de qualidade. Se não cumpre, o operador paga multa ou recebe menos.">SLA</span>:</b> falha crítica resolvida em 48 h e as demais em 7 dias. Quem oferecer 24 h ganha mais pontos.</li>
+                <li><b>Dados e painel:</b> multa por não compartilhar os dados operacionais com a fiscalização e por deixar fora do ar o <b>painel público</b> de consulta.</li>
+                <li><b>Locais:</b> 4 dos 9 urbanos mudaram. Os documentos não dizem por quê.</li>
+                <li><b>Fim do contrato:</b> as benfeitorias ficam com o Município. Se a permissão for revogada antes, a empresa é indenizada pelo que não amortizou.</li>
+                <li><b>Nota:</b> 30 técnica, 30 qualidade e 40 contrapartidas extras.</li>
+              </ul>
+              Propostas até 18/09, sessão em 21/09, assinatura prevista até 30/10/2026.</td></tr>
+            <tr><td class="nw"><b>hoje</b></td><td><b>Resultado não encontrado.</b> Nem o site da SEMA nem a imprensa local publicaram o vencedor ou o termo assinado até 22/11/2026.</td></tr>
+          </tbody>
+        </table></div>
+        <div class="resumo"><b>O que Porto Velho ensina ao Operacional</b> <span class="tag t-sintese">síntese</span>
+          <ul class="lista">
+            <li><b>O estudo elétrico veio depois, por pressão de fora.</b> O 1º edital caiu justamente pelo que você respondeu no treino: antes de construir, perguntar à distribuidora. O erro custou uns seis meses (de abril a outubro).</li>
+            <li><b>Os locais saíram de critério urbanístico, não de demanda.</b> Nenhum documento lido mostra estudo de uso. O risco de demanda fica inteiro com a empresa, o que pode afastar interessados.</li>
+            <li><b>Sem PPP e sem pagar nada, a cidade cobrou desempenho:</b> 95% de disponibilidade, SLA de 48 h, dados abertos à fiscalização e painel público. São os indicadores do seu pré-projeto, dentro de uma permissão de uso.</li>
+            <li><b>A contrapartida pesou mais que a técnica</b> (40 contra 30 pontos). É bom para a Prefeitura, mas encarece o negócio.</li>
+          </ul></div>
+
+        <h3>2 · Uberlândia (MG): permissão de uso com parte do faturamento</h3>
+        <ul class="lista">
+          <li><b>Como:</b> decreto de permissão de uso de 8 espaços públicos por <b>5 anos</b> (19/10/2026). A empresa (NuCharge) implanta, opera e mantém, e estima investir R$ 2,5 milhões.</li>
+          <li><b>Equipamentos:</b> 7 carregadores de 80 kW e 1 de 240 kW, 20 conexões no total, em praças, num parque e no estacionamento do Centro Administrativo.</li>
+          <li><b>O que a cidade recebe:</b> <b>10% do faturamento bruto</b> de cada estação, apurado todo mês, em dinheiro ou em bens e serviços. A Prefeitura estima cerca de R$ 1,05 milhão em 5 anos.</li>
+          <li><b>Dados:</b> relatório mensal por estação (recargas, energia, valores cobrados) e <b>acesso à plataforma e à API</b> da empresa.</li>
+          <li><b>Prazo:</b> até 120 dias para operar. O ponto de 240 kW pode levar uns 6 meses, pela ligação com a Cemig. A empresa fala em cerca de R$ 70 por recarga completa.</li>
+          <li><b>Não encontrado:</b> se houve chamamento e por que esses locais.</li>
+        </ul>
+
+        <h3>3 · Porto Alegre (RS): começar por um teste</h3>
+        <ul class="lista">
+          <li><b>Como:</b> uma <span class="termo" tabindex="0" data-def="Teste em pequena escala, por tempo limitado, para ver se uma solução funciona antes de contratá-la de vez.">prova de conceito</span> no programa Living Lab POA, com parceiros que instalam e operam, "sem custos para a prefeitura".</li>
+          <li><b>Uso medido:</b> desde maio/2026, 3 eletropostos em vias públicas entregaram cerca de 25 mil kWh em mais de 1.250 recargas, para 546 usuários.</li>
+          <li><b>Próximos:</b> em agosto, 4 novos foram autorizados, com início em 45 a 60 dias, "dependendo da liberação da ligação de energia pela concessionária".</li>
+          <li><b>Não encontrado:</b> o instrumento jurídico, a potência e o critério dos locais.</li>
+        </ul>
+
+        <h3>4 · Rio de Janeiro: do sandbox à distribuidora</h3>
+        <ul class="lista">
+          <li><b>O piloto:</b> o primeiro eletroposto público (Barra da Tijuca, fev/2025) saiu do <span class="termo" tabindex="0" data-def="Programa da Prefeitura do Rio que autoriza testar soluções inovadoras na cidade por tempo limitado, com regras mais leves. SBC tem o seu, o SBC Sandbox.">Sandbox.Rio</span>, com uma empresa privada. Até 30/06/2026 foram <b>31.518 recargas</b> e 768 MWh.</li>
+          <li><b>A escala:</b> em out/2026, acordo de cooperação técnica com a <b>Light</b>, a distribuidora, para chegar a 15 pontos até 2028.</li>
+          <li><b>Divisão de papéis:</b> o investimento é privado, e a Light ajuda a viabilizar a parte elétrica. Os locais "levarão em conta a demanda e os estudos" do sandbox.</li>
+          <li><b>Não encontrado:</b> quem instala os novos pontos, por qual instrumento, a potência e o preço.</li>
+        </ul>
+
+        <h3>5 · São José dos Campos (SP): ônibus, quando a cidade é dona do problema</h3>
+        <ul class="lista">
+          <li><b>A frota primeiro:</b> a licitação dos ônibus fracassou cinco vezes. Em mar/2025, a cidade assinou a <b>locação de 400 ônibus elétricos</b> por 15 anos (R$ 2,71 bilhões).</li>
+          <li><b>Três contratos separados:</b> quem fornece os ônibus, quem cuida da gestão financeira e quem opera.</li>
+          <li><b>A recarga:</b> é <b>obra e fornecimento</b> numa garagem, o Pátio Sul. São 34 vagas com carregador de pelo menos 140 kW cada, para cerca de 160 ônibus por dia. O pregão foi em dez/2025: vencedor a R$ 5,2 milhões (o teto era R$ 9,6 milhões), com 120 dias para entregar.</li>
+          <li><b>Não encontrado:</b> quem paga a energia, os SLAs e a situação depois de dez/2025.</li>
+        </ul>
+
+        <h3>6 · E em São Bernardo? O ônibus já tem dono</h3>
+        <ul class="lista">
+          <li><b>Quem opera:</b> a <b>BR7 Mobilidade</b> (Bernatrans), por <span class="termo" tabindex="0" data-def="Concessão em que a empresa paga ao Município pelo direito de explorar o serviço (a outorga), além de cobrar tarifa do usuário.">concessão onerosa</span> de <b>25 anos</b>, desde 1º/04/2020. Foi a única participante da licitação.</li>
+          <li><b>Metas do edital:</b> trocar o diesel em <b>30% da frota em 10 anos, 60% em 15 e 100% em 20</b>, com um plano em 24 meses. Tudo condicionado à oferta da indústria e ao reequilíbrio do contrato.</li>
+          <li><b>Infraestrutura:</b> a concessionária responde pela que é "vinculada diretamente à operação": terminais, pontos e estações.</li>
+          <li><b>Linha 20 (jun/2023):</b> 8 ônibus elétricos da Eletra, fabricante de SBC, cerca de R$ 20 milhões pagos "exclusivamente pela concessionária".</li>
+          <li><b>Não encontrado:</b> onde eles carregam e quem pagou a recarga.</li>
+        </ul>
+        <div class="resumo"><b>O que isso muda no Hub</b> <span class="tag t-sintese">síntese</span>: a recarga dos ônibus municipais provavelmente já é obrigação da BR7, pelo contrato de 2020. O Hub não deveria pagar de novo por ela, e sim <b>conversar com esse contrato</b>: onde ficam as garagens, o que a rede aguenta lá e se faz sentido compartilhar a infraestrutura. Vale confirmar no contrato, com a Giovanna e com a Secretaria de Transportes, antes de pôr ônibus no desenho do Hub.</div>
+
+        <h3>O padrão que aparece</h3>
+        <div class="tabela-wrap"><table>
+          <thead><tr><th>Cidade</th><th>Instrumento</th><th>Quem paga</th><th>O que a cidade recebe</th><th>Desempenho cobrado</th><th>Situação</th></tr></thead>
+          <tbody>
+            <tr><td><b>Porto Velho</b></td><td>permissão de uso, 10 anos</td><td>empresa</td><td>carros, mudas, mobiliário, lazer</td><td>95% disponível, SLA de 48 h, dados, painel público</td><td>republicado; resultado não encontrado</td></tr>
+            <tr><td><b>Uberlândia</b></td><td>permissão de uso, 5 anos</td><td>empresa</td><td>10% do faturamento</td><td>relatório mensal e acesso à API</td><td>autorizado em out/2026</td></tr>
+            <tr><td><b>Porto Alegre</b></td><td>prova de conceito</td><td>parceiros</td><td>dados de uso</td><td>não encontrado</td><td>3 operando, 4 autorizados</td></tr>
+            <tr><td><b>Rio</b></td><td>sandbox, depois cooperação com a distribuidora</td><td>empresa</td><td>não encontrado</td><td>não encontrado</td><td>1 operando, meta de 15 até 2028</td></tr>
+            <tr><td><b>São José dos Campos</b></td><td>pregão de obra (garagem de ônibus)</td><td>Prefeitura</td><td>a infraestrutura</td><td>não encontrado</td><td>vencedor em dez/2025</td></tr>
+          </tbody>
+        </table></div>
+        <div class="resumo"><b>Leitura para o Hub</b> <span class="tag t-sintese">síntese</span>
+          <ul class="lista">
+            <li><b>Carro particular:</b> as cidades cedem o espaço e cobram contrapartida. Nenhuma paga.</li>
+            <li><b>Ônibus:</b> a recarga vai junto com o contrato da frota ou da operação.</li>
+            <li><b>Onde caberia uma PPP:</b> no que o mercado não faz sozinho e que não está em contrato nenhum, como a frota municipal (carros e utilitários das secretarias) e as áreas sem cobertura. É a hipótese da pergunta 6 do roteiro, agora com casos.</li>
+            <li><b>Por onde começar:</b> as cidades que mediram antes (Porto Alegre, Rio) começaram por um piloto com dado de uso. O SBC Sandbox, que o pré-projeto (3.6) já prevê, serve para isso.</li>
+          </ul></div>
+
+        <p class="nota"><b>Ficaram de fora</b>, por não termos conseguido ler a fonte: <b>Curitiba</b> (1º eletroposto público, pela Urbs) e <b>Chapecó</b> (pregão de uso de espaço em 11 locais, com propostas até 25/11), porque os sites recusaram o acesso automático; o edital de chamamento do <b>Rio</b> (SMTR 01/2025), porque o PDF não tem texto legível; <b>Paris</b> e <b>Amsterdam</b>, porque nada se confirmou além de Paris ter hoje cerca de 2.000 pontos operados por uma empresa de energia. Se quiser algum deles, dá para abrir no navegador e me passar o texto.</p>
+
+        <p class="origem"><b>De onde vem:</b> Porto Velho, nos documentos oficiais da SEMA, lidos inteiros: <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/CHAMAMENTO%20P%C3%9ABLICO%20N%C2%BA%2001-2026-SEMA%20-%20ANEXO%20III%20ESTUDO%20T%C3%89CNICO%20PRELIMINAR.pdf" target="_blank" rel="noopener">estudo técnico preliminar</a>, <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/2026/02/87807/1771013837edital-de-chamamento-n0-01-2026-sema.pdf" target="_blank" rel="noopener">1º edital</a>, <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/2026/04/87807/1776091026sei-0755984-resposta-14.pdf" target="_blank" rel="noopener">resposta à impugnação</a>, <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/REPUBLICA%C3%87%C3%83O%20DO%20EDITAL%20CHAMAMENTO%20P%C3%9ABLICO%20N%C2%BA%2001-2026-SEMA%20-%20ELETROPOSTOS.pdf" target="_blank" rel="noopener">edital republicado</a> e <a class="ext" href="https://sema.portovelho.ro.gov.br/uploads/arquivos/CHAMAMENTO%20P%C3%9ABLICO%20N%C2%BA%2001-2026-SEMA%20-%20ANEXO%20II%20-%20PROJETO%20B%C3%81SICO.pdf" target="_blank" rel="noopener">projeto básico</a> (os dois últimos são imagem e foram lidos pelas páginas). Cópias em <code>referencias/porto-velho/</code>. Uberlândia: <a class="ext" href="https://diariodocomercio.com.br/economia/uberlandia-eletropostos-espacos-publicos/" target="_blank" rel="noopener">Diário do Comércio, 22/10/2026</a>. Porto Alegre: <a class="ext" href="https://prefeitura.poa.br/gi/noticias/prefeitura-amplia-pontos-de-carregamento-para-veiculos-eletricos-em-vias-publicas" target="_blank" rel="noopener">Prefeitura, 04/08/2026</a>. Rio: <a class="ext" href="https://diariodorio.com/rio-de-janeiro/2026/10/19/prefeitura-do-rio-fecha-parceria-com-a-light-para-aumentar-pontos-de-recarga-de-carros-eletricos.html" target="_blank" rel="noopener">Diário do Rio, 19/10/2026</a>. São José dos Campos: Diário do Transporte, <a class="ext" href="https://diariodotransporte.com.br/2025/12/23/sao-jose-dos-campos-sp-confirma-nansen-como-vencedora-de-licitacao-para-infraestrutura-de-recarga-de-onibus-eletricos/amp/" target="_blank" rel="noopener">23/12/2025</a> e <a class="ext" href="https://diariodotransporte.com.br/2025/03/07/sao-jose-dos-campos-sp-assina-contrato-de-r-271-bilhoes-com-green-energy-para-aluguel-de-400-onibus-eletricos-nesta-sexta-07/" target="_blank" rel="noopener">07/03/2025</a>. SBC: Diário do Transporte, <a class="ext" href="https://diariodotransporte.com.br/2020/02/29/bernatrans-do-grupo-abc-e-oficialmente-declarada-vencedora-na-licitacao-dos-onibus-de-sao-bernardo-do-campo/amp/" target="_blank" rel="noopener">29/02/2020</a> e <a class="ext" href="https://diariodotransporte.com.br/2020/03/31/br7-mobilidade-assume-transporte-coletivo-de-sao-bernardo-do-campo-a-partir-desta-quarta-feira/amp/" target="_blank" rel="noopener">31/03/2020</a>; <a class="ext" href="https://abcdoabc.com.br/sao-bernardo-sai-a-frente-ao-lancar-a-primeira-linha-de-onibus-100-eletrica-do-abc/" target="_blank" rel="noopener">ABCdoABC, 22/06/2023</a>. Fora de Porto Velho, as fontes são matérias de imprensa: nenhum contrato foi lido. O que está marcado com <span class="tag t-sintese">síntese</span> é leitura do Claude.</p>
+      </div>
+    </details>
+
     <details class="bloco" id="termos" data-busca>
       <summary><h2>Termos que vão aparecer</h2><span class="cont">além do glossário do guia</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">

@@ -206,6 +206,7 @@ html[data-tema=escuro] .topo, html[data-tema=escuro] .kpi.destaque { background:
 html[data-tema=escuro] .topo h1, html[data-tema=escuro] .topo .sobre, html[data-tema=escuro] .kpi.destaque .val { color: #fff; }
 html[data-tema=escuro] .pilula:not(.suave) { color: #0B2E3C; }
 html[data-tema=escuro] .resumo { background: #33270F; }
+html[data-tema=escuro] .kpi.destaque { box-shadow: inset 0 0 0 2px var(--lima); }
 html[data-tema=escuro] .trilho { background: #24363D; }
 html[data-tema=escuro] .ponto { background: #46606A; }
 </style>
@@ -224,7 +225,7 @@ html[data-tema=escuro] .ponto { background: #46606A; }
 <div class="barra-ferramentas">
   <div class="barra-int">
     <span class="barra-titulo">Guia da equipe</span>
-    <input type="search" id="busca" placeholder="Buscar no curso, no projeto, nos slides e no glossário…" aria-label="Buscar">
+    <input type="search" id="busca" placeholder="Buscar no guia…" aria-label="Buscar">
     <div class="grupo-filtro" role="group" aria-label="Filtrar por área">
       <button class="chip-filtro" data-filtro="todas" aria-pressed="true">Todas</button>
       <button class="chip-filtro" data-filtro="eco" aria-pressed="false"><span class="ponto verde"></span>Econômico</button>

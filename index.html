@@ -206,13 +206,14 @@ html[data-tema=escuro] .topo, html[data-tema=escuro] .kpi.destaque { background:
 html[data-tema=escuro] .topo h1, html[data-tema=escuro] .topo .sobre, html[data-tema=escuro] .kpi.destaque .val { color: #fff; }
 html[data-tema=escuro] .pilula:not(.suave) { color: #0B2E3C; }
 html[data-tema=escuro] .resumo { background: #33270F; }
+html[data-tema=escuro] .kpi.destaque { box-shadow: inset 0 0 0 2px var(--lima); }
 html[data-tema=escuro] .trilho { background: #24363D; }
 html[data-tema=escuro] .ponto { background: #46606A; }
 
 section.bloco > .kpis + * { margin-top: 14px; } .legenda-dim { margin-top: 10px; }
 /* Painel: uma cor por dimensão de indicador (nenhuma repete as cores das áreas) */
-:root { --d-disp: #0F7C7A; --d-uso: #2563A8; --d-fin: #A16207; --d-gov: #4A6572; --d-amb: #5F7A1F; --d-soc: #BE185D; --d-eco: #8B5E3C; }
-html[data-tema=escuro] { --d-disp: #5CC6C1; --d-uso: #7FB0EA; --d-fin: #E3B04B; --d-gov: #9DB4BE; --d-amb: #A9C46A; --d-soc: #F07AAE; --d-eco: #D4A47C; }
+:root { --d-disp: #0F7C7A; --d-uso: #1E3A8A; --d-fin: #6B4226; --d-gov: #64748B; --d-amb: #0EA5E9; --d-soc: #DB2777; --d-eco: #881337; }
+html[data-tema=escuro] { --d-disp: #5CC6C1; --d-uso: #7B93F0; --d-fin: #C9A27E; --d-gov: #A3B1C2; --d-amb: #7DD3FC; --d-soc: #F9A8D4; --d-eco: #F0707F; }
 .d-disp { --d: var(--d-disp); } .d-uso { --d: var(--d-uso); } .d-fin { --d: var(--d-fin); } .d-gov { --d: var(--d-gov); }
 .d-amb { --d: var(--d-amb); } .d-soc { --d: var(--d-soc); } .d-eco { --d: var(--d-eco); }
 .ponto-dim { width: 14px; height: 14px; border-radius: 4px; background: var(--d); flex: none; }
@@ -226,10 +227,10 @@ html[data-tema=escuro] { --d-disp: #5CC6C1; --d-uso: #7FB0EA; --d-fin: #E3B04B; 
 .formula { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13.5px; padding: 8px 10px; border-radius: 6px; background: color-mix(in srgb, var(--d) 10%, var(--cartao)); color: var(--texto); }
 .ind dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; margin: 0; font-size: 14px; }
 .ind dt { font-weight: 700; color: var(--texto-suave); } .ind dd { margin: 0; }
-.ind-ref { font-size: 13px; color: var(--texto-suave); }
+.ind-ref { font-size: 13px; color: var(--texto-suave); } .ind-ref .termo { text-decoration-thickness: 1.5px; }
 .st { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
 .s-pay { background: var(--tinta); color: var(--lima); } .s-disc { background: #FDF1DC; color: #8A5A00; } .s-acomp { background: var(--teal-claro); color: var(--texto-suave); }
-html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s-disc { background: #3A2A10; color: #F2C46D; }
+html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s-acomp { background: #24363D; color: #C9D6DA; } html[data-tema=escuro] .s-disc { background: #3A2A10; color: #F2C46D; }
 .ind[data-status=pay] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--lima) 70%, transparent); }
 .so-pay .ind:not([data-status=pay]) { display: none; }
 .legenda-dim { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
@@ -258,7 +259,7 @@ html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s
 <div class="barra-ferramentas">
   <div class="barra-int">
     <span class="barra-titulo">Painel de indicadores</span>
-    <input type="search" id="busca" placeholder="Buscar nos indicadores, fórmulas e fontes…" aria-label="Buscar">
+    <input type="search" id="busca" placeholder="Buscar nos indicadores…" aria-label="Buscar">
     <div class="grupo-filtro" role="group" aria-label="Filtrar">
       <button class="chip-filtro" data-filtro="todas" aria-pressed="true">Todas</button>
       <button class="chip-filtro" data-filtro="disp" aria-pressed="false"><span class="ponto-dim d-disp" style="width:10px;height:10px"></span>Disponibilidade</button>
@@ -267,7 +268,7 @@ html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s
       <button class="chip-filtro" data-filtro="gov" aria-pressed="false"><span class="ponto-dim d-gov" style="width:10px;height:10px"></span>Governança</button>
       <button class="chip-filtro" data-filtro="amb" aria-pressed="false"><span class="ponto-dim d-amb" style="width:10px;height:10px"></span>Ambiental</button>
       <button class="chip-filtro" data-filtro="soc" aria-pressed="false"><span class="ponto-dim d-soc" style="width:10px;height:10px"></span>Social</button>
-      <button class="chip-filtro" data-filtro="eco" aria-pressed="false"><span class="ponto-dim d-eco" style="width:10px;height:10px"></span>Econômico</button>
+      <button class="chip-filtro" data-filtro="eco" aria-pressed="false"><span class="ponto-dim d-eco" style="width:10px;height:10px"></span>Impacto econômico</button>
     </div>
     <label class="chk"><input type="checkbox" id="so-pay"> Só os propostos para pagamento</label>
     <button class="botao" id="expandir">Expandir tudo</button>
@@ -289,7 +290,7 @@ html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s
     <a href="#dim-gov"><span class="ponto-dim d-gov" style="width:10px;height:10px"></span><span class="tit">Governança</span></a>
     <a href="#dim-amb"><span class="ponto-dim d-amb" style="width:10px;height:10px"></span><span class="tit">Ambiental</span></a>
     <a href="#dim-soc"><span class="ponto-dim d-soc" style="width:10px;height:10px"></span><span class="tit">Social</span></a>
-    <a href="#dim-eco"><span class="ponto-dim d-eco" style="width:10px;height:10px"></span><span class="tit">Econômico</span></a>
+    <a href="#dim-eco"><span class="ponto-dim d-eco" style="width:10px;height:10px"></span><span class="tit">Impacto econômico</span></a>
     <h2>Para decidir</h2>
     <a href="#perguntas">Perguntas para a equipe</a>
     <a href="#curso">Onde isso entra no curso</a>
@@ -305,13 +306,13 @@ html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s
         <div class="kpi"><div class="rot">A discutir</div><div class="val">8</div><div class="det">dependem de decisão da equipe</div></div>
       </div>
       <div class="definicao">Este quadro organiza o que o pré-projeto já prevê nos itens <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.3 (sustentabilidade): os ODS que o Hub atende e como, com metas ambientais e sociais.">3.3</span>, <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.5 (riscos): custo da conexão elétrica, obsolescência, atrasos, equipamento parado, ataques cibernéticos; mitigação por estudo de rede, padrões abertos, implantação por gatilhos e remuneração por desempenho.">3.5</span> e <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.10 (monitoramento): linha de base, metas anuais e, todo mês, disponibilidade, falhas, tempo de reparo e uso, num painel público.">3.10</span>: o que medir, como, de onde vem o dado e quais indicadores podem entrar na remuneração do parceiro. <b>As metas ficam em aberto de propósito:</b> dependem do diagnóstico de demanda e da rede elétrica, previsto para os meses 3 a 6 (<span class="termo" tabindex="0" data-def="Pré-projeto, item 3.7 (implementação): inventário de ativos, diagnóstico de demanda, rede e locais (meses 3 a 6) e implantação em fases com gatilhos de expansão.">item 3.7</span>).</div>
-      <div class="legenda-dim"><span><span class="ponto-dim d-disp"></span>Disponibilidade</span><span><span class="ponto-dim d-uso"></span>Uso</span><span><span class="ponto-dim d-fin"></span>Financeiro</span><span><span class="ponto-dim d-gov"></span>Governança</span><span><span class="ponto-dim d-amb"></span>Ambiental</span><span><span class="ponto-dim d-soc"></span>Social</span><span><span class="ponto-dim d-eco"></span>Econômico</span></div>
+      <div class="legenda-dim"><span><span class="ponto-dim d-disp"></span>Disponibilidade</span><span><span class="ponto-dim d-uso"></span>Uso</span><span><span class="ponto-dim d-fin"></span>Financeiro</span><span><span class="ponto-dim d-gov"></span>Governança</span><span><span class="ponto-dim d-amb"></span>Ambiental</span><span><span class="ponto-dim d-soc"></span>Social</span><span><span class="ponto-dim d-eco"></span>Impacto econômico</span></div>
       <div class="legenda-dim"><span><span class="st s-pay">Proposto para pagamento</span> entra na nota</span><span><span class="st s-disc">A discutir</span> a equipe decide</span><span><span class="st s-acomp">Acompanhamento</span> só monitora</span></div>
     </section>
 
     <section class="bloco" id="cadeia">
       <h2>Como um indicador vira contrato</h2>
-      <p>Num contrato de PPP, o indicador só funciona se tiver fonte confiável e consequência definida. O caminho, do carregador ao pagamento:</p>
+      <p>Num contrato de <span class="termo" tabindex="0" data-def="Parceria Público-Privada: contrato longo em que um parceiro privado investe e opera um serviço e é pago, total ou parcialmente, pelo poder público.">PPP</span>, o indicador só funciona se tiver fonte confiável e consequência definida. O caminho, do carregador ao pagamento:</p>
       <div class="cadeia">
         <div><b>Operação</b><span>carregadores, hubs e usinas solares funcionando nos pontos</span></div>
         <div><b>Dado</b><span>a plataforma digital registra status, sessões e energia, por um <span class="termo" tabindex="0" data-def="Protocolo público que todo carregador fala, como o OCPP (Open Charge Point Protocol). Permite ler os dados de qualquer fabricante e trocar de fornecedor sem perder a plataforma.">padrão aberto de comunicação</span></span></div>
@@ -508,11 +509,11 @@ html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s
       </div>
     </details>
     <details class="bloco dimensao" id="dim-eco" data-area="eco" open>
-      <summary><h2><span class="ponto-dim d-eco"></span>Econômico</h2><span class="cont">O Hub movimenta a cidade? · 2 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
+      <summary><h2><span class="ponto-dim d-eco"></span>Impacto econômico</h2><span class="cont">O Hub movimenta a cidade? · 2 indicadores</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
         <div class="inds">
           <article class="ind d-eco" data-status="acomp" data-busca>
-            <div class="ind-topo"><span class="ind-dim">Econômico · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
+            <div class="ind-topo"><span class="ind-dim">Impacto econômico · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
             <h4>Investimento privado mobilizado</h4>
             <p>Quanto do investimento veio do parceiro, e não do orçamento municipal.</p>
             <div class="formula">Σ R$ investidos pelo parceiro e financiadores</div>
@@ -520,7 +521,7 @@ html[data-tema=escuro] .s-pay { background: #0B2E3C; } html[data-tema=escuro] .s
             <span class="ind-ref">pré-projeto <span class="termo" tabindex="0" data-def="Pré-projeto, item 3.9 (impactos): efeitos econômicos, sociais e ambientais esperados, entre eles o investimento privado mobilizado.">3.9</span> · impactos</span>
           </article>
           <article class="ind d-eco" data-status="acomp" data-busca>
-            <div class="ind-topo"><span class="ind-dim">Econômico · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
+            <div class="ind-topo"><span class="ind-dim">Impacto econômico · Anual</span><span class="st s-acomp">Acompanhamento</span></div>
             <h4>Empregos e compras locais</h4>
             <p>Efeito do Hub na economia de São Bernardo.</p>
             <div class="formula">nº de empregos gerados · compras locais ÷ compras totais × 100</div>

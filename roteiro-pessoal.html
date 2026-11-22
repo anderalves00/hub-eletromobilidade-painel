@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Roteiro pessoal — o Operacional no Hub</title>
 <!-- Identidade própria (caderno de estudo), diferente da do guia, por decisão do Andy em 2026-11-21 — ver DecisoesProj.md. As cores das áreas são as mesmas do guia. Mecânica do esqueleto DevMode/configuracao/templates/html/painel-base.html. O publicar-quadro.ps1 injeta doctype e head. -->
+<script>try{if(localStorage.getItem("mba-tema")==="escuro")document.documentElement.dataset.tema="escuro"}catch(e){}</script>
 <style>
 :root {
   /* Caderno: papel, tinta e caneta azul; marca-texto para o que pede atenção */
@@ -21,6 +22,7 @@
   --raio: 6px; --sombra: 0 1px 2px rgba(30, 42, 68, .06);
   --serifa: Georgia, "Times New Roman", serif;
   --fonte: "Segoe UI", system-ui, Arial, sans-serif;
+  --fundo-pagina: var(--papel);
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -53,9 +55,9 @@ p { margin: 0; }
 /* Barra de ferramentas */
 .barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--papel); border-bottom: 1px solid var(--pauta); }
 .barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
-.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--pauta); border-radius: 6px; font: inherit; background: #fff; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--pauta); border-radius: 6px; font: inherit; background: var(--cartao); }
 .grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip-filtro { border: 1px solid var(--pauta); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro { border: 1px solid var(--pauta); background: var(--cartao); color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
 .botao { border: 1px solid var(--tinta); background: transparent; color: var(--tinta); padding: 6px 12px; border-radius: 6px; font: 600 13px var(--fonte); cursor: pointer; text-decoration: none; }
 .botao:hover { background: var(--papel-2); }
@@ -87,7 +89,7 @@ details.bloco > .bloco-corpo { padding: 0 26px 22px; display: grid; gap: 16px; }
 details[open] > summary .seta { transform: rotate(90deg); }
 
 /* Item recolhível dentro de uma seção */
-details.item { border: 1px solid var(--pauta); border-radius: var(--raio); background: #fff; }
+details.item { border: 1px solid var(--pauta); border-radius: var(--raio); background: var(--cartao); }
 details.item[open] { border-color: var(--azul); }
 details.item > summary { padding: 12px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
 .cod-grande { font: 700 22px var(--serifa); color: var(--azul); min-width: 28px; }
@@ -136,7 +138,7 @@ tbody tr:hover td { background: var(--papel); }
 
 /* Grades de cartões */
 .colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
-.coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: #fff; display: grid; gap: 8px; align-content: start; }
+.coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: var(--cartao); display: grid; gap: 8px; align-content: start; }
 .coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
 .coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
 .pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; }
@@ -178,6 +180,28 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   .seta { display: none; }
   body { background: #fff; }
 }
+
+/* TEMA-ESCURO: só pelo botão, lembrado no navegador; nunca herdado do sistema */
+html[data-tema=escuro] #dica, html[data-tema=escuro] .termo:hover::after, html[data-tema=escuro] .termo:focus::after { background: #EEF1F4; color: #121820; }
+html[data-tema=escuro] .chip-filtro[aria-pressed=true] { color: var(--fundo-pagina); }
+html[data-tema=escuro] input[type=search] { color: var(--texto); }
+html[data-tema=escuro] .t-sintese { background: #3A3628; color: #E2DAC4; }
+.barra-titulo { display: none; font-weight: 700; color: var(--tinta); white-space: nowrap; margin-right: 4px; }
+body.rolou .barra-titulo { display: inline; }
+html[data-tema=escuro] {
+  --papel: #171B24; --papel-2: #1F2430; --cartao: #1C212C; --fundo-pagina: #171B24;
+  --tinta: #E6E9F0; --azul: #93ABE3; --azul-esc: #E6E9F0; --azul-claro: #243049;
+  --marca-claro: #3A3518; --pauta: #343B4A; --borda: #343B4A;
+  --verde: #5BC88A; --verde-claro: #183526; --roxo: #B29AE0; --roxo-claro: #2C2440;
+  --laranja: #F0A947; --laranja-esc: #F2B566; --laranja-claro: #3A2A14;
+  --vermelho: #F08A80; --vermelho-claro: #3D1C1A;
+  --texto: #D5D9E0; --texto-suave: #9EA5B1; --sombra: none;
+  color-scheme: dark;
+}
+html[data-tema=escuro] body { background: var(--papel); }
+html[data-tema=escuro] .topo .privado { color: #1E2A44; }
+html[data-tema=escuro] .ponto { background: #4A5160; }
+.barra-titulo { font: 700 16px var(--serifa); }
 </style>
 <header class="topo">
   <div class="topo-int">
@@ -193,6 +217,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
 
 <div class="barra-ferramentas">
   <div class="barra-int">
+    <span class="barra-titulo">Roteiro pessoal</span>
     <input type="search" id="busca" placeholder="Buscar nas tarefas, nos estudos e nas falas…" aria-label="Buscar">
     <div class="grupo-filtro" role="group" aria-label="Filtrar por prazo">
       <button class="chip-filtro" data-filtro="todas" aria-pressed="true">Tudo</button>
@@ -202,6 +227,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
     <button class="botao" id="expandir">Expandir tudo</button>
     <button class="botao" id="recolher">Recolher tudo</button>
     <button class="botao" id="imprimir">Imprimir</button>
+    <button class="botao" id="tema" aria-pressed="false">Modo escuro</button>
     <a class="botao" href="base-curso.html" target="_blank" rel="noopener">Base do curso</a>
     <a class="botao" href="guia.html" target="_blank" rel="noopener">Guia da equipe</a>
   </div>
@@ -504,5 +530,21 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   document.addEventListener("focusin", e => { const el = alvo(e); if (el) mostra(el); });
   document.addEventListener("focusout", esconde);
   addEventListener("scroll", esconde, true);
+})();
+</script>
+<script>
+// TEMA-ESCURO e título fixo na barra
+(function () {
+  const raiz = document.documentElement, b = document.getElementById("tema");
+  const pinta = () => { const e = raiz.dataset.tema === "escuro"; b.textContent = e ? "Modo claro" : "Modo escuro"; b.setAttribute("aria-pressed", e); };
+  b.onclick = () => {
+    if (raiz.dataset.tema === "escuro") delete raiz.dataset.tema; else raiz.dataset.tema = "escuro";
+    try { localStorage.setItem("mba-tema", raiz.dataset.tema || "claro"); } catch (e) {}
+    pinta();
+  };
+  pinta();
+  const topo = document.querySelector("header.topo");
+  if (topo && "IntersectionObserver" in window)
+    new IntersectionObserver(([e]) => document.body.classList.toggle("rolou", !e.isIntersecting)).observe(topo);
 })();
 </script>

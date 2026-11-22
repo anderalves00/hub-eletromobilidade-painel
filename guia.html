@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Guia da equipe — Hub Municipal de Eletromobilidade</title>
 <!-- Identidade: a do pitch da equipe (feito pela SDETJ), por decisão do Andy em 2026-11-21 — ver DecisoesProj.md. Mecânica do esqueleto DevMode/configuracao/templates/html/painel-base.html. O publicar-quadro.ps1 injeta doctype e head. -->
+<script>try{if(localStorage.getItem("mba-tema")==="escuro")document.documentElement.dataset.tema="escuro"}catch(e){}</script>
 <style>
 :root {
   /* Paleta do pitch (tema do pptx) */
@@ -20,6 +21,7 @@
   --fundo: #F5F9F8; --cartao: #ffffff;
   --raio: 12px; --sombra: 0 1px 3px rgba(11, 46, 60, .08);
   --fonte: Calibri, Carlito, "Segoe UI", Arial, sans-serif;
+  --fundo-pagina: var(--fundo);
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -51,13 +53,13 @@ p { margin: 0; }
 .pilula.suave { background: rgba(255,255,255,.12); color: #fff; }
 
 /* Barra de ferramentas */
-.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--cartao); border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
 .barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
 .barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
 .grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip-filtro { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 700 14px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro { border: 1px solid var(--borda); background: var(--cartao); color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 700 14px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
-.botao { border: 1px solid var(--teal); background: #fff; color: var(--teal); padding: 6px 12px; border-radius: 8px; font: 700 14px var(--fonte); cursor: pointer; text-decoration: none; }
+.botao { border: 1px solid var(--teal); background: var(--cartao); color: var(--teal); padding: 6px 12px; border-radius: 8px; font: 700 14px var(--fonte); cursor: pointer; text-decoration: none; }
 .botao:hover { background: var(--teal-claro); }
 
 /* Estrutura */
@@ -145,7 +147,7 @@ tbody tr:hover td { background: var(--teal-claro); }
 .colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px; }
 .coluna { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-top: 5px solid var(--cor, var(--teal)); display: grid; gap: 8px; align-content: start; }
 .coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
-.coluna .definicao { background: #fff; }
+.coluna .definicao { background: var(--cartao); }
 .coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-teal { --cor: var(--teal); }
 .pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 14px; }
 .pend { border-radius: var(--raio); padding: 14px 16px; background: var(--teal-claro); border-left: 5px solid var(--ambar); }
@@ -154,7 +156,7 @@ tbody tr:hover td { background: var(--teal-claro); }
 .origem { font-size: 14px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 10px; margin-top: 4px; }
 .origem b { color: var(--teal); }
 .t-sintese { background: #E9EEF0; color: var(--ardosia); }
-details.sub { background: #fff; border-radius: 8px; padding: 8px 12px; }
+details.sub { background: var(--cartao); border-radius: 8px; padding: 8px 12px; }
 details.sub > summary { cursor: pointer; font-weight: 700; color: var(--tinta); font-size: 15px; }
 details.sub[open] > summary { margin-bottom: 6px; }
 .oculto { display: none !important; }
@@ -182,6 +184,30 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
   body { background: #fff; }
   .topo, .kpi.destaque { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* TEMA-ESCURO: só pelo botão, lembrado no navegador; nunca herdado do sistema */
+html[data-tema=escuro] #dica, html[data-tema=escuro] .termo:hover::after, html[data-tema=escuro] .termo:focus::after { background: #EEF1F4; color: #121820; }
+html[data-tema=escuro] .chip-filtro[aria-pressed=true] { color: var(--fundo-pagina); }
+html[data-tema=escuro] input[type=search] { color: var(--texto); }
+html[data-tema=escuro] .t-sintese { background: #3A3628; color: #E2DAC4; }
+.barra-titulo { display: none; font-weight: 700; color: var(--tinta); white-space: nowrap; margin-right: 4px; }
+body.rolou .barra-titulo { display: inline; }
+html[data-tema=escuro] {
+  --fundo: #0E1A20; --cartao: #13232B; --fundo-pagina: #0E1A20;
+  --tinta: #E3EEF0; --tinta-2: #E3EEF0; --teal: #5CC6C1; --teal-esc: #86D6D2; --teal-claro: #15302F;
+  --texto: #D3E0E3; --texto-suave: #97AEB5; --borda: #26434D; --sombra: none;
+  --verde: #5BC88A; --verde-claro: #183526; --roxo: #B29AE0; --roxo-claro: #2C2440;
+  --laranja: #F0A947; --laranja-esc: #F2B566; --laranja-claro: #3A2A14;
+  --vermelho: #F08A80; --vermelho-claro: #3D1C1A;
+  color-scheme: dark;
+}
+html[data-tema=escuro] body { background: var(--fundo); }
+html[data-tema=escuro] .topo, html[data-tema=escuro] .kpi.destaque { background: #0B2E3C; }
+html[data-tema=escuro] .topo h1, html[data-tema=escuro] .topo .sobre, html[data-tema=escuro] .kpi.destaque .val { color: #fff; }
+html[data-tema=escuro] .pilula:not(.suave) { color: #0B2E3C; }
+html[data-tema=escuro] .resumo { background: #33270F; }
+html[data-tema=escuro] .trilho { background: #24363D; }
+html[data-tema=escuro] .ponto { background: #46606A; }
 </style>
 <header class="topo">
   <div class="topo-int">
@@ -197,6 +223,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
 
 <div class="barra-ferramentas">
   <div class="barra-int">
+    <span class="barra-titulo">Guia da equipe</span>
     <input type="search" id="busca" placeholder="Buscar no curso, no projeto, nos slides e no glossário…" aria-label="Buscar">
     <div class="grupo-filtro" role="group" aria-label="Filtrar por área">
       <button class="chip-filtro" data-filtro="todas" aria-pressed="true">Todas</button>
@@ -207,6 +234,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
     <button class="botao" id="expandir">Expandir tudo</button>
     <button class="botao" id="recolher">Recolher tudo</button>
     <button class="botao" id="imprimir">Imprimir</button>
+    <button class="botao" id="tema" aria-pressed="false">Modo escuro</button>
     <a class="botao" href="./" target="_blank" rel="noopener">Painel de indicadores</a>
   </div>
 </div>
@@ -535,5 +563,21 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
   document.addEventListener("focusin", e => { const el = alvo(e); if (el) mostra(el); });
   document.addEventListener("focusout", esconde);
   addEventListener("scroll", esconde, true);
+})();
+</script>
+<script>
+// TEMA-ESCURO e título fixo na barra
+(function () {
+  const raiz = document.documentElement, b = document.getElementById("tema");
+  const pinta = () => { const e = raiz.dataset.tema === "escuro"; b.textContent = e ? "Modo claro" : "Modo escuro"; b.setAttribute("aria-pressed", e); };
+  b.onclick = () => {
+    if (raiz.dataset.tema === "escuro") delete raiz.dataset.tema; else raiz.dataset.tema = "escuro";
+    try { localStorage.setItem("mba-tema", raiz.dataset.tema || "claro"); } catch (e) {}
+    pinta();
+  };
+  pinta();
+  const topo = document.querySelector("header.topo");
+  if (topo && "IntersectionObserver" in window)
+    new IntersectionObserver(([e]) => document.body.classList.toggle("rolou", !e.isIntersecting)).observe(topo);
 })();
 </script>

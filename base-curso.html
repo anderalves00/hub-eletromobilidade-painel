@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Base do curso — o que cada documento diz</title>
 <!-- Só do Andy (escondida). Identidade de caderno, a mesma do roteiro pessoal (mesmo material de estudo) — ver DecisoesProj.md. O publicar-quadro.ps1 injeta doctype e head. -->
+<script>try{if(localStorage.getItem("mba-tema")==="escuro")document.documentElement.dataset.tema="escuro"}catch(e){}</script>
 <style>
 :root {
   /* Caderno: papel, tinta e caneta azul; marca-texto para o que pede atenção */
@@ -21,6 +22,7 @@
   --raio: 6px; --sombra: 0 1px 2px rgba(30, 42, 68, .06);
   --serifa: Georgia, "Times New Roman", serif;
   --fonte: "Segoe UI", system-ui, Arial, sans-serif;
+  --fundo-pagina: var(--papel);
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -53,9 +55,9 @@ p { margin: 0; }
 /* Barra de ferramentas */
 .barra-ferramentas { position: sticky; top: 0; z-index: 20; background: var(--papel); border-bottom: 1px solid var(--pauta); }
 .barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
-.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--pauta); border-radius: 6px; font: inherit; background: #fff; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--pauta); border-radius: 6px; font: inherit; background: var(--cartao); }
 .grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip-filtro { border: 1px solid var(--pauta); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip-filtro { border: 1px solid var(--pauta); background: var(--cartao); color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px var(--fonte); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .chip-filtro[aria-pressed=true] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
 .botao { border: 1px solid var(--tinta); background: transparent; color: var(--tinta); padding: 6px 12px; border-radius: 6px; font: 600 13px var(--fonte); cursor: pointer; text-decoration: none; }
 .botao:hover { background: var(--papel-2); }
@@ -87,7 +89,7 @@ details.bloco > .bloco-corpo { padding: 0 26px 22px; display: grid; gap: 16px; }
 details[open] > summary .seta { transform: rotate(90deg); }
 
 /* Item recolhível dentro de uma seção */
-details.item { border: 1px solid var(--pauta); border-radius: var(--raio); background: #fff; }
+details.item { border: 1px solid var(--pauta); border-radius: var(--raio); background: var(--cartao); }
 details.item[open] { border-color: var(--azul); }
 details.item > summary { padding: 12px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; }
 .cod-grande { font: 700 22px var(--serifa); color: var(--azul); min-width: 28px; }
@@ -136,7 +138,7 @@ tbody tr:hover td { background: var(--papel); }
 
 /* Grades de cartões */
 .colunas { align-items: start; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
-.coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: #fff; display: grid; gap: 8px; align-content: start; }
+.coluna { border: 1px solid var(--pauta); border-left: 4px solid var(--cor, var(--azul)); border-radius: var(--raio); padding: 12px 16px; background: var(--cartao); display: grid; gap: 8px; align-content: start; }
 .coluna > h4 { font-size: 17px; color: var(--cor, var(--tinta)); }
 .coluna.c-verde { --cor: var(--verde); } .coluna.c-roxo { --cor: var(--roxo); } .coluna.c-laranja { --cor: var(--laranja-esc); } .coluna.c-azul { --cor: var(--azul); }
 .pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; }
@@ -165,10 +167,16 @@ tbody tr:hover td { background: var(--papel); }
 .origem b { color: var(--tinta); }
 .tab-programa th:nth-child(2) { min-width: 200px; }
 .tab-programa th:nth-child(5) { min-width: 280px; }
-.ambas { background: var(--azul-claro); }
+.ambas { background: var(--azul-claro); text-align: center; }
 .ambas::before { content: "vale para as duas PPPs"; display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--azul); margin-bottom: 2px; }
 .grupo { margin-top: 18px; padding: 6px 4px 2px; border-bottom: 2px solid var(--tinta); }
 .grupo:first-of-type { margin-top: 4px; }
+details.grupo-det > summary.grupo { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: end; }
+details.grupo-det > summary.grupo::-webkit-details-marker { display: none; }
+details.grupo-det > summary.grupo > * { grid-column: 1; }
+details.grupo-det > summary.grupo > .seta { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+details.grupo-det[open] > summary.grupo > .seta { transform: rotate(90deg); }
+details.grupo-det { display: grid; gap: 14px; }
 .grupo-num { font: italic 13px var(--serifa); color: var(--texto-suave); }
 .grupo-tit { font-size: 26px; margin: 2px 0 4px; }
 .grupo p { color: var(--texto-suave); font-size: 14px; margin-bottom: 6px; }
@@ -189,13 +197,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   .layout { grid-template-columns: 1fr; padding: 16px; }
   .lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--pauta); padding: 0 0 12px; display: flex; flex-wrap: wrap; gap: 2px 10px; }
   .lateral h2 { display: none; }
-  .colunas, .pend-grid, .grupo { margin-top: 18px; padding: 6px 4px 2px; border-bottom: 2px solid var(--tinta); }
-.grupo:first-of-type { margin-top: 4px; }
-.grupo-num { font: italic 13px var(--serifa); color: var(--texto-suave); }
-.grupo-tit { font-size: 26px; margin: 2px 0 4px; }
-.grupo p { color: var(--texto-suave); font-size: 14px; margin-bottom: 6px; }
-.ref { white-space: nowrap; }
-.quatro { grid-template-columns: 1fr; }
+  .colunas, .pend-grid, .quatro { grid-template-columns: 1fr; }
   .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
   .topo h1 { font-size: 26px; }
   footer { padding: 0 16px 24px; }
@@ -212,6 +214,28 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   .seta { display: none; }
   body { background: #fff; }
 }
+
+/* TEMA-ESCURO: só pelo botão, lembrado no navegador; nunca herdado do sistema */
+html[data-tema=escuro] #dica, html[data-tema=escuro] .termo:hover::after, html[data-tema=escuro] .termo:focus::after { background: #EEF1F4; color: #121820; }
+html[data-tema=escuro] .chip-filtro[aria-pressed=true] { color: var(--fundo-pagina); }
+html[data-tema=escuro] input[type=search] { color: var(--texto); }
+html[data-tema=escuro] .t-sintese { background: #3A3628; color: #E2DAC4; }
+.barra-titulo { display: none; font-weight: 700; color: var(--tinta); white-space: nowrap; margin-right: 4px; }
+body.rolou .barra-titulo { display: inline; }
+html[data-tema=escuro] {
+  --papel: #171B24; --papel-2: #1F2430; --cartao: #1C212C; --fundo-pagina: #171B24;
+  --tinta: #E6E9F0; --azul: #93ABE3; --azul-esc: #E6E9F0; --azul-claro: #243049;
+  --marca-claro: #3A3518; --pauta: #343B4A; --borda: #343B4A;
+  --verde: #5BC88A; --verde-claro: #183526; --roxo: #B29AE0; --roxo-claro: #2C2440;
+  --laranja: #F0A947; --laranja-esc: #F2B566; --laranja-claro: #3A2A14;
+  --vermelho: #F08A80; --vermelho-claro: #3D1C1A;
+  --texto: #D5D9E0; --texto-suave: #9EA5B1; --sombra: none;
+  color-scheme: dark;
+}
+html[data-tema=escuro] body { background: var(--papel); }
+html[data-tema=escuro] .topo .privado { color: #1E2A44; }
+html[data-tema=escuro] .ponto { background: #4A5160; }
+.barra-titulo { font: 700 16px var(--serifa); }
 </style>
 <header class="topo">
   <div class="topo-int">
@@ -226,10 +250,12 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
 
 <div class="barra-ferramentas">
   <div class="barra-int">
+    <span class="barra-titulo">Base do curso</span>
     <input type="search" id="busca" placeholder="Buscar nos documentos e nos termos…" aria-label="Buscar">
     <button class="botao" id="expandir">Expandir tudo</button>
     <button class="botao" id="recolher">Recolher tudo</button>
     <button class="botao" id="imprimir">Imprimir</button>
+    <button class="botao" id="tema" aria-pressed="false">Modo escuro</button>
     <a class="botao" href="roteiro-pessoal.html" target="_blank" rel="noopener">Roteiro pessoal</a>
     <a class="botao" href="guia.html" target="_blank" rel="noopener">Guia da equipe</a>
   </div>
@@ -286,7 +312,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       <p class="origem"><b>Como esta página foi feita:</b> cada documento foi lido inteiro em 21/11. Os PDFs com texto foram extraídos; o cronograma, que é imagem, foi lido pelas páginas. O que é resumo ou opinião do Claude está marcado com <span class="tag t-sintese">síntese</span>.</p>
     </section>
 
-    <div class="grupo" id="bloco-chegada"><span class="grupo-num">Parte 1</span><h2 class="grupo-tit">Como chegamos até aqui</h2><p>Da seleção do município à sua chegada, documento por documento.</p></div>
+    <details class="grupo-det" id="bloco-chegada" open>
+      <summary class="grupo"><span class="grupo-num">Parte 1</span><h2 class="grupo-tit">Como chegamos até aqui</h2><p>Da seleção do município à sua chegada, documento por documento.</p><span class="seta" aria-hidden="true">›</span></summary>
     <details class="bloco" id="linha" data-busca>
       <summary><h2>Linha do tempo da seleção</h2><span class="cont">de julho a 24/11/2026</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
@@ -483,7 +510,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
       </div>
     </details>
 
-    <div class="grupo" id="bloco-basico"><span class="grupo-num">Parte 2</span><h2 class="grupo-tit">O básico para começar</h2><p>O vocabulário e as regras que os documentos dão como sabidos.</p></div>
+    </details>
+    <details class="grupo-det" id="bloco-basico" open>
+      <summary class="grupo"><span class="grupo-num">Parte 2</span><h2 class="grupo-tit">O básico para começar</h2><p>O vocabulário e as regras que os documentos dão como sabidos.</p><span class="seta" aria-hidden="true">›</span></summary>
     <details class="bloco" id="basico" data-busca>
       <summary><h2>PPP e concessão: o básico</h2><span class="cont">o que é · diferenças · limites · obrigações</span><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo">
@@ -501,12 +530,12 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
           <tbody>
             <tr><td><b>Quem paga o parceiro</b></td><td>o usuário (tarifa) e receitas acessórias</td><td>o usuário e o Município</td><td>o Município (a Administração é a usuária)</td></tr>
             <tr><td><b>Lei</b></td><td><span class="termo ref" tabindex="0" data-def="Lei 8.987/1995, a lei das concessões de serviço público: define concessão, serviço adequado, direitos dos usuários, cláusulas do contrato, encargos das partes e extinção.">8.987/1995</span></td><td colspan="2" class="ambas"><span class="termo ref" tabindex="0" data-def="Lei 11.079/2004, a lei das PPPs: define concessão patrocinada e administrativa, limites (valor, prazo, objeto), cláusulas, contraprestação, SPE e regras fiscais.">11.079/2004</span>, que soma suas regras às cláusulas da <span class="termo ref" tabindex="0" data-def="Lei 8.987/1995, a lei das concessões de serviço público: define concessão, serviço adequado, direitos dos usuários, cláusulas do contrato, encargos das partes e extinção.">8.987</span> (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 5º: além das cláusulas do art. 23 da Lei 8.987, o contrato de PPP prevê&#10;• I prazo de 5 a 35 anos&#10;• II penalidades proporcionais&#10;• III repartição de riscos&#10;• IV remuneração e atualização&#10;• V preservação da atualidade&#10;• VI inadimplência do parceiro público&#10;• VII critérios objetivos de desempenho&#10;• VIII garantias&#10;• IX compartilhamento de ganhos de crédito&#10;• X vistoria de bens reversíveis&#10;• XI cronograma do aporte de recursos">art. 5º</span>)</td></tr>
-            <tr><td><b>Valor mínimo do contrato</b></td><td>regra só da PPP</td><td colspan="2" class="ambas"><b>R$ 10 milhões</b> (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 2º, §4º: é vedada PPP&#10;• I: com contrato inferior a R$ 10 milhões (valor da Lei 13.529/2017)&#10;• II: com prestação do serviço inferior a 5 anos&#10;• III: cujo objeto único seja mão de obra, equipamentos ou obra pública">art. 2º, §4º, I</span>)</td></tr>
+            <tr><td><b>Valor mínimo do contrato</b></td><td>Não se aplica</td><td colspan="2" class="ambas"><b>R$ 10 milhões</b> (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 2º, §4º: é vedada PPP&#10;• I: com contrato inferior a R$ 10 milhões (valor da Lei 13.529/2017)&#10;• II: com prestação do serviço inferior a 5 anos&#10;• III: cujo objeto único seja mão de obra, equipamentos ou obra pública">art. 2º, §4º, I</span>)</td></tr>
             <tr><td><b>Prazo</b></td><td>determinado (<span class="termo ref" tabindex="0" data-def="Lei 8.987, art. 2º, II: concessão de serviço público é a delegação da prestação, por licitação (concorrência ou diálogo competitivo), a pessoa jurídica ou consórcio que demonstre capacidade, por sua conta e risco e por prazo determinado.">art. 2º, II</span>)</td><td colspan="2" class="ambas"><b>de 5 a 35 anos</b>, contando prorrogações (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 5º, I: prazo compatível com a amortização dos investimentos, não inferior a 5 nem superior a 35 anos, incluindo eventual prorrogação.">art. 5º, I</span>)</td></tr>
             <tr><td><b>Pagamento por desempenho</b></td><td>a qualidade é medida por indicadores no contrato (<span class="termo ref" tabindex="0" data-def="Lei 8.987, art. 23, III: cláusula sobre os critérios, indicadores, fórmulas e parâmetros definidores da qualidade do serviço.">art. 23, III</span>)</td><td colspan="2" class="ambas">o pagamento <b>pode variar conforme metas de qualidade e disponibilidade</b> (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 6º, §1º: o contrato poderá prever remuneração variável vinculada ao desempenho do parceiro, conforme metas e padrões de qualidade e disponibilidade.">art. 6º, §1º</span>)</td></tr>
-            <tr><td><b>Empresa só para o contrato</b></td><td>regra só da PPP</td><td colspan="2" class="ambas">obrigatória: uma <span class="termo" tabindex="0" data-def="Sociedade de propósito específico: empresa criada só para executar aquele contrato, separada das outras atividades do parceiro. O Município não pode ter a maioria do capital votante.">SPE</span> (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 9º: antes do contrato, deve ser constituída sociedade de propósito específico (SPE) para implantar e gerir o objeto; a Administração não pode ter a maioria do capital votante.">art. 9º</span>)</td></tr>
+            <tr><td><b>Empresa só para o contrato</b></td><td>Não se aplica</td><td colspan="2" class="ambas">obrigatória: uma <span class="termo" tabindex="0" data-def="Sociedade de propósito específico: empresa criada só para executar aquele contrato, separada das outras atividades do parceiro. O Município não pode ter a maioria do capital votante.">SPE</span> (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 9º: antes do contrato, deve ser constituída sociedade de propósito específico (SPE) para implantar e gerir o objeto; a Administração não pode ter a maioria do capital votante.">art. 9º</span>)</td></tr>
             <tr><td><b>Limite fiscal</b></td><td>não há pagamento público</td><td colspan="2" class="ambas">despesas com PPPs até <b>5% da <span class="termo" tabindex="0" data-def="A arrecadação do município no ano (impostos, transferências e outras receitas correntes), descontadas algumas deduções previstas na Lei de Responsabilidade Fiscal.">receita corrente líquida</span></b>; acima disso, o município perde garantias e transferências voluntárias da União (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 28: a União não concede garantia nem transferência voluntária a estados e municípios cujas despesas continuadas com PPPs passem de 5% da receita corrente líquida (no ano anterior ou nos 10 anos seguintes).">art. 28</span>)</td></tr>
-            <tr><td><b>Autorização da Câmara</b></td><td>regra só da PPP</td><td>exigida se mais de 70% da remuneração vier do Município (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 10, §3º: concessão patrocinada em que mais de 70% da remuneração seja paga pela Administração depende de autorização legislativa específica.">art. 10, §3º</span>)</td><td>a lei só fala da patrocinada</td></tr>
+            <tr><td><b>Autorização da Câmara</b></td><td>Não se aplica</td><td>exigida se mais de 70% da remuneração vier do Município (<span class="termo ref" tabindex="0" data-def="Lei 11.079, art. 10, §3º: concessão patrocinada em que mais de 70% da remuneração seja paga pela Administração depende de autorização legislativa específica.">art. 10, §3º</span>)</td><td>a lei só fala da patrocinada</td></tr>
             <tr><td><b><span class="termo" tabindex="0" data-def="A disputa pública que escolhe quem vai fazer o contrato, com regras iguais para todos os concorrentes.">Licitação</span></b></td><td colspan="3">concorrência ou <span class="termo" tabindex="0" data-def="Modalidade da lei 14.133 em que a Administração conversa com empresas pré-selecionadas para desenvolver a solução antes de pedir as propostas finais. Útil quando o próprio poder público não sabe a melhor solução técnica.">diálogo competitivo</span> (<span class="termo ref" tabindex="0" data-def="Lei 8.987, art. 2º, II: concessão de serviço público é a delegação da prestação, por licitação (concorrência ou diálogo competitivo), a pessoa jurídica ou consórcio que demonstre capacidade, por sua conta e risco e por prazo determinado.">8.987, art. 2º, II</span>; <span class="termo" tabindex="0" data-def="Lei 11.079, art. 10: licitação por concorrência ou diálogo competitivo, condicionada a&#10;• I estudo técnico (conveniência e metas fiscais)&#10;• II impacto orçamentário-financeiro&#10;• III compatibilidade com LDO e LOA&#10;• IV fluxo de recursos públicos&#10;• V objeto no PPA&#10;• VI consulta pública de no mínimo 30 dias&#10;• VII licença ambiental prévia, quando exigida">11.079, art. 10</span>)</td></tr>
           </tbody>
         </table></div>
@@ -751,6 +780,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
         </table></div>
       </div>
     </details>
+    </details>
   </main>
 </div>
 <footer>Página só do Andy. Escondida, não privada: nenhuma página pública tem link para ela, mas quem abrir o repositório no GitHub vê o arquivo.</footer>
@@ -815,5 +845,21 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font: italic 14px var(
   document.addEventListener("focusin", e => { const el = alvo(e); if (el) mostra(el); });
   document.addEventListener("focusout", esconde);
   addEventListener("scroll", esconde, true);
+})();
+</script>
+<script>
+// TEMA-ESCURO e título fixo na barra
+(function () {
+  const raiz = document.documentElement, b = document.getElementById("tema");
+  const pinta = () => { const e = raiz.dataset.tema === "escuro"; b.textContent = e ? "Modo claro" : "Modo escuro"; b.setAttribute("aria-pressed", e); };
+  b.onclick = () => {
+    if (raiz.dataset.tema === "escuro") delete raiz.dataset.tema; else raiz.dataset.tema = "escuro";
+    try { localStorage.setItem("mba-tema", raiz.dataset.tema || "claro"); } catch (e) {}
+    pinta();
+  };
+  pinta();
+  const topo = document.querySelector("header.topo");
+  if (topo && "IntersectionObserver" in window)
+    new IntersectionObserver(([e]) => document.body.classList.toggle("rolou", !e.isIntersecting)).observe(topo);
 })();
 </script>

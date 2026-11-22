@@ -28,7 +28,9 @@ body { margin: 0; background: var(--fundo); color: var(--texto); font: 16px/1.55
 a { color: var(--teal); }
 a:hover { color: var(--teal-esc); }
 a.ext::after { content: "\00a0↗"; font-size: .85em; }
-.termo.dir::after { left: auto; right: 0; }
+.js-dica .termo:hover::after, .js-dica .termo:focus::after { content: none; }
+#dica { position: fixed; z-index: 50; display: none; max-width: min(360px, 86vw); background: var(--tinta); color: #fff; font: 400 13px/1.45 var(--fonte); padding: 8px 10px; border-radius: 6px; white-space: pre-line; box-shadow: 0 4px 12px rgba(0,0,0,.18); pointer-events: none; }
+@media print { #dica { display: none !important; } }
 h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
 .nw { white-space: nowrap; }
@@ -516,15 +518,22 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 14px; }
 })();
 </script>
 <script>
-// Balão do termo não passa da borda direita: perto dela, abre para a esquerda
+// Balão dos termos: flutua por cima da página (não cria barra de rolagem em tabela) e não sai da tela
 (function () {
-  function ajusta(e) {
-    const el = e.target.closest && e.target.closest(".termo");
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.classList.toggle("dir", r.left + Math.min(340, innerWidth * 0.8) > innerWidth - 16);
+  document.documentElement.classList.add("js-dica");
+  const d = document.createElement("div"); d.id = "dica"; d.setAttribute("role", "tooltip"); document.body.appendChild(d);
+  function mostra(el) {
+    d.textContent = el.dataset.def; d.style.display = "block";
+    const r = el.getBoundingClientRect(), w = d.offsetWidth, h = d.offsetHeight;
+    let x = Math.max(12, Math.min(r.left, innerWidth - w - 12));
+    let y = r.bottom + 6; if (y + h > innerHeight - 8) y = Math.max(8, r.top - h - 6);
+    d.style.left = x + "px"; d.style.top = y + "px";
   }
-  document.addEventListener("mouseover", ajusta);
-  document.addEventListener("focusin", ajusta);
+  const esconde = () => { d.style.display = "none"; };
+  const alvo = e => e.target.closest && e.target.closest(".termo[data-def]");
+  document.addEventListener("mouseover", e => { const el = alvo(e); el ? mostra(el) : esconde(); });
+  document.addEventListener("focusin", e => { const el = alvo(e); if (el) mostra(el); });
+  document.addEventListener("focusout", esconde);
+  addEventListener("scroll", esconde, true);
 })();
 </script>
